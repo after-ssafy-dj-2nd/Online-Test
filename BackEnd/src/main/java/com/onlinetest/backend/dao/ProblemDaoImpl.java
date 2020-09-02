@@ -7,6 +7,12 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class ProblemDaoImpl {
 
+	String ns = "problem.";
+	
 	@Autowired
 	private SqlSession sqlSeesion;
+
+	public void setName(String name) {
+		sqlSeesion.insert(ns+"setName", name);
+	}
 }
