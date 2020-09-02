@@ -10,14 +10,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		values (#{name})
 	</insert>
 
-	<select id="getProblems" parameterType="java.lang.Integer">
+	<select id="getProblems" parameterType="java.lang.Integer" resultType="com.onlinetest.backend.dto.Problem">
 		select problem.id, content, answer, commentary, type, disclosure, writer,
-		(select user.userid from user where user.id == problem.writer) from problem
+		(select user.id from user where user.id = problem.writer) from problem
 	</select>
 
-	<select id="getProblem" parameterType="java.lang.Integer">
+	<select id="getProblem" parameterType="java.lang.Integer" resultType="com.onlinetest.backend.dto.Problem">
 		select problem.id, content, answer, commentary, type, disclosure, writer,
-		(select user.userid from user where user.id == problem.writer) from problem where id = #{id}
+		(select user.id from user where user.id = problem.writer) from problem where id = #{id}
 	</select>
 
 	<insert	id="addProblem" parameterType="com.onlinetest.backend.dto.Problem">
