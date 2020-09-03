@@ -41,19 +41,23 @@ public class ProblemController {
 
 	@RequestMapping(value = "/problem", method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<Map<String, Object>> getProblem(@RequestParam int id) {
-		Map<String, Object> resultMap = new HashMap<>();
-		problemservice.getProblem(id);
+	public ResponseEntity<Problem> getProblem(@RequestParam int id) {
+		Problem problem = problemservice.getProblem(id);
 
-		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+		return new ResponseEntity<Problem>(problem, HttpStatus.OK);
 	}
 
     @RequestMapping(value = "/problem", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<Map<String, Object>> addProblem(@RequestBody Problem problem){
 		Map<String, Object> resultMap = new HashMap<>();
+		if (problem.getContent() == null | problem.getAnswer() == 0
+				| problem.getType() == null | problem.getWriter() == 0){
+			resultMap.put("status", "400");
+			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.BAD_REQUEST);
+		}
 		problemservice.addProblem(problem);
-
+		resultMap.put("status", "200");
 		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
 	}
 
@@ -61,7 +65,16 @@ public class ProblemController {
 	@ResponseBody
 	public ResponseEntity<Map<String, Object>> updateProblem(@RequestBody Problem problem) {
 		Map<String, Object> resultMap = new HashMap<>();
+		if (problemservice.getProblem(problem.getId()) == null | problem.getContent() == null
+				| problem.getAnswer() == 0 | problem.getType() == null | problem.getWriter() == 0){
+			resultMap.put("status", "400");
+			resultMap.put("problemInfo", null);
+			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.BAD_REQUEST);
+		}
 		problemservice.updateProblem(problem);
+		Problem problemInfo = problemservice.getProblem(problem.getId());
+		resultMap.put("problemInfo", problemInfo);
+		resultMap.put("status", "200");
 		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
 	}
 
@@ -70,6 +83,7 @@ public class ProblemController {
 	public ResponseEntity<Map<String, Object>> deleteProblem(@RequestParam int id) {
 		Map<String, Object> resultMap = new HashMap<>();
 		problemservice.deleteProblem(id);
+		resultMap.put("status", "200");
 		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
 	}
 
