@@ -8,6 +8,7 @@ const Header = () => {
       <Link to="/">메인</Link>
       <Link to="/login">로그인</Link>
       <Link to="/signup">회원가입</Link>
+      <Link to="/teacher">선생님</Link>
     </header>
   );
 };
