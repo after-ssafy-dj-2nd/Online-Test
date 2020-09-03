@@ -55,5 +55,22 @@ public class UserController {
 
 		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
 	}
+	
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public ResponseEntity<Map<String, Object>> login(@RequestBody User user) throws Exception {
+		logger.info("1-------------signUp-----------------------------" + new Date());
+		Map<String, Object> resultMap = new HashMap<>();
+		
+		User userInfo = userservice.login(user);
+		
+		if(userInfo==null) {
+			resultMap.put("login", "fail");
+		}else {
+			resultMap.put("login", "ok");
+			resultMap.put("userInfo", userInfo);			
+		}
+
+		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+	}
 
 }
