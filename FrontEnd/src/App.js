@@ -18,11 +18,11 @@ function App() {
       <Header />
       <Switch>
         <Route path="/" render={() => <IntroPage />} exact />
-        <Route path="/main" render={() => <MainPage />} exact />
-        <Route path="/login" render={() => <LoginPage />} exact />
-        <Route path="/signup" render={() => <SignupPage />} exact />
-        <Route path="/test" render={() => <TestPage />} exact />
-        <Route path="/teacher" render={() => <TeacherPage />} exact />
+        <Route path="/main" render={() => <MainPage />} />
+        <Route path="/login" render={() => <LoginPage />} />
+        <Route path="/signup" render={() => <SignupPage />} />
+        <Route path="/test" render={() => <TestPage />} />
+        <Route path="/teacher" render={() => <TeacherPage />} />
         <Route component={NotFoundPage} />
       </Switch>
       <Footer />
