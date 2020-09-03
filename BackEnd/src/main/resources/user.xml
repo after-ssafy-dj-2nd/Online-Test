@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="user">
+	
+	<insert id="signUp"
+		parameterType="com.onlinetest.backend.dto.User">
+		insert into user (user_id, password, auth, agency_id) 
+		VALUES (#{user_id}, hex(aes_encrypt(#{password}, 'test')), #{auth}, #{agency_id});
+	</insert>
+	
+	<select id="idCheck"
+	parameterType="string"
+	resultType="int">
+		select count(*)
+		from user
+		where user_id=#{user_id}
+	</select>
+	
+	<select id="login"
+		parameterType="com.onlinetest.backend.dto.User"
+		resultType="com.onlinetest.backend.dto.User">
+		select id, user_id, auth, agency_id
+		from user
+		where user_id=#{user_id} and password=hex(aes_encrypt(#{password}, 'test'))
+	</select>
+	
+</mapper>
