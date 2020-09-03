@@ -1,9 +1,11 @@
 import React from 'react';
-
+import IntroContent from '../components/Intro/IntroContent'
+import Welcome from '../components/Intro/Welcome'
 const IntroPage = () => {
   return (
-    <div>
-      IntroPage
+    <div className="intro-wrapper">
+      <Welcome></Welcome>
+      <IntroContent></IntroContent>
     </div>
   );
 };
