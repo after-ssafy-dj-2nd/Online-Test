@@ -16,7 +16,7 @@ const exclamationMarkStyle = {
 const NotFound = () => {
   return (
     <div style={notFoundPageStyle}>
-      <i class="fas fa-exclamation-triangle" style={exclamationMarkStyle} />
+      <i className="fas fa-exclamation-triangle" style={exclamationMarkStyle} />
       <h3><b>이 페이지는 없는 페이지 입니다.</b></h3>
       <Link to="/">메인으로</Link>
     </div>
