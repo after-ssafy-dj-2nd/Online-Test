@@ -1,0 +1,26 @@
+version: '3'                         
+services:
+  db:
+    restart: always                  
+    image: mysql                     
+    environment:                     
+      MYSQL_DATABASE: onlinetest
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_ROOT_PASSWORD: onlinetest0901;
+    command:                         
+      --default-authentication-plugin=mysql_native_password 
+      --character-set-server=utf8mb4 
+      --collation-server=utf8mb4_unicode_ci 
+    ports:                           
+      - 3306:3306
+  
+  back:                              
+    build: './backend'               
+    expose:                          
+      - "8080"
+    ports:                           
+      - 8080:8080
+    environment:                     
+      WAIT_HOSTS: mysql:3306        
+    depends_on:                      
+      - db
