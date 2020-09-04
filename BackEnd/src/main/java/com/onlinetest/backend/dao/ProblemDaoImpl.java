@@ -24,6 +24,7 @@ public class ProblemDaoImpl {
 	}
 
 	public Problem getProblem(int id){
+
 		return sqlSeesion.selectOne(ns + "getProblem", id);
 	}
 
