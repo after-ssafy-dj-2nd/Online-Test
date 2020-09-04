@@ -1,6 +1,7 @@
 /* default style setting */
 :root {
-  --black : #222;
+	--black : #222;
+	--gray: #ccc;
 	--white: #fff;
 	--red: crimson;
 }

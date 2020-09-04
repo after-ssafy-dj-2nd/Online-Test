@@ -1,0 +1,16 @@
+# build stage(react.js 빌드)
+FROM node:lts-alpine as build-stage
+WORKDIR /app
+COPY package*.json ./ 
+RUN npm install
+RUN npm install @vue/cli@3.7.0 -g
+COPY . .
+RUN npm run build 
+
+# production stage(nginx 사용하여 동작)
+FROM nginx:stable-alpine as production-stage
+COPY --from=build-stage /app/dist /usr/share/nginx/html
+RUN rm /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/conf.d
+EXPOSE 80 # 80번 포트로 외부에 노출
+CMD ["nginx", "-g", "daemon off;"]

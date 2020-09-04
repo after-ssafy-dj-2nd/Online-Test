@@ -1,0 +1,75 @@
+.select-signup-wrapper {
+  margin: 2rem auto;
+  width: 80%;
+  min-width: 300px;
+}
+
+.select-signup-wrapper h2 {
+  margin-bottom: 1em;
+  text-align: center;
+}
+
+.signup-button-group {
+  text-align: center;
+}
+
+.signup-button-group a {
+  display: inline-flex;
+  align-items: center;
+  padding: 1em 2.5em;
+  margin: 0.4em;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  transition: all .2s;
+}
+
+.signup-button-group a:first-child {
+  background-color: mediumaquamarine;
+  color: var(--black);
+}
+
+.signup-button-group a:last-child {
+  background-color: midnightblue;
+  color: var(--white);
+}
+
+.signup-button-group a i.fas {
+  font-size: 3em;
+  padding-right: 0.4em;
+}
+
+.signup-button-group a p {
+  line-height: 1.4;
+}
+
+.signup-button-group a p span {
+  display: block;
+}
+
+.signup-button-group a:hover {
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, .2);
+}
+
+@media screen and (max-width: 600px) {
+  .select-signup-wrapper {
+    width: 95%;
+  }
+
+  .select-signup-wrapper h2 {
+    font-size: 1.2em;
+  }
+
+  .signup-button-group a {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .signup-button-group a i.fas {
+    font-size: 2.5em;
+    padding-right: 0;
+  }
+
+  .signup-button-group a p span {
+    display: inline;
+  }
+}
