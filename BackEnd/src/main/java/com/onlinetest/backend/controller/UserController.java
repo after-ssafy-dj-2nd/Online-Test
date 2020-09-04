@@ -16,7 +16,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.onlinetest.backend.dto.User;
+import com.onlinetest.backend.dto.swagger.UserSwagger;
 import com.onlinetest.backend.service.IUserService;
+
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 @RestController
 @RequestMapping("/api")
@@ -27,46 +33,56 @@ public class UserController {
 	@Autowired
 	private IUserService userservice;
 	
+	@ApiResponses(value = { 
+            @ApiResponse(code = 200, message = "Successful / true:성공, false:실패", response = Boolean.class)})
+	@ApiOperation(value = "회원가입", response = Boolean.class)
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
-	public ResponseEntity<Map<String, Object>> signUp(@RequestBody User user) throws Exception {
+	public ResponseEntity<Boolean> signUp(@RequestBody @ApiParam(value="id 제외하고 입력") User user) throws Exception {
 		logger.info("1-------------signUp-----------------------------" + new Date());
-		Map<String, Object> resultMap = new HashMap<>();
+		Boolean signUp = false;
 		
-		userservice.signUp(user);
-
-		resultMap.put("signUp", "ok");
-
-		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+		try {
+			userservice.signUp(user);
+			signUp = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return new ResponseEntity<Boolean>(signUp, HttpStatus.OK);
 	}
-	
+
+	@ApiResponses(value = { 
+            @ApiResponse(code = 200, message = "Successful / true:사용가능, false:중복", response = Boolean.class)})
+	@ApiOperation(value = "회원가입 시 id 중복 체크", response = Boolean.class)
 	@RequestMapping(value = "/idcheck", method = RequestMethod.GET)
-	public ResponseEntity<Map<String, Object>> idCheck(@RequestParam String user_id) throws Exception {
+	public ResponseEntity<Boolean> idCheck(@RequestParam String user_id) throws Exception {
 		logger.info("1-------------idCheck-----------------------------" + new Date());
 		
-		Map<String, Object> resultMap = new HashMap<>();
+		boolean idCheck = false;
 		
 		int cnt = userservice.idCheck(user_id);
 
 		if(cnt==0) {
-			resultMap.put("idCheck", true);
-		}else {
-			resultMap.put("idCheck", false);
+			idCheck = true;
 		}
 
-		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+		return new ResponseEntity<Boolean>(idCheck, HttpStatus.OK);
 	}
 	
+	@ApiResponses(value = { 
+            @ApiResponse(code = 200, message = "Successful / 성공 - login:true, user:user정보, 실패 - login:false", response = UserSwagger.class)})
+	@ApiOperation(value = "로그인", response = UserSwagger.class)
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public ResponseEntity<Map<String, Object>> login(@RequestBody User user) throws Exception {
-		logger.info("1-------------signUp-----------------------------" + new Date());
+	public ResponseEntity<Map<String, Object>> login(@RequestBody @ApiParam(value="user_id, password만 입력") User user) throws Exception {
+		logger.info("1-------------login-----------------------------" + new Date());
 		Map<String, Object> resultMap = new HashMap<>();
 		
 		User userInfo = userservice.login(user);
 		
 		if(userInfo==null) {
-			resultMap.put("login", "fail");
+			resultMap.put("login", false);
 		}else {
-			resultMap.put("login", "ok");
+			resultMap.put("login", true);
 			resultMap.put("userInfo", userInfo);			
 		}
 
