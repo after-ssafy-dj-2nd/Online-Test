@@ -24,10 +24,13 @@ public class ProblemDaoImpl {
 	}
 
 	public Problem getProblem(int id){
+
 		return sqlSeesion.selectOne(ns + "getProblem", id);
 	}
 
-	public void addProblem(Problem problem){ sqlSeesion.insert(ns + "addProblem", problem); }
+	public void addProblem(Problem problem){
+		sqlSeesion.insert(ns + "addProblem", problem);
+	}
 
 	public void updateProblem(Problem problem){
 		sqlSeesion.update(ns + "updateProblem", problem);
