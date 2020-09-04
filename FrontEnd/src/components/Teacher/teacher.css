@@ -1,0 +1,24 @@
+#teacher--wrap {
+  display: flex;
+  min-height:100vh;
+}
+
+.teacher--wrap {
+  display : flex;
+}
+.teacher-side-bar {
+  background-color : var(--gray);
+  width :20%;
+}
+
+.teacher-side-bar a{
+  width : 100%;
+}
+
+.teacher-content {
+  width : 80%;
+}
+
+.active {
+  background-color : #529502;
+}

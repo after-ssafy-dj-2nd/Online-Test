@@ -33,6 +33,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		type = #{type},
 		disclosure = #{disclosure},
 		writer = #{writer}
+		where id = #{id}
 	</update>
 
 	<delete id="deleteProblem" parameterType="java.lang.Integer">
