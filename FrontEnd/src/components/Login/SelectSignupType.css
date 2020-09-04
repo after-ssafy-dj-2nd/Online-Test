@@ -55,9 +55,18 @@
     width: 95%;
   }
 
+  .select-signup-wrapper h2 {
+    font-size: 1.2em;
+  }
+
   .signup-button-group a {
     display: flex;
     justify-content: space-between;
+  }
+
+  .signup-button-group a i.fas {
+    font-size: 2.5em;
+    padding-right: 0;
   }
 
   .signup-button-group a p span {
