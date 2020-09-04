@@ -1,0 +1,16 @@
+# build stage(vue.js 빌드)
+FROM node:lts-alpine as build-stage # 노드 설치 및 사용
+WORKDIR /app # 도커내 작업폴더 지정
+COPY package*.json ./ # 도커내 작업폴더에 노드 환경(package.json ...)을 복사
+RUN npm install # 노드 환경 설치
+RUN npm install @vue/cli@3.7.0 -g
+COPY . .
+RUN npm run build # vue 빌드
+
+# production stage(nginx 사용하여 동작)
+FROM nginx:stable-alpine as production-stage # nginx 설치 및 사용
+COPY --from=build-stage /app/dist /usr/share/nginx/html # 빌드된 내용을 nginx에 올리기
+RUN rm /etc/nginx/conf.d/default.conf # 도커내 nginx 환경변수 제거(내맘대로 조작하려구)
+COPY nginx.conf /etc/nginx/conf.d # 도커내 nginx 환경변수 복사
+EXPOSE 80 # 80번 포트로 외부에 노출
+CMD ["nginx", "-g", "daemon off;"] # nginx 실행
