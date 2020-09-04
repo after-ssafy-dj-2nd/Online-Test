@@ -21,4 +21,8 @@ public class UserDaoImpl {
 	public int idCheck(String user_id) {
 		return sqlSeesion.selectOne(ns+"idCheck", user_id);
 	}
+
+	public User login(User user) {
+		return sqlSeesion.selectOne(ns+"login", user);
+	}
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper 
+<!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="problem">
@@ -9,5 +9,35 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		insert into agency (name) 
 		values (#{name})
 	</insert>
+
+	<select id="getProblems" parameterType="java.lang.Integer" resultType="com.onlinetest.backend.dto.Problem">
+		select problem.id, content, answer, commentary, type, disclosure, writer,
+		(select user.id from user where user.id = problem.writer) from problem
+	</select>
+
+	<select id="getProblem" parameterType="java.lang.Integer" resultType="com.onlinetest.backend.dto.Problem">
+		select problem.id, content, answer, commentary, type, disclosure, writer,
+		(select user.id from user where user.id = problem.writer) from problem where id = #{id}
+	</select>
+
+	<insert	id="addProblem" parameterType="com.onlinetest.backend.dto.Problem">
+		insert into problem (content, answer, commentary, type, disclosure, writer)
+		values (#{content}, #{answer}, #{commentary}, #{type}, #{disclosure}, #{writer})
+	</insert>
+
+	<update id="updateProblem" parameterType="com.onlinetest.backend.dto.Problem">
+		update problem set
+		content = #{content},
+		answer = #{answer},
+		commentary = #{commentary},
+		type = #{type},
+		disclosure = #{disclosure},
+		writer = #{writer}
+		where id = #{id}
+	</update>
+
+	<delete id="deleteProblem" parameterType="java.lang.Integer">
+		delete from problem where id = #{id}
+	</delete>
 	
 </mapper>

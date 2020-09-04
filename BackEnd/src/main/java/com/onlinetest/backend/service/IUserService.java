@@ -6,4 +6,6 @@ public interface IUserService {
 	void signUp(User user);
 	
 	int idCheck(String user_id);	
+	
+	User login(User user);
 }	

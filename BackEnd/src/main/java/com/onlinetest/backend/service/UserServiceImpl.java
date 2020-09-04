@@ -26,6 +26,12 @@ public class UserServiceImpl implements IUserService{
 		return userdao.idCheck(user_id);
 	}
 
+	@Override
+	@Transactional(readOnly=true)
+	public User login(User user) {
+		return userdao.login(user);
+	}
+
 	
 
 }
