@@ -3,11 +3,15 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './util/serviceWorker';
 import './assets/css/default.css';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import IntroPage from './pages/IntroPage';
 
 ReactDOM.render(
   <BrowserRouter>
-    <App />
+    <Switch>
+      <Route path="/" render={() => <IntroPage />} exact />
+      <Route path="/" render={() => <App/>} />
+    </Switch>
   </BrowserRouter>,
   document.getElementById('root')
 );

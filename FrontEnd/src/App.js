@@ -2,7 +2,6 @@ import React from 'react';
 import './App.css';
 import Header from './components/Common/Header';
 import Footer from './components/Common/Footer';
-import IntroPage from './pages/IntroPage';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import MainPage from './pages/MainPage';
@@ -17,7 +16,6 @@ function App() {
     <>
       <Header />
       <Switch>
-        <Route path="/" render={() => <IntroPage />} exact />
         <Route path="/main" render={() => <MainPage />} />
         <Route path="/login" render={() => <LoginPage />} />
         <Route path="/signup" render={() => <SignupPage />} />
