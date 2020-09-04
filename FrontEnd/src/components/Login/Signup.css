@@ -1,0 +1,65 @@
+.signup-form {
+  margin: 2rem auto;
+  width: 80%;
+  min-width: 300px;
+}
+
+.signup-form h2 {
+  margin-bottom: 1em;
+  text-align: center;
+}
+
+.signup-form form {
+  margin: 0 auto;
+  max-width: 600px;
+}
+
+.signup-form article {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.signup-form article label {
+  font-weight: 600;
+  padding-right: 0.5em;
+}
+
+.signup-form article input {
+  flex-grow: 1;
+}
+
+.signup-form small {
+  display: block;
+  margin: 0.3em 0 1.2em;
+  color: var(--red);
+}
+
+.signup-form button {
+  display: block;
+  width: 100%;
+  background-color: var(--gray);
+  font-weight: 600;
+  padding: 0.5em 0;
+}
+
+@media screen and (max-width: 600px) {
+  .signup-form {
+    width: 95%;
+  }
+
+  .signup-form article {
+    display: block;
+  }
+
+  .signup-form label {
+    display: inline-block;
+    padding-bottom: 0.1em;
+    margin-bottom: 0.6em;
+    border-bottom: 1px solid var(--gray);
+  }
+
+  .signup-form input {
+    width: 100%;
+  }
+}
