@@ -1,0 +1,26 @@
+.intro-content-wrap {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  margin:auto;
+}
+
+.intro-content-title {
+  /* height: 33%; */
+  flex-basis: 22%;
+  width: 100%;
+  background-color: red;
+}
+
+.intro-content-explanation {
+  flex-basis: 55%;
+  width: 100%;
+  background-color: blue;
+}
+
+.intro-content-caption {
+  width: 100%;
+  background-color: green;
+}
