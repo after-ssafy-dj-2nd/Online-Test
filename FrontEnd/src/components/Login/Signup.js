@@ -79,7 +79,7 @@ const Signup = memo(({ signupType, history }) => {
           <input type="email" id="email" value={email} onChange={onChange} />
         </article>
         <small>(이메일 양식을 지켜서 작성해주세요.)</small>
-        <button type="submit">회원가입</button>
+        <button type="submit"><i className="fas fa-user-plus" /> 회원가입</button>
       </form>
     </div>
   );

@@ -70,4 +70,6 @@ button {
 	background: transparent;
 	cursor: pointer;
 	color: var(--black);
+	font-size: 1em;
+	font-family: 'Gothic A1';
 }
