@@ -1,11 +1,14 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
+import Login from '../components/Login/Login';
+import FindPassword from '../components/Login/FindPassword';
 
-const LoginPage = () => {
+const LoginPage = ({ location }) => {
+  const { pathname } = location;
+
   return (
-    <div>
-      Login Page
-    </div>
+    pathname === '/login' ? <Login /> : <FindPassword />
   );
 };
 
-export default LoginPage;
+export default withRouter(LoginPage);
