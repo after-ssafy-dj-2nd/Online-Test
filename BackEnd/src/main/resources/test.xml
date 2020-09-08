@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="test">
+	
+	<insert id="setStartTest"
+		parameterType="com.onlinetest.backend.dto.swagger.StartTest">
+		insert into test (student_id, problem_set_id, starttime) 
+		VALUES (#{student_id}, #{set_id}, now());
+	</insert>
+	
+	<select id="getProblemSet"
+	parameterType="int"
+	resultType="com.onlinetest.backend.dto.swagger.Set">
+		select id, name, starttime, endtime
+		from problem_set
+		where id=#{setNum}
+	</select>
+	
+	<select id="getProblems"
+		parameterType="int"
+		resultType="com.onlinetest.backend.dto.swagger.Problem">
+		select id, content, description, p.score, type
+		from problem_test t, problem p
+		where t.problem_set_id=#{setNum} and t.problem_id=p.id
+	</select>
+	
+</mapper>

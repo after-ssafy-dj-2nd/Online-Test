@@ -13,5 +13,6 @@
 	<mappers>
 		<mapper resource="problem.xml" />
 		<mapper resource="user.xml" />
+		<mapper resource="test.xml" />
 	</mappers>
 </configuration>
