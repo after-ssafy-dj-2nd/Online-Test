@@ -1,14 +1,8 @@
 import React, { memo, useReducer, useMemo } from 'react';
 import { withRouter } from 'react-router-dom';
 import validation from '../../util/validation';
+import { reducer } from '../../util/reducer';
 import './Signup.css';
-
-const reducer = (state, action) => {
-  return {
-    ...state,
-    [action.id]: action.value
-  };
-}
 
 const signupTitle = signupType => `${signupType === 'student' ? '학생용' : '선생님용'} 계정 회원가입`;
 
@@ -79,7 +73,7 @@ const Signup = memo(({ signupType, history }) => {
           <input type="email" id="email" value={email} onChange={onChange} />
         </article>
         <small>(이메일 양식을 지켜서 작성해주세요.)</small>
-        <button type="submit">회원가입</button>
+        <button type="submit"><i className="fas fa-user-plus" /> 회원가입</button>
       </form>
     </div>
   );
