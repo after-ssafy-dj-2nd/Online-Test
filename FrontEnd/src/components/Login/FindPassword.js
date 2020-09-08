@@ -1,13 +1,7 @@
-import React, { useReducer, useCallback } from 'react';
+import React, { useReducer } from 'react';
 import { withRouter } from 'react-router-dom';
+import { reducer } from '../../util/reducer';
 import './FindPassword.css';
-
-const reducer = (state, action) => {
-  return {
-    ...state,
-    [action.id]: action.value
-  };
-}
 
 const FindPassword = ({ history }) => {
   const [state, dispatch] = useReducer(reducer, {
@@ -17,9 +11,9 @@ const FindPassword = ({ history }) => {
 
   const { id, email } = state;
 
-  const onChange = useCallback(e => {
+  const onChange = e => {
     dispatch(e.target);
-  }, []);
+  };
 
   const onSubmit = e => {
     e.preventDefault();

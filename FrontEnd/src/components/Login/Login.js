@@ -1,14 +1,8 @@
 import React, { useReducer, useState, useEffect, useRef, useCallback } from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { storage } from '../../util/storage';
+import { reducer } from '../../util/reducer';
 import './Login.css';
-
-const reducer = (state, action) => {
-  return {
-    ...state,
-    [action.id]: action.value
-  };
-}
 
 const Login = ({ history }) => {
   const [isSaveId, setIsSaveId] = useState(false);
@@ -36,9 +30,9 @@ const Login = ({ history }) => {
     }
   }, []);
   
-  const onChange = useCallback(e => {
+  const onChange = e => {
     dispatch(e.target);
-  }, []);
+  };
   
   const onChangeIsSaveId = useCallback(e => {
     setIsSaveId(e.target.checked);
