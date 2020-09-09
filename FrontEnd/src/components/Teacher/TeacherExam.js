@@ -1,10 +1,6 @@
-import React, {useReducer} from 'react'
-const reducer = (state,action) => {
-  return {
-    ...state,
-    [action.id] : action.value
-  }
-}
+import React, {useReducer} from 'react';
+import { reducer } from '../../util/reducer';
+
 const TeacherExam = () => {
   const [state, dispatch] = useReducer(reducer, {
     title: '',
@@ -14,10 +10,13 @@ const TeacherExam = () => {
     participants : '',
     password : ''
   });
+  
   const {title,startTime, endTime, isOpen,participants, password} = state
+  
   const onChange = e => {
     dispatch(e.target)
   }
+  
   const onCheckChange = (e) => {
     dispatch({id: 'isOpen',value: !isOpen})
   }
