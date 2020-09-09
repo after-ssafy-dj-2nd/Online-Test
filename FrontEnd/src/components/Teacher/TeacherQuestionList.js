@@ -1,12 +1,20 @@
 import React, {useState} from 'react'
 import TeacherQuestion from './TeacherQuestion'
 import {$} from '../../util/DOM'
-const TeacherQuestionList = () => {
 
+const defaultQuestion = [
+  {content:'', answers : ['','',''], description: '' ,score : 5,correct : [0,1]},
+]
+
+const totalScore = (questions) => {
+  return questions.reduce((score,question) => 
+    score + (parseInt(question.score) || 0), 0
+  )
+}
+  
+const TeacherQuestionList = () => {
   let [showIndex , setShowIndex] = useState(0)
-  const defaultQuestion = [
-    {content:'', answers : ['','',''], description: '' ,score : 5,correct : [0,1]},
-  ]
+
   const [questions,setQuestions] = useState([
     {content:'이 중 먹을 수 없는 것은', answers : ['마라탕','설렁탕','곰탕','목욕탕'], description : '',score : 50, correct : [3]},
     {content:'2번 문제', answers : ['1','2','3'], description :'2번 문제는 ' ,score : 5, correct: []},
@@ -25,11 +33,7 @@ const TeacherQuestionList = () => {
     })
     )
   }
-  const totalScore = () => {
-    return questions.reduce((score,question) => 
-      score + (parseInt(question.score) || 0), 0
-    )
-  }
+
   const checkQuestion = (question) => {
     if (!question.score) {
       return false
@@ -54,7 +58,7 @@ const TeacherQuestionList = () => {
   }
   return (
     <div>
-      <span>{'총점 = '+ totalScore() + '점'}</span>
+      <span>{'총점 = '+ totalScore(questions) + '점'}</span>
       <div className="questions-box">
         {questions.map((question,index) => (
           <button className={checkQuestion(question) ? '' : 'wrong'}
