@@ -1,10 +1,10 @@
-import React, {useState} from 'react'
+import React from 'react'
 import { NavLink } from 'react-router-dom';
 
 import './teacher.css'
 const menus = [{
 	title: 'HOME',
-	path: ''
+	path: 'home'
 },
 {
 	title: 'STUDENT',
@@ -21,15 +21,19 @@ const menus = [{
 ];
 const TeacherNavBar = () => {
 	return ( 
-		<div className="teacher-side-bar">
-			{menus.map((menu, index) => ( 
-				<NavLink to={`/teacher/${menu.path}`} exact>
-					<button
-						className="btn nav-btn"	
-					  key = {index}> 
-						{menu.title}
-					</button>
-				</NavLink>)
+		<div className="teacher-navbar">
+			{menus.map((menu, index) => (
+				<div
+				  className="teacher-navbar-item" 
+				  key = {index}
+				>
+					<NavLink to={`/teacher/${menu.path}`}>
+						<button className="btn nav-btn"	> 
+							{menu.title}
+						</button>
+					</NavLink>
+				</div>
+				)
 			)}
 		</div >
 	)
