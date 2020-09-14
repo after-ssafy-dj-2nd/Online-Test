@@ -3,11 +3,11 @@ import { reducer } from '../../util/reducer';
 
 const TeacherExam = () => {
   const [state, dispatch] = useReducer(reducer, {
-    title: '',
-    startTime: '',
-    endTime:'',
+    title: '시험 제목',
+    startTime: '2020-07-01T13:00',
+    endTime:'2020-07-01T15:00',
     isOpen: true,
-    participants : '',
+    participants : '13',
     password : ''
   });
   
@@ -52,7 +52,7 @@ const TeacherExam = () => {
     console.log(state)
 
     // 문제생성부분으로 전달
-    // window.location.href="/teacher/home"
+    window.location.href="/teacher/exam/questions"
   }
 
   return (

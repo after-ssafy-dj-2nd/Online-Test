@@ -31,9 +31,9 @@ const TeacherQuestion = (props)=>{
     setQuestion(reducer('correct',correct))
   }
 
-  const deleteAnswer = (index) => {
-    const check = window.confirm(`${index+1} 번 보기를 지우겠습니까`)
-    if (check){
+  const deleteAnswer = (e,index) => {
+    e.preventDefault();
+    if (window.confirm(`${index+1} 번 보기를 지우겠습니까`)){
       setAnswers(
         answers.filter((_,answerIndex)=> answerIndex !==index)
       )
@@ -65,7 +65,7 @@ const TeacherQuestion = (props)=>{
   }
   
   return (
-    <form  className="question-form">
+    <form className="question-form">
       <article className="question-score">
         <label htmlFor="score"> 점수 </label>
         <input id="score" type="number" value={score} onChange={e=>setScore(e)}/> 점
@@ -83,7 +83,7 @@ const TeacherQuestion = (props)=>{
             <span>{index+1} . </span>
             <input type="checkbox" checked={checkAnswer(index)} onChange={e => onCorrectChange(index,e)}/>
             <input value={answer} onChange={e=>onAnswerChange(index, e)}/>
-            <button onClick={()=>deleteAnswer(index)}>X</button>
+            <button onClick={(e)=>deleteAnswer(e,index)}>X</button>
           </div>
         ))}
         <div onClick={addAnswer}>항목 추가 +</div>
