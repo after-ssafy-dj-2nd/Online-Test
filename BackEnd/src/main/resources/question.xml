@@ -28,7 +28,7 @@
     </update>
 
     <delete id="deleteQuestion" parameterType="java.lang.Integer">
-        delete from problem where id = #{id}
+        delete from question where id = #{id}
     </delete>
 
 </mapper>
