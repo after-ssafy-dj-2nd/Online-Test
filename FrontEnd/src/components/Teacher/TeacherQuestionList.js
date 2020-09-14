@@ -56,6 +56,17 @@ const TeacherQuestionList = () => {
     }
     console.log(questions)
   }
+
+  const deleteQuestion = (e,index) => {
+    e.preventDefault();
+    if (window.confirm(`${index+1}번 문제를 지우겠습니까`)){
+      setQuestions(
+        questions.filter((_,questionIndex)=> questionIndex !==index)
+      )
+    }
+    setShowIndex(index == questions.length - 1 ? index -1 : index)
+  }
+
   return (
     <div>
       <span>{'총점 = '+ totalScore(questions) + '점'}</span>
@@ -71,7 +82,9 @@ const TeacherQuestionList = () => {
       <div className="question-list">
         {questions.map((question,index) => (
           <div key={index}  className={"question-wrap" + (index===showIndex ? ' show' : '')}>
-            <div className="question-title">{index+1} 번 문제</div>
+            <div className="question-title">{index+1 + '번 문제'}
+              <button onClick={(e)=>deleteQuestion(e,index)}>X</button>
+            </div>
             <TeacherQuestion question={question} setQuestion={setQuestion}/>
           </div>
         ))}
