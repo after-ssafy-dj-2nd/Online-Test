@@ -11,7 +11,7 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<mappers>
-		<mapper resource="problem.xml" />
+		<mapper resource="question.xml" />
 		<mapper resource="user.xml" />
 	</mappers>
 </configuration>

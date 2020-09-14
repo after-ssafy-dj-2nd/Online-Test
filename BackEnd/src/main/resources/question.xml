@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="question">
+
+    <select id="getQuestions" resultType="com.onlinetest.backend.dto.Question">
+        select question.id, content, description, commentary, type, writer_id from question
+    </select>
+
+    <select id="getQuestion" parameterType="java.lang.Integer" resultType="com.onlinetest.backend.dto.Question">
+        select question.id, content, description, commentary, type, writer_id from question where id = #{id}
+    </select>
+
+    <insert	id="createQuestion" parameterType="com.onlinetest.backend.dto.Question">
+        insert into question (id, content, description, commentary, type, writer_id)
+        values (#{content}, #{description}, #{commentary}, #{type}, #{writer_id})
+    </insert>
+
+    <update id="updateQuestion" parameterType="com.onlinetest.backend.dto.Question">
+        update question set
+        content = #{content},
+        description = #{description},
+        commentary = #{commentary},
+        type = #{type},
+        writer_id = #{writer_id}
+        where id = #{id}
+    </update>
+
+    <delete id="deleteQuestion" parameterType="java.lang.Integer">
+        delete from question where id = #{id}
+    </delete>
+
+</mapper>
