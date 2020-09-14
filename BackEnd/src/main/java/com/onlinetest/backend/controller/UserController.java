@@ -34,7 +34,8 @@ public class UserController {
 	private IUserService userservice;
 	
 	@ApiResponses(value = { 
-            @ApiResponse(code = 200, message = "Successful / true:성공, false:실패", response = Boolean.class)})
+            @ApiResponse(code = 200, message = "Successful / true:성공", response = Boolean.class),
+            @ApiResponse(code = 400, message = "false:실패", response = Boolean.class)})
 	@ApiOperation(value = "회원가입", response = Boolean.class)
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	public ResponseEntity<Boolean> signUp(@RequestBody @ApiParam(value="id 제외하고 입력") User user) throws Exception {
@@ -46,6 +47,7 @@ public class UserController {
 			signUp = true;
 		} catch (Exception e) {
 			e.printStackTrace();
+			return new ResponseEntity<Boolean>(signUp, HttpStatus.BAD_REQUEST);
 		}
 		
 		return new ResponseEntity<Boolean>(signUp, HttpStatus.OK);
