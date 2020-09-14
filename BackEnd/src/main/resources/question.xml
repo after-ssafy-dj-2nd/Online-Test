@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="question">
 
-    <select id="getQuestions" parameterType="java.lang.Integer" resultType="com.onlinetest.backend.dto.Question">
+    <select id="getQuestions" resultType="com.onlinetest.backend.dto.Question">
         select question.id, content, description, commentary, type, writer_id from question
     </select>
 
