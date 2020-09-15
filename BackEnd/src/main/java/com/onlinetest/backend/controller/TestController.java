@@ -44,11 +44,6 @@ public class TestController {
 		//로그인 체크
 		//시험 응시 가능한 학생인지 체크
 		
-		//응시 학생 id(토큰 만들면 수정)
-		int student_id = 2;
-		
-		testservice.setStartTest(new ExamStudent(student_id, exam_id));
-		
 		Exam exam = testservice.getExam(exam_id);
 		
 		return new ResponseEntity<Exam>(exam, HttpStatus.OK);
@@ -65,8 +60,12 @@ public class TestController {
 		//로그인 체크
 		//시험 응시 가능한 학생인지 체크
 		
-		List<Question> questions = testservice.getQuestion(exam_id);
+		//응시 학생 id(토큰 만들면 수정)
+		int student_id = 2;
 		
+		testservice.setStartTest(new ExamStudent(student_id, exam_id));
+		
+		List<Question> questions = testservice.getQuestion(exam_id);
 		QuestionList start = new QuestionList(questions);
 		
 		return new ResponseEntity<QuestionList>(start, HttpStatus.OK);
