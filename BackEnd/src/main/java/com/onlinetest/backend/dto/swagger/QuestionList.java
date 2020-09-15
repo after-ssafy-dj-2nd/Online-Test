@@ -1,16 +1,17 @@
-package com.onlinetest.backend.dto;
+package com.onlinetest.backend.dto.swagger;
 
 import java.util.List;
+import com.onlinetest.backend.dto.Question;
 
-public class QuestionExam {
+public class QuestionList {
 	private List<Question> question;
 	
-	public QuestionExam() {
+	public QuestionList() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	
-	public QuestionExam(List<Question> question) {
+	public QuestionList(List<Question> question) {
 		super();
 		this.question = question;
 	}
