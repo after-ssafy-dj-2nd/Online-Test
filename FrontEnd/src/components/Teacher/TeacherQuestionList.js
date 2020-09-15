@@ -3,7 +3,7 @@ import TeacherQuestion from './TeacherQuestion'
 import {$} from '../../util/DOM'
 
 const defaultQuestion = [
-  {content:'', answers : ['','',''], description: '' ,score : 5,correct : [0,1]},
+  {content:'', answers : [{content : '', correct:false},{content : '', correct:false},{content : '', correct:false}], description: '' ,score : 5,correct : [0,1]},
 ]
 
 const totalScore = (questions) => {
@@ -16,8 +16,8 @@ const TeacherQuestionList = () => {
   let [showIndex , setShowIndex] = useState(0)
 
   const [questions,setQuestions] = useState([
-    {content:'이 중 먹을 수 없는 것은', answers : ['마라탕','설렁탕','곰탕','목욕탕'], description : '',score : 50, correct : [3]},
-    {content:'2번 문제', answers : ['1','2','3'], description :'2번 문제는 ' ,score : 5, correct: []},
+    {content:'이 중 먹을 수 없는 것은', answers : [{content : '마라탕', correct:false},{content : '설렁탕', correct:false},{content : '곰탕', correct:false},{content : '목욕탕', correct:true}], description : '',score : 50},
+    {content:'2번 문제', answers : [{content : '1', correct:false},{content : '2', correct:false},{content : '3', correct:true}], description :'2번 문제는 ' ,score : 5},
   ]);
 
   const addQuestions = () => {
@@ -41,9 +41,7 @@ const TeacherQuestionList = () => {
     if (!question.content) {
       return false
     }
-    if (!question.correct.length) {
-      return false
-    }
+
     if (question.answers.some(answer => !answer)){
       return false
     }
@@ -64,7 +62,7 @@ const TeacherQuestionList = () => {
         questions.filter((_,questionIndex)=> questionIndex !==index)
       )
     }
-    setShowIndex(index == questions.length - 1 ? index -1 : index)
+    setShowIndex(index === questions.length - 1 ? index -1 : index)
   }
 
   return (
@@ -72,7 +70,7 @@ const TeacherQuestionList = () => {
       <span>{'총점 = '+ totalScore(questions) + '점'}</span>
       <div className="questions-box">
         {questions.map((question,index) => (
-          <button className={checkQuestion(question) ? '' : 'wrong'}
+          <button className={checkQuestion(question) ? '' : 'red'}
             key={index}
             onClick={()=>setShowIndex(index)}>
             <span>{index+1 + '번'}</span>
