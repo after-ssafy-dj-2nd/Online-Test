@@ -2,7 +2,7 @@ import React from 'react'
 
 const TeacherQuestion = (props)=>{
   const {question ,setQuestion} = props
-  const {score, content, description, answers} = question
+  const {score, content, description, examples} = question
 
   const reducer = (key,value) => {
     return {
@@ -11,8 +11,8 @@ const TeacherQuestion = (props)=>{
     }
   }
 
-  const setAnswers = (answers) => {
-    setQuestion(reducer('answers', answers))
+  const setExamples = (examples) => {
+    setQuestion(reducer('examples', examples))
   }
 
   const setContent = (e) => {
@@ -27,31 +27,31 @@ const TeacherQuestion = (props)=>{
     setQuestion(reducer('score',e.target.value))
   }
 
-  const deleteAnswer = (e,index) => {
+  const deleteExample = (e,index) => {
     e.preventDefault();
     if (window.confirm(`${index+1} 번 보기를 지우겠습니까`)){
-      setAnswers(
-        answers.filter((_,answerIndex)=> answerIndex !==index)
+      setExamples(
+        examples.filter((_,exampleIndex)=> exampleIndex !==index)
       )
     }
   }
  
-  const onAnswerChange = (index,e)=> {
-    setAnswers(
-      answers.map((answer, answersIndex) => {
-        return answersIndex === index ? {...answer , content : e.target.value} : answer
+  const onExampleChange = (index,e)=> {
+    setExamples(
+      examples.map((example, exampleIndex) => {
+        return exampleIndex === index ? {...example , content : e.target.value} : example
       })
     )
   }
 
-  const addAnswer = ()=>{
-    setAnswers(answers.concat({content:'',correct:false}))
+  const addExample = ()=>{
+    setExamples(examples.concat({content:'',correct:false}))
   }
 
   const onCorrectChange = (index,e) => {
-    setAnswers(
-      answers.map((answer, answersIndex)=> {
-        return answersIndex === index ? {...answer , correct : e.target.checked} : answer
+    setExamples(
+      examples.map((example, exampleIndex)=> {
+        return exampleIndex === index ? {...example , correct : e.target.checked} : example
     })
     )
   }
@@ -69,16 +69,16 @@ const TeacherQuestion = (props)=>{
       <article className="question-description">
         <textarea id="description" value={description} onChange={e=>setDescription(e)}/>
       </article>
-      <article className="question-answers">
-        {answers.map((answer,index)=> (
-          <div className='question-answer' key={index}>
+      <article className="question-examples">
+        {examples.map((example,index)=> (
+          <div className='question-example' key={index}>
             <span>{index+1} . </span>
-            <input type="checkbox" checked={answer.correct} onChange={e => onCorrectChange(index,e)}/>
-            <input value={answer.content} onChange={e=>onAnswerChange(index, e)}/>
-            <button onClick={(e)=>deleteAnswer(e,index)}>X</button>
+            <input type="checkbox" checked={example.correct} onChange={e => onCorrectChange(index,e)}/>
+            <input value={example.content} onChange={e=>onExampleChange(index, e)}/>
+            <button onClick={(e)=>deleteExample(e,index)}>X</button>
           </div>
         ))}
-        <div onClick={addAnswer}>항목 추가 +</div>
+        <div onClick={addExample}>항목 추가 +</div>
       </article>
     </form>
   )

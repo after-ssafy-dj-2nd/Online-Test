@@ -3,7 +3,7 @@ import TeacherQuestion from './TeacherQuestion'
 import {$} from '../../util/DOM'
 
 const defaultQuestion = [
-  {content:'', answers : [{content : '', correct:false},{content : '', correct:false},{content : '', correct:false}], description: '' ,score : 5,correct : [0,1]},
+  {content:'', examples : [{content : '', correct:false},{content : '', correct:false},{content : '', correct:false}], description: '' ,score : 5,correct : [0,1]},
 ]
 
 const totalScore = (questions) => {
@@ -16,8 +16,8 @@ const TeacherQuestionList = () => {
   let [showIndex , setShowIndex] = useState(0)
 
   const [questions,setQuestions] = useState([
-    {content:'이 중 먹을 수 없는 것은', answers : [{content : '마라탕', correct:false},{content : '설렁탕', correct:false},{content : '곰탕', correct:false},{content : '목욕탕', correct:true}], description : '',score : 50},
-    {content:'2번 문제', answers : [{content : '1', correct:false},{content : '2', correct:false},{content : '3', correct:true}], description :'2번 문제는 ' ,score : 5},
+    {content:'이 중 먹을 수 없는 것은', examples : [{content : '마라탕', correct:false},{content : '설렁탕', correct:false},{content : '곰탕', correct:false},{content : '목욕탕', correct:true}], description : '',score : 50},
+    {content:'2번 문제', examples : [{content : '1', correct:false},{content : '2', correct:false},{content : '3', correct:true}], description :'2번 문제는 ' ,score : 5},
   ]);
 
   const addQuestions = () => {
@@ -42,7 +42,7 @@ const TeacherQuestionList = () => {
       return false
     }
 
-    if (question.answers.some(answer => !answer)){
+    if (question.examples.some(answer => !answer.content)){
       return false
     }
     return true
