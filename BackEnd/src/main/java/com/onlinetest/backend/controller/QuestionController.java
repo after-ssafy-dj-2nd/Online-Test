@@ -48,7 +48,7 @@ public class QuestionController {
     @ResponseBody
     public ResponseEntity<Map<String, Object>> addProblem(@RequestBody Question question){
         Map<String, Object> resultMap = new HashMap<>();
-        if (question.getContent() == null | question.getType() == null){
+        if (question.getContent() == null){
             resultMap.put("status", "400");
             return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.BAD_REQUEST);
         }
@@ -62,7 +62,7 @@ public class QuestionController {
     @ResponseBody
     public ResponseEntity<Map<String, Object>> updateProblem(@RequestBody Question question) {
         Map<String, Object> resultMap = new HashMap<>();
-        if (questionService.getQuestion(question.getId()) == null | question.getContent() == null | question.getType() == null ){
+        if (questionService.getQuestion(question.getId()) == null | question.getContent() == null){
             resultMap.put("status", "400");
             resultMap.put("problemInfo", null);
             return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.BAD_REQUEST);
