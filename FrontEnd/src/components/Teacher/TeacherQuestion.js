@@ -2,7 +2,7 @@ import React from 'react'
 
 const TeacherQuestion = (props)=>{
   const {question ,setQuestion} = props
-  const {score, content, description, answers, correct} = question
+  const {score, content, description, answers} = question
 
   const reducer = (key,value) => {
     return {
@@ -27,10 +27,6 @@ const TeacherQuestion = (props)=>{
     setQuestion(reducer('score',e.target.value))
   }
 
-  const setCorrect = (correct)=> {
-    setQuestion(reducer('correct',correct))
-  }
-
   const deleteAnswer = (e,index) => {
     e.preventDefault();
     if (window.confirm(`${index+1} 번 보기를 지우겠습니까`)){
@@ -43,25 +39,21 @@ const TeacherQuestion = (props)=>{
   const onAnswerChange = (index,e)=> {
     setAnswers(
       answers.map((answer, answersIndex) => {
-        return answersIndex === index ? e.target.value : answer
+        return answersIndex === index ? {...answer , content : e.target.value} : answer
       })
     )
   }
 
   const addAnswer = ()=>{
-    setAnswers(answers.concat(''))
-  }
-  
-  const checkAnswer = (index) =>{
-    return correct.includes(index)
+    setAnswers(answers.concat({content:'',correct:false}))
   }
 
   const onCorrectChange = (index,e) => {
-    if (e.target.checked){
-      setCorrect(correct.concat(index))
-    } else {
-      setCorrect(correct.filter(value=> value !== index))
-    }
+    setAnswers(
+      answers.map((answer, answersIndex)=> {
+        return answersIndex === index ? {...answer , correct : e.target.checked} : answer
+    })
+    )
   }
   
   return (
@@ -81,8 +73,8 @@ const TeacherQuestion = (props)=>{
         {answers.map((answer,index)=> (
           <div className='question-answer' key={index}>
             <span>{index+1} . </span>
-            <input type="checkbox" checked={checkAnswer(index)} onChange={e => onCorrectChange(index,e)}/>
-            <input value={answer} onChange={e=>onAnswerChange(index, e)}/>
+            <input type="checkbox" checked={answer.correct} onChange={e => onCorrectChange(index,e)}/>
+            <input value={answer.content} onChange={e=>onAnswerChange(index, e)}/>
             <button onClick={(e)=>deleteAnswer(e,index)}>X</button>
           </div>
         ))}
