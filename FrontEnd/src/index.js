@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './util/serviceWorker';
 import './assets/css/default.css';
+import './assets/css/normalize.css';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import IntroPage from './pages/IntroPage';
 

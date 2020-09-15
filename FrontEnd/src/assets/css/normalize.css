@@ -1,0 +1,205 @@
+/* (1) button 태그 */
+.btn {
+  display: inline-block;
+  vertical-align: top;
+  text-align: center;
+  border-radius: 2px;
+  border: transparent;
+  font-size: 1rem;
+  padding: 2px 6px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* (2) button 크기 */
+.btn--xsmall {
+  font-size: 0.75rem;
+  padding: 1px 3px;
+}
+
+.btn--small {
+  font-size: 0.875rem;
+}
+
+.btn--large {
+  font-size: 1.15rem;
+  padding: 3px 9px;
+}
+
+.btn--xlarge {
+  font-size: 1.3rem;
+  padding: 4px 12px;
+}
+
+/* (3) button 색상 별 스타일링 */
+.btn--orangered {
+  background-color: var(--orangered);
+  transition: all .15s;
+}
+
+.btn--orangered:not(:disabled):hover {
+  background-color: #F59882;
+  cursor: pointer;
+  box-shadow: var(--box-shadow);
+}
+
+.btn--orangered:disabled {
+  background-color: #F7D4CB;
+  opacity: 0.8;
+}
+
+.btn--light-gray {
+  background-color: var(--light-gray);
+  transition: all .15s;
+}
+
+.btn--light-gray:not(:disabled):hover {
+  background-color: #DEDFE1;
+  cursor: pointer;
+  box-shadow: var(--box-shadow);
+}
+
+.btn--light-gray:disabled {
+  background-color: #F4F6FB;
+  opacity: 0.8;
+}
+
+.btn--beige {
+  background-color: var(--beige);
+  transition: all .15s;
+}
+
+.btn--beige:not(:disabled):hover {
+  background-color: #F0EEDC;
+  cursor: pointer;
+  box-shadow: var(--box-shadow);
+}
+
+.btn--beige:disabled {
+  background-color: #FDFCF6;
+  opacity: 0.8;
+}
+
+.btn--oynx {
+  background-color: var(--oynx);
+  color: var(--white);
+  transition: all .15s;
+}
+
+.btn--oynx:not(:disabled):hover {
+  background-color: #686767;
+  cursor: pointer;
+  box-shadow: var(--box-shadow);
+}
+
+.btn--oynx:disabled {
+  background-color: #959595;
+  opacity: 0.8;
+}
+
+.btn--orange {
+  background-color: var(--orange);
+  color: var(--white);
+  transition: all .15s;
+}
+
+.btn--orange:not(:disabled):hover {
+  background-color: #F5BC88;
+  cursor: pointer;
+  box-shadow: var(--box-shadow);
+}
+
+.btn--orange:disabled {
+  background-color: #F0D9C4;
+  opacity: 0.8;
+}
+
+/* (4) input 태그 */
+input {
+  display: inline-block;
+  width: 100%;
+  font-size: 1rem;
+  border: 1px solid var(--beige);
+  border-radius: 2px;
+  padding: 6px 12px;
+  transition: all .15s;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+input:focus {
+  outline: none;
+  border: 1px solid var(--oynx);
+  box-shadow: var(--box-shadow);
+}
+
+input:disabled {
+  background-color: var(--beige);
+  opacity: 0.5;
+}
+
+/* (5) textarea 태그 */
+textarea {
+  display: inline-block;
+  width: 100%;
+  font-size: 1rem;
+  border: 1px solid var(--beige);
+  border-radius: 2px;
+  padding: 6px 12px;
+  transition: all .15s;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+textarea:focus {
+  outline: none;
+  border: 1px solid var(--oynx);
+  box-shadow: var(--box-shadow);
+}
+
+textarea.resize-none {
+  resize: none;
+}
+
+textarea:disabled {
+  background-color: var(--beige);
+  opacity: 0.5;
+  resize: none;
+}
+
+/* (6) 텍스트 색상 */
+.text-red {
+  color: var(--red);
+}
+
+.text-orangered {
+  color: var(--orangered);
+}
+
+.text-gray {
+  color: var(--gray);
+}
+
+.text-light-gray {
+  color: var(--light-gray);
+}
+
+.text-beige {
+  color: var(--beige);
+}
+
+.text-oynx {
+  color: var(--oynx);
+}
+
+.text-orange {
+  color: var(--orange);
+}
+
+.text-black {
+  color: var(--black);
+}
+
+.text-white {
+  color: var(--white);
+}
