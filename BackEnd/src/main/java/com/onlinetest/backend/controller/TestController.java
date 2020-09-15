@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.onlinetest.backend.dto.Exam;
 import com.onlinetest.backend.dto.ExamStudent;
 import com.onlinetest.backend.dto.Question;
-import com.onlinetest.backend.dto.QuestionExam;
+import com.onlinetest.backend.dto.swagger.QuestionList;
 import com.onlinetest.backend.service.ITestService;
 
 import io.swagger.annotations.ApiImplicitParam;
@@ -55,11 +55,11 @@ public class TestController {
 	}
 	
 	@ApiResponses(value = { 
-            @ApiResponse(code = 200, message = "Successful", response = QuestionExam.class)})
+            @ApiResponse(code = 200, message = "Successful", response = QuestionList.class)})
 	@ApiImplicitParam(name="exam_id", value="시험번호")
 	@ApiOperation(value = "시험 응시 시작")
 	@RequestMapping(value = "/starttest", method = RequestMethod.GET)
-	public ResponseEntity<QuestionExam> starttest(@RequestParam int exam_id) throws Exception {
+	public ResponseEntity<QuestionList> starttest(@RequestParam int exam_id) throws Exception {
 		logger.info("1-------------starttest-----------------------------" + new Date());
 		
 		//로그인 체크
@@ -67,9 +67,9 @@ public class TestController {
 		
 		List<Question> questions = testservice.getQuestion(exam_id);
 		
-		QuestionExam start = new QuestionExam(questions);
+		QuestionList start = new QuestionList(questions);
 		
-		return new ResponseEntity<QuestionExam>(start, HttpStatus.OK);
+		return new ResponseEntity<QuestionList>(start, HttpStatus.OK);
 	}
 
 }
