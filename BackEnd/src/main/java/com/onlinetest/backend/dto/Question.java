@@ -5,14 +5,15 @@ public class Question {
     private String content;
     private String description;
     private String commentary;
-    private String type;
+    private boolean type;
     private int writer_id;
+    private int score;
 
     public Question() {
         super();
     }
 
-    public Question(int id, String content, String description, String commentary, String type, int writer_id) {
+    public Question(int id, String content, String description, String commentary, boolean type, int writer_id) {
         super();
         this.id = id;
         this.content = content;
@@ -22,7 +23,16 @@ public class Question {
         this.writer_id = writer_id;
     }
 
-    public int getId() {
+    public Question(int id, String content, String description, boolean type, int score) {
+		super();
+		this.id = id;
+		this.content = content;
+		this.description = description;
+		this.type = type;
+		this.score = score;
+	}
+
+	public int getId() {
         return id;
     }
 
@@ -54,11 +64,11 @@ public class Question {
         this.commentary = commentary;
     }
 
-    public String getType() {
+    public boolean getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(boolean type) {
         this.type = type;
     }
 
@@ -69,6 +79,15 @@ public class Question {
     public void setWriter_id(int writer_id) {
         this.writer_id = writer_id;
     }
+
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
+	}
+    
 }
 
 
