@@ -1,0 +1,203 @@
+/* (1) button 태그 */
+.btn {
+  display: inline-block;
+  vertical-align: top;
+  text-align: center;
+  border-radius: 2px;
+  border: transparent;
+  background-color: var(--light-gray);
+  font-size: 1.25rem;
+  padding: 8px 12px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  transition: all .15s;
+}
+
+.btn:not(:disabled):hover {
+  background-color: #DEDFE1;
+  cursor: pointer;
+  box-shadow: var(--box-shadow);
+}
+
+.btn:focus {
+  outline: none;
+}
+
+.btn:active {
+  box-shadow: none;
+}
+
+/* (2) button 크기 */
+.btn--xsmall {
+  font-size: 1rem;
+  padding: 3px 5px;
+}
+
+.btn--small {
+  font-size: 1.1rem;
+  padding: 6px 9px;
+}
+
+.btn--large {
+  font-size: 1.5rem;
+  padding: 12px 18px;
+}
+
+.btn--xlarge {
+  font-size: 1.7rem;
+  padding: 18px 27px;
+}
+
+/* (4) input 태그 */
+input {
+  display: inline-block;
+  width: 100%;
+  font-size: 1rem;
+  border: 1px solid var(--beige);
+  border-radius: 2px;
+  padding: 6px 12px;
+  transition: all .15s;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+input:focus {
+  outline: none;
+  border: 1px solid var(--oynx);
+  box-shadow: var(--box-shadow);
+}
+
+input:disabled {
+  background-color: var(--beige);
+  opacity: 0.5;
+}
+
+/* (5) textarea 태그 */
+textarea {
+  display: inline-block;
+  width: 100%;
+  font-size: 1rem;
+  border: 1px solid var(--beige);
+  border-radius: 2px;
+  padding: 6px 12px;
+  transition: all .15s;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+textarea:focus {
+  outline: none;
+  border: 1px solid var(--oynx);
+  box-shadow: var(--box-shadow);
+}
+
+textarea.resize-none {
+  resize: none;
+}
+
+textarea:disabled {
+  background-color: var(--beige);
+  opacity: 0.5;
+  resize: none;
+}
+
+/* (6) 텍스트 색상 */
+.red {
+  color: var(--red);
+}
+
+.orangered {
+  color: var(--orangered);
+}
+
+.gray {
+  color: var(--gray);
+}
+
+.light-gray {
+  color: var(--light-gray);
+}
+
+.beige {
+  color: var(--beige);
+}
+
+.oynx {
+  color: var(--oynx);
+}
+
+.orange {
+  color: var(--orange);
+}
+
+.black {
+  color: var(--black);
+}
+
+.white {
+  color: var(--white);
+}
+
+/* (7) 배경색 지정 */
+.bg-red {
+  color: var(--red);
+}
+
+.bg-orangered {
+  color: var(--orangered);
+}
+
+.bg-gray {
+  color: var(--gray);
+}
+
+.bg-light-gray {
+  color: var(--light-gray);
+}
+
+.bg-beige {
+  color: var(--beige);
+}
+
+.bg-oynx {
+  color: var(--oynx);
+}
+
+.bg-orange {
+  color: var(--orange);
+}
+
+.bg-black {
+  color: var(--black);
+}
+
+.bg-white {
+  color: var(--white);
+}
+
+/* (8) 텍스트 정렬 */
+.text-left {
+  text-align: left;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+/* (9) NavLink의 active 스타일 */
+.active {
+  background-color: var(--gray);
+}
+
+/* (10) 색상의 긍정 부정 표현 */
+.positive {
+  color: var(--blue);
+}
+
+.negative {
+  color: var(--red);
+}

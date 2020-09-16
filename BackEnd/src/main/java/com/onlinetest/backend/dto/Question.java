@@ -7,6 +7,7 @@ public class Question {
     private String commentary;
     private boolean type;
     private int writer_id;
+    private int score;
 
     public Question() {
         super();
@@ -22,7 +23,16 @@ public class Question {
         this.writer_id = writer_id;
     }
 
-    public int getId() {
+    public Question(int id, String content, String description, boolean type, int score) {
+		super();
+		this.id = id;
+		this.content = content;
+		this.description = description;
+		this.type = type;
+		this.score = score;
+	}
+
+	public int getId() {
         return id;
     }
 
@@ -69,6 +79,15 @@ public class Question {
     public void setWriter_id(int writer_id) {
         this.writer_id = writer_id;
     }
+
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
+	}
+    
 }
 
 
