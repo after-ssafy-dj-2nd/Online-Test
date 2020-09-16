@@ -4,31 +4,52 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="question">
 
-    <select id="getQuestions" resultType="com.onlinetest.backend.dto.Question">
-        select question.id, content, description, commentary, type, writer_id from question
+    <select id="getQuestions" parameterType="java.lang.Integer" resultType="com.onlinetest.backend.dto.Question">
+        select * from question where writer_id = #{user_id}
     </select>
 
-    <select id="getQuestion" parameterType="java.lang.Integer" resultType="com.onlinetest.backend.dto.Question">
-        select question.id, content, description, commentary, type, writer_id from question where id = #{id}
+    <select id="getQuestion" parameterType="java.util.Map" resultType="com.onlinetest.backend.dto.Question">
+        select * from question where question.id = #{id} and writer_id = #{user_id}
     </select>
 
-    <insert	id="createQuestion" parameterType="com.onlinetest.backend.dto.Question">
-        insert into question (id, content, description, commentary, type, writer_id)
-        values (#{content}, #{description}, #{commentary}, #{type}, #{writer_id})
+    <select id="getQuestionById" parameterType="java.lang.Integer" resultType="com.onlinetest.backend.dto.Question">
+        select * from question where question.id = #{id}
+    </select>
+
+    <insert	id="createQuestion" useGeneratedKeys="true" keyProperty="id" parameterType="com.onlinetest.backend.dto.QuestionExample">
+        insert into question (content, description, commentary, type, writer_id)
+        values (
+        #{content},
+        #{description},
+        #{commentary},
+        #{type},
+        #{writer_id})
     </insert>
 
-    <update id="updateQuestion" parameterType="com.onlinetest.backend.dto.Question">
+    <update id="updateQuestion" keyProperty="id" parameterType="com.onlinetest.backend.dto.QuestionExample">
         update question set
         content = #{content},
         description = #{description},
         commentary = #{commentary},
         type = #{type},
         writer_id = #{writer_id}
-        where id = #{id}
+        where id = #{id} and writer_id = #{writer_id}
     </update>
 
     <delete id="deleteQuestion" parameterType="java.lang.Integer">
         delete from question where id = #{id}
+    </delete>
+
+    <select id="getExamples" parameterType="java.lang.Integer" resultType="com.onlinetest.backend.dto.Example">
+        select example.id, question_id, content, correct from example where question_id = #{question_id}
+    </select>
+    
+    <insert	id="createExample" useGeneratedKeys="true" keyProperty="id" parameterType="com.onlinetest.backend.dto.Example">
+        insert into example (question_id, content, correct) values (#{question_id}, #{content}, #{correct})
+    </insert>
+
+    <delete id="deleteExamples" parameterType="java.lang.Integer">
+        delete from example where question_id = #{question_id}
     </delete>
 
 </mapper>
