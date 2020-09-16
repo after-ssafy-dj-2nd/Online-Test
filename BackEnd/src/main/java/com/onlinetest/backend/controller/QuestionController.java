@@ -68,7 +68,7 @@ public class QuestionController {
     public ResponseEntity<Map<String, Object>> addProblem(@RequestBody QuestionExample questionExample){
         int user_id = 2;
         Map<String, Object> resultMap = new HashMap<>();
-
+      
         if (questionExample.getWriter_id() != user_id){
             resultMap.put("status", "401");
             return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.UNAUTHORIZED);

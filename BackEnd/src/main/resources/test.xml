@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="test">
+		
+		<insert id="setStartTest"
+			parameterType="com.onlinetest.backend.dto.ExamStudent">
+			insert into exam_student (student_id, exam_id, starttime) 
+			VALUES (#{student_id}, #{exam_id}, now());
+		</insert>
+		
+		<select id="getExam"
+		parameterType="int"
+		resultType="com.onlinetest.backend.dto.Exam">
+			select e.id, e.name, starttime, endtime, u.name teacher_name
+			from exam e, user u
+			where e.id=#{exam_id} and e.teacher_id=u.id
+		</select>
+		
+		<select id="getQuestion"
+			parameterType="int"
+			resultType="com.onlinetest.backend.dto.Question">
+			select id, content, description, type, e.score score
+			from question_exam e, question q
+			where e.exam_id=#{exam_id} and e.question_id=q.id
+		</select>
+		
+	</mapper>
