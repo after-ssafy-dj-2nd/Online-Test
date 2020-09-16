@@ -6,9 +6,19 @@ const Examcard = (props) => {
     const start = diffSecond(Date(),exam.startTime)
     const end= diffSecond(Date(),exam.endTime)
     if (start<0 && 0 < end){
-      return '진행중'
+      return (
+        <>
+          <p>진행 중</p>
+          <p>{timeDiff(end)} 남음</p>
+        </>
+      )
     } else if (start>0){
-      return `${timeDiff(start)} 남음`
+      return (
+        <>
+          <p>대기 중</p>
+          <p>{timeDiff(start)} 남음</p>
+        </>
+      )
     } else {
       return `종료`
     }
@@ -29,8 +39,8 @@ const Examcard = (props) => {
         {exam.participants}
       </div>
       <div>
-        {stringToTime(exam.startTime)} <br></br>
-        {stringToTime(exam.endTime)}
+        <p>{stringToTime(exam.startTime)}</p>
+        <p>{'~ ' + stringToTime(exam.endTime)}</p>
       </div>
       <div>
         {timeDiff(diffSecond(exam.startTime,exam.endTime))}

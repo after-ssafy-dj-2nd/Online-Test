@@ -14,7 +14,7 @@ const EXAM_SAMPLE = [
     {
       title: '2번 시험',
       startTime: '2020-09-16T00:00',
-      endTime:'2020-09-16T15:00',
+      endTime:'2020-09-17T15:00',
       isOpen: false,
       participants : 20,
       password : 'asdf'
@@ -37,8 +37,7 @@ const TeacherHome = () => {
           <div>공개</div>
           <div>제목</div>
           <div>인원수</div>
-          <div>시작시간</div>
-          <div>종료시간</div>
+          <div>시험시간</div>
           <div>진행시간</div>
           <div>상태</div>
         </div>

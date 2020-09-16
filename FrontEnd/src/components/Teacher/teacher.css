@@ -51,25 +51,25 @@
   display:table-cell;
   vertical-align: middle;
 }
-.exam--row :nth-child(1){
+.exam--row>:nth-child(1){
   width : 5%;
 }
-.exam--row :nth-child(2){
+.exam--row>:nth-child(2){
   width : 20%;
 }
-.exam--row :nth-child(3){
+.exam--row>:nth-child(3){
   width : 10%;
 }
-.exam--row :nth-child(4){
+.exam--row>:nth-child(4){
   width : 15%;
 }
-.exam--row :nth-child(5){
+.exam--row>:nth-child(5){
   width : 15%;
 }
-.exam--row :nth-child(6){
+.exam--row>:nth-child(6){
   width : 20%;
 }
-.exam--row :nth-child(7){
+.exam--row>:nth-child(7){
   width : 15%;
 }
 .exam--cards {
