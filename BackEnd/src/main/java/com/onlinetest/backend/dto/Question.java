@@ -5,14 +5,14 @@ public class Question {
     private String content;
     private String description;
     private String commentary;
-    private String type;
+    private boolean type;
     private int writer_id;
 
     public Question() {
         super();
     }
 
-    public Question(int id, String content, String description, String commentary, String type, int writer_id) {
+    public Question(int id, String content, String description, String commentary, boolean type, int writer_id) {
         super();
         this.id = id;
         this.content = content;
@@ -54,11 +54,11 @@ public class Question {
         this.commentary = commentary;
     }
 
-    public String getType() {
+    public boolean getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(boolean type) {
         this.type = type;
     }
 

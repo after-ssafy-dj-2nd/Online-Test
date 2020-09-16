@@ -34,11 +34,11 @@ public class UserController {
 	private IUserService userservice;
 	
 	@ApiResponses(value = { 
-            @ApiResponse(code = 200, message = "Successful / true:¼º°ø", response = Boolean.class),
-            @ApiResponse(code = 400, message = "false:½ÇÆĞ", response = Boolean.class)})
-	@ApiOperation(value = "È¸¿ø°¡ÀÔ", response = Boolean.class)
+            @ApiResponse(code = 200, message = "Successful / true:ì„±ê³µ", response = Boolean.class),
+            @ApiResponse(code = 400, message = "false:ì‹¤íŒ¨", response = Boolean.class)})
+	@ApiOperation(value = "íšŒì›ê°€ì…", response = Boolean.class)
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
-	public ResponseEntity<Boolean> signUp(@RequestBody @ApiParam(value="id Á¦¿ÜÇÏ°í ÀÔ·Â") User user) throws Exception {
+	public ResponseEntity<Boolean> signUp(@RequestBody @ApiParam(value="id ì œì™¸í•˜ê³  ì…ë ¥") User user) throws Exception {
 		logger.info("1-------------signUp-----------------------------" + new Date());
 		Boolean signUp = false;
 		
@@ -54,8 +54,8 @@ public class UserController {
 	}
 
 	@ApiResponses(value = { 
-            @ApiResponse(code = 200, message = "Successful / true:»ç¿ë°¡´É, false:Áßº¹", response = Boolean.class)})
-	@ApiOperation(value = "È¸¿ø°¡ÀÔ ½Ã id Áßº¹ Ã¼Å©", response = Boolean.class)
+            @ApiResponse(code = 200, message = "Successful / true:ì‚¬ìš©ê°€ëŠ¥, false:ì¤‘ë³µ", response = Boolean.class)})
+	@ApiOperation(value = "íšŒì›ê°€ì… ì‹œ id ì¤‘ë³µ ì²´í¬", response = Boolean.class)
 	@RequestMapping(value = "/idcheck", method = RequestMethod.GET)
 	public ResponseEntity<Boolean> idCheck(@RequestParam String user_id) throws Exception {
 		logger.info("1-------------idCheck-----------------------------" + new Date());
@@ -72,10 +72,10 @@ public class UserController {
 	}
 	
 	@ApiResponses(value = { 
-            @ApiResponse(code = 200, message = "Successful / ¼º°ø - login:true, user:userÁ¤º¸, ½ÇÆĞ - login:false", response = UserSwagger.class)})
-	@ApiOperation(value = "·Î±×ÀÎ", response = UserSwagger.class)
+            @ApiResponse(code = 200, message = "Successful / ì„±ê³µ - login:true, user:userì •ë³´, ì‹¤íŒ¨ - login:false", response = UserSwagger.class)})
+	@ApiOperation(value = "ë¡œê·¸ì¸", response = UserSwagger.class)
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public ResponseEntity<Map<String, Object>> login(@RequestBody @ApiParam(value="user_id, password¸¸ ÀÔ·Â") User user) throws Exception {
+	public ResponseEntity<Map<String, Object>> login(@RequestBody @ApiParam(value="user_id, passwordë§Œ ì…ë ¥") User user) throws Exception {
 		logger.info("1-------------login-----------------------------" + new Date());
 		Map<String, Object> resultMap = new HashMap<>();
 		
