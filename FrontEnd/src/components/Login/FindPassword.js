@@ -53,7 +53,7 @@ const FindPassword = ({ history }) => {
               로그인 후 회원정보 수정에서 비밀번호를 꼭 변경해주세요!
             </p>
           </div>
-          <button type="submit"><i className="fas fa-key" /> 비밀번호 찾기</button>
+          <button type="submit" className="btn btn--small find-password-button"><i className="fas fa-key" /> 비밀번호 찾기</button>
         </article>
       </form>
     </div>

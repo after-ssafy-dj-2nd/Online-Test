@@ -1,0 +1,77 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, .3);
+  overflow: hidden;
+}
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 1200px;
+  max-height: 90%;
+  overflow-y: auto;
+  padding: 20px;
+  font-size: 16px;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 0px 3px 6px rgba(0,0,0,0.16);
+}
+
+.modal .modal-title {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.2rem;
+  padding-bottom: 5px;
+  margin-bottom: 5px;
+  border-bottom: 1px solid silver;
+}
+
+.modal .modal-title i {
+  font-size: 1.2rem;
+  padding-left: 10px; 
+}
+
+.modal .modal-title i:hover {
+  cursor: pointer;
+}
+
+.modal .modal-contents {
+  font-size: 16px;
+  padding: 10px 0;
+}
+
+.modal .button-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+
+/* modal animation */
+.modal-overlay.modal-anim-enter {
+  opacity: 0.00;
+  transition: all 0.2s;
+}
+
+.modal-overlay.modal-anim-enter.modal-anim-enter-active {
+  opacity: 1;
+}
+
+.modal-overlay.modal-anim-leave {
+  opacity: 1;
+  transition: all 0.2s;
+}
+
+.modal-overlay.modal-anim-leave.modal-anim-leave-active {
+  opacity: 0.00;
+}
