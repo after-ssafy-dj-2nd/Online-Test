@@ -30,23 +30,11 @@
   flex-grow: 1;
 }
 
-.login-form button {
+.login-form .login-form-button {
   display: block;
   width: 100%;
-  background-color: var(--gray);
-  font-weight: 600;
   padding: 0.5em 0;
-  margin-bottom: 1.5em;
-}
-
-.login-form .find-password-link {
-  display: block;
-  margin: 0 auto;
-  max-width: 600px;
-  text-align: center;
-  background-color: var(--gray);
-  font-weight: 600;
-  padding: 0.5em 0;
+  margin-bottom: 15px;
 }
 
 @media screen and (max-width: 600px) {

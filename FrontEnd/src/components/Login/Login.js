@@ -3,10 +3,21 @@ import { withRouter, Link } from 'react-router-dom';
 import { storage } from '../../util/storage';
 import { reducer } from '../../util/reducer';
 import './Login.css';
+import Modal from '../Common/Modal';
 
 const Login = ({ history }) => {
   const [isSaveId, setIsSaveId] = useState(false);
   const checkBoxEl = useRef(null);
+
+  const [isShowModal, setIsShowModal] = useState(false);
+
+  const showModal = () => {
+    setIsShowModal(true);
+  };
+  
+  const closeModal = () => {
+    setIsShowModal(false);
+  };
 
   const [state, dispatch] = useReducer(reducer, {
     id: '',
@@ -77,14 +88,24 @@ const Login = ({ history }) => {
           <label htmlFor="save-id" name="save-id">아이디 저장</label>
           <input ref={checkBoxEl} type="checkbox" id="save-id" value={isSaveId} onChange={onChangeIsSaveId}/>
         </article>
-        <button type="submit"><i className="fas fa-sign-in-alt" /> 로그인</button>
+        <button type="submit" className="btn btn--small login-form-button"><i className="fas fa-sign-in-alt" /> 로그인</button>
         <Link
           to="login/findpassword"
-          className="find-password-link"
+          className="btn btn--small login-form-button"
         >
           <i className="fas fa-key" /> 비밀번호 찾기
         </Link>
       </form>
+
+      {/* 모달 테스트(추후 삭제할 예정) */}
+      <button onClick={showModal} className="btn btn--small">모달 열기(테스트용)</button>
+      <Modal isShow={isShowModal} close={closeModal} title="Modal Title">
+        <div>
+          <p>컨텐츠1</p>
+          <p>컨텐츠2</p>
+          <img src="https://via.placeholder.com/150" alt="임시 이미지" />
+        </div>
+      </Modal>
     </div>
   );
 };
