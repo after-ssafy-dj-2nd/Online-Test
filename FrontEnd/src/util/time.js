@@ -10,7 +10,7 @@ export const timeDiff = (sec) => {
   if (!d && s) {diff += `${s}초`}
   return diff
 }
-export const stringToTime = (time) => {
+export const timeToString = (time) => {
   return time.replace('T',' ')
 /*  const [Y,M,D,h,m,s] = time.split(/[^0-9]/g)
   let date = ''

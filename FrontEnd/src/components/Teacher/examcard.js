@@ -1,26 +1,26 @@
 import React from 'react'
-import {timeDiff, stringToTime, diffSecond} from '../../util/time'
+import {timeDiff, timeToString, diffSecond} from '../../util/time'
 const Exam = (props) => {
   const {exam} = props
   const examStatus = () => {
-    const start = diffSecond(Date(),exam.startTime)
-    const end= diffSecond(Date(),exam.endTime)
-    if (start<0 && 0 < end){
-      return `진행중 ${timeDiff(end)}남음`
-    } else if (start>0){
-      return `${timeDiff(start)} 남음`
+    const startSec = diffSecond(Date(),exam.startTime)
+    const endSec = diffSecond(Date(),exam.endTime)
+    if (startSec <0 && 0 < endSec){
+      return `진행중 ${timeDiff(endSec)}남음`
+    } else if (startSec>0){
+      return `${timeDiff(startSec)} 남음`
     } else {
       return `종료`
     }
   }
-  const lockIcon = () =>{
+  const lockIconClass = () =>{
     return exam.isOpen ? 'fas fa-lock-open' : 'fas fa-lock'
   }
 
   return (
     <div className="exam--card">
       <div>
-        <i className={lockIcon()}></i>
+        <i className={lockIconClass()}></i>
       </div>
       <div>
         {exam.title}
@@ -29,7 +29,7 @@ const Exam = (props) => {
         {exam.participants} 명
       </div>
       <div>
-        {stringToTime(exam.startTime)} ~ {stringToTime(exam.endTime).slice(11,)}
+        {timeToString(exam.startTime)} ~ {timeToString(exam.endTime).slice(11,)}
       </div>
       <div>
         {timeDiff(diffSecond(exam.startTime,exam.endTime))}
