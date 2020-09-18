@@ -51,7 +51,6 @@
 /* (4) input 태그 */
 input {
   display: inline-block;
-  width: 100%;
   font-size: 1rem;
   border: 1px solid var(--beige);
   border-radius: 2px;
@@ -75,7 +74,6 @@ input:disabled {
 /* (5) textarea 태그 */
 textarea {
   display: inline-block;
-  width: 100%;
   font-size: 1rem;
   border: 1px solid var(--beige);
   border-radius: 2px;
