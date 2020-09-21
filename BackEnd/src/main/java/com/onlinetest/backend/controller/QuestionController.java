@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@CrossOrigin(origins = { "*" }, maxAge = 6000, exposedHeaders = "access-token", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api")
 public class QuestionController {
@@ -44,7 +45,7 @@ public class QuestionController {
     @ApiOperation(value = "문제 상세 보기", response = QuestionSwagger.class)
     @RequestMapping(value = "/question", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<QuestionExample> getProblem(@RequestParam int id) {
+    public ResponseEntity<QuestionExample> getQuestion(@RequestParam int id) {
         int user_id = 2;
 
         Map<String, Integer> paramMap = new HashMap<>();
@@ -65,7 +66,7 @@ public class QuestionController {
     @ApiOperation(value = "문제 생성", response = QuestionSwagger.class)
     @RequestMapping(value = "/question", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<Map<String, Object>> addProblem(@RequestBody QuestionExample questionExample){
+    public ResponseEntity<Map<String, Object>> addQuestion(@RequestBody QuestionExample questionExample){
         int user_id = 2;
         Map<String, Object> resultMap = new HashMap<>();
       
@@ -92,7 +93,7 @@ public class QuestionController {
     @ApiOperation(value = "문제 수정", response = QuestionSwagger.class)
     @RequestMapping(value = "/question", method = RequestMethod.PUT)
     @ResponseBody
-    public ResponseEntity<Map<String, Object>> updateProblem(@RequestBody QuestionExample questionExample) {
+    public ResponseEntity<Map<String, Object>> updateQuestion(@RequestBody QuestionExample questionExample) {
         int user_id = 2;
         Map<String, Object> resultMap = new HashMap<>();
 
@@ -120,9 +121,9 @@ public class QuestionController {
     }
 
     @ApiOperation(value = "문제 삭제", response = QuestionSwagger.class)
-    @RequestMapping(value = "/problem", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/question", method = RequestMethod.DELETE)
     @ResponseBody
-    public ResponseEntity<Map<String, Object>> deleteProblem(@RequestParam int id) {
+    public ResponseEntity<Map<String, Object>> deleteQuestion(@RequestParam int id) {
         int user_id = 2;
         Question question = questionService.getQuestionById(id);
         Map<String, Object> resultMap = new HashMap<>();
