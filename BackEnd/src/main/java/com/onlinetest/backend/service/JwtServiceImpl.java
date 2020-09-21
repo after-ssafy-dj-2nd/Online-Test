@@ -83,7 +83,7 @@ public class JwtServiceImpl implements IJwtService{
 	}
 	
 	@Override
-	public int getMemberId() {
-		return (int)this.get("user").get("memberId");
+	public int getUserId() {
+		return (int)this.get("user").get("user_id");
 	}
 }

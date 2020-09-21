@@ -8,7 +8,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
     private static final String[] EXCLUDE_PATHS = {
-            "/api/login"
+            "/api/login",
+            "/api/signup",
+            "/api/idcheck"
     };
 
     @Autowired
