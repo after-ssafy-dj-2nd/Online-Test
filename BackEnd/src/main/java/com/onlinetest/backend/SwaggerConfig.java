@@ -32,7 +32,7 @@ public class SwaggerConfig {
 	public Docket postsApi() {
 		List<Parameter> global = new ArrayList<>();
 		User userInfo = new User(2, "test", null, 1, "test", "test@test.com");
-		global.add(new ParameterBuilder().name("Authorization")
+		global.add(new ParameterBuilder().name("access-token")
 								  .description("Access Token (기본설정 - id:2, user_id:test, auth:1)")
 								  .parameterType("header")
 								  .defaultValue(jwtService.create("user", userInfo, "userInfo"))

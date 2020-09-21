@@ -11,7 +11,7 @@ import com.onlinetest.backend.service.IJwtService;
 
 @Component
 public class JwtInterceptor implements HandlerInterceptor{
-	private static final String HEADER_AUTH = "Authorization";
+	private static final String HEADER_AUTH = "access-token";
 
 	@Autowired
 	private IJwtService jwtService;

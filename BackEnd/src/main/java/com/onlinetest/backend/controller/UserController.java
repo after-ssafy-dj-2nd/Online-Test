@@ -29,7 +29,7 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
-@CrossOrigin(origins = { "*" }, maxAge = 6000, exposedHeaders = "Authorization", allowedHeaders = "*")
+@CrossOrigin(origins = { "*" }, maxAge = 6000, exposedHeaders = "access-token", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api")
 public class UserController {
@@ -96,7 +96,7 @@ public class UserController {
 			resultMap.put("login", true);
 			resultMap.put("userInfo", userInfo);		
 			String token = jwtservice.create("user", userInfo, "userInfo");
-			response.setHeader("Authorization", token);
+			response.setHeader("access-token", token);
 		}
 
 		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
