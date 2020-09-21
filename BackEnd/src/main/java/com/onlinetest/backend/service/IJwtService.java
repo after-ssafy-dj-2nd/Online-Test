@@ -9,5 +9,5 @@ public interface IJwtService {
 	
 	Map<String, Object> get(String key);
 	
-	int getUserId();
+	int getId();
 }	
