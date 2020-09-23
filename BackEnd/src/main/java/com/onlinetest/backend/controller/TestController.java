@@ -14,6 +14,7 @@ import com.onlinetest.backend.dto.Exam;
 import com.onlinetest.backend.dto.ExamStudent;
 import com.onlinetest.backend.dto.Question;
 import com.onlinetest.backend.dto.swagger.QuestionList;
+import com.onlinetest.backend.service.IJwtService;
 import com.onlinetest.backend.service.ITestService;
 
 import io.swagger.annotations.ApiImplicitParam;
@@ -31,6 +32,9 @@ public class TestController {
 	@Autowired
 	private ITestService testservice;
 	
+	@Autowired
+    private IJwtService jwtservice;
+	
 	@ApiResponses(value = { 
             @ApiResponse(code = 200, message = "Successful", response = Exam.class)})
 	@ApiImplicitParam(name="exam_id", value="시험번호")
@@ -39,7 +43,6 @@ public class TestController {
 	public ResponseEntity<Exam> readytest(@RequestParam int exam_id) throws Exception {
 		logger.info("1-------------readytest-----------------------------" + new Date());
 		
-		//로그인 체크
 		//시험 응시 가능한 학생인지 체크
 		
 		Exam exam = testservice.getExam(exam_id);
@@ -55,11 +58,7 @@ public class TestController {
 	public ResponseEntity<QuestionList> starttest(@RequestParam int exam_id) throws Exception {
 		logger.info("1-------------starttest-----------------------------" + new Date());
 		
-		//로그인 체크
-		//시험 응시 가능한 학생인지 체크
-		
-		//응시 학생 id(토큰 만들면 수정)
-		int student_id = 2;
+		int student_id = jwtservice.getId();
 		
 		testservice.setStartTest(new ExamStudent(student_id, exam_id));
 		

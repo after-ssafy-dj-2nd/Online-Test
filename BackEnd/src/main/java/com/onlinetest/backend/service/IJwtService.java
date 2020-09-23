@@ -1,0 +1,13 @@
+package com.onlinetest.backend.service;
+
+import java.util.Map;
+
+public interface IJwtService {
+	<T> String create(String key, T data, String subject);
+	
+	boolean isUsable(String jwt);
+	
+	Map<String, Object> get(String key);
+	
+	int getId();
+}	

@@ -4,6 +4,7 @@ import com.onlinetest.backend.dto.Example;
 import com.onlinetest.backend.dto.Question;
 import com.onlinetest.backend.dto.QuestionExample;
 import com.onlinetest.backend.dto.swagger.QuestionSwagger;
+import com.onlinetest.backend.service.IJwtService;
 import com.onlinetest.backend.service.IQuestionService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +25,15 @@ public class QuestionController {
 
     @Autowired
     private IQuestionService questionService;
+    
+    @Autowired
+    private IJwtService jwtservice;
 
     @ApiOperation(value = "모든 문제 보기", response = QuestionSwagger.class)
     @RequestMapping(value = "/questions", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<List<QuestionExample>> getQuestions() {
-        int user_id = 2;
+        int user_id = jwtservice.getId();
 
         List<Question> questions = questionService.getQuestions(user_id);
         List<QuestionExample> questionExampleList = new ArrayList<QuestionExample>();
@@ -45,8 +49,9 @@ public class QuestionController {
     @ApiOperation(value = "문제 상세 보기", response = QuestionSwagger.class)
     @RequestMapping(value = "/question", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<QuestionExample> getQuestion(@RequestParam int id) {
-        int user_id = 2;
+
+    public ResponseEntity<QuestionExample> getProblem(@RequestParam int id) {
+        int user_id = jwtservice.getId();
 
         Map<String, Integer> paramMap = new HashMap<>();
         paramMap.put("id", id);
@@ -66,8 +71,10 @@ public class QuestionController {
     @ApiOperation(value = "문제 생성", response = QuestionSwagger.class)
     @RequestMapping(value = "/question", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<Map<String, Object>> addQuestion(@RequestBody QuestionExample questionExample){
-        int user_id = 2;
+
+    public ResponseEntity<Map<String, Object>> addProblem(@RequestBody QuestionExample questionExample){
+        int user_id = jwtservice.getId();
+
         Map<String, Object> resultMap = new HashMap<>();
       
         if (questionExample.getWriter_id() != user_id){
@@ -93,8 +100,9 @@ public class QuestionController {
     @ApiOperation(value = "문제 수정", response = QuestionSwagger.class)
     @RequestMapping(value = "/question", method = RequestMethod.PUT)
     @ResponseBody
-    public ResponseEntity<Map<String, Object>> updateQuestion(@RequestBody QuestionExample questionExample) {
-        int user_id = 2;
+
+    public ResponseEntity<Map<String, Object>> updateProblem(@RequestBody QuestionExample questionExample) {
+        int user_id = jwtservice.getId();
         Map<String, Object> resultMap = new HashMap<>();
 
         if (questionExample.getWriter_id() != user_id){
@@ -123,8 +131,9 @@ public class QuestionController {
     @ApiOperation(value = "문제 삭제", response = QuestionSwagger.class)
     @RequestMapping(value = "/question", method = RequestMethod.DELETE)
     @ResponseBody
-    public ResponseEntity<Map<String, Object>> deleteQuestion(@RequestParam int id) {
-        int user_id = 2;
+
+    public ResponseEntity<Map<String, Object>> deleteProblem(@RequestParam int id) {
+        int user_id = jwtservice.getId();
         Question question = questionService.getQuestionById(id);
         Map<String, Object> resultMap = new HashMap<>();
 
