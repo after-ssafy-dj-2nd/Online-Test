@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@CrossOrigin(origins = { "*" }, maxAge = 6000, exposedHeaders = "access-token", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api")
 public class QuestionController {
@@ -48,6 +49,7 @@ public class QuestionController {
     @ApiOperation(value = "문제 상세 보기", response = QuestionSwagger.class)
     @RequestMapping(value = "/question", method = RequestMethod.GET)
     @ResponseBody
+
     public ResponseEntity<QuestionExample> getProblem(@RequestParam int id) {
         int user_id = jwtservice.getId();
 
@@ -69,8 +71,10 @@ public class QuestionController {
     @ApiOperation(value = "문제 생성", response = QuestionSwagger.class)
     @RequestMapping(value = "/question", method = RequestMethod.POST)
     @ResponseBody
+
     public ResponseEntity<Map<String, Object>> addProblem(@RequestBody QuestionExample questionExample){
         int user_id = jwtservice.getId();
+
         Map<String, Object> resultMap = new HashMap<>();
       
         if (questionExample.getWriter_id() != user_id){
@@ -96,6 +100,7 @@ public class QuestionController {
     @ApiOperation(value = "문제 수정", response = QuestionSwagger.class)
     @RequestMapping(value = "/question", method = RequestMethod.PUT)
     @ResponseBody
+
     public ResponseEntity<Map<String, Object>> updateProblem(@RequestBody QuestionExample questionExample) {
         int user_id = jwtservice.getId();
         Map<String, Object> resultMap = new HashMap<>();
@@ -124,8 +129,9 @@ public class QuestionController {
     }
 
     @ApiOperation(value = "문제 삭제", response = QuestionSwagger.class)
-    @RequestMapping(value = "/problem", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/question", method = RequestMethod.DELETE)
     @ResponseBody
+
     public ResponseEntity<Map<String, Object>> deleteProblem(@RequestParam int id) {
         int user_id = jwtservice.getId();
         Question question = questionService.getQuestionById(id);

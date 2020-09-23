@@ -28,9 +28,9 @@ const TeacherNavBar = () => {
 				  key = {index}
 				>
 					<NavLink to={`/teacher/${menu.path}`}>
-						<button className="btn nav-btn"	> 
+						<div className="btn nav-btn"	> 
 							{menu.title}
-						</button>
+						</div>
 					</NavLink>
 				</div>
 				)
