@@ -1,5 +1,7 @@
 package com.onlinetest.backend.dto;
 
+import java.util.List;
+
 public class Question {
     private int id;
     private String content;
@@ -8,31 +10,23 @@ public class Question {
     private boolean type;
     private int writer_id;
     private int score;
+    private List<Example> exampleList;
 
     public Question() {
-        super();
     }
 
-    public Question(int id, String content, String description, String commentary, boolean type, int writer_id) {
-        super();
+    public Question(int id, String content, String description, String commentary, boolean type, int writer_id, int score, List<Example> exampleList) {
         this.id = id;
         this.content = content;
         this.description = description;
         this.commentary = commentary;
         this.type = type;
         this.writer_id = writer_id;
+        this.score = score;
+        this.exampleList = exampleList;
     }
 
-    public Question(int id, String content, String description, boolean type, int score) {
-		super();
-		this.id = id;
-		this.content = content;
-		this.description = description;
-		this.type = type;
-		this.score = score;
-	}
-
-	public int getId() {
+    public int getId() {
         return id;
     }
 
@@ -64,7 +58,7 @@ public class Question {
         this.commentary = commentary;
     }
 
-    public boolean getType() {
+    public boolean isType() {
         return type;
     }
 
@@ -80,14 +74,21 @@ public class Question {
         this.writer_id = writer_id;
     }
 
-	public int getScore() {
-		return score;
-	}
+    public int getScore() {
+        return score;
+    }
 
-	public void setScore(int score) {
-		this.score = score;
-	}
-    
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public List<Example> getExampleList() {
+        return exampleList;
+    }
+
+    public void setExampleList(List<Example> exampleList) {
+        this.exampleList = exampleList;
+    }
 }
 
 

@@ -1,15 +1,13 @@
 package com.onlinetest.backend.service;
 
 import com.onlinetest.backend.dto.Example;
-import com.onlinetest.backend.dto.QuestionExample;
+import com.onlinetest.backend.dto.Question;
+import com.onlinetest.backend.dao.QuestionDaoImpl;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.onlinetest.backend.dao.QuestionDaoImpl;
-import com.onlinetest.backend.dto.Question;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -39,14 +37,14 @@ public class QuestionServiceImpl implements IQuestionService {
 
     @Override
     @Transactional
-    public void createQuestion(QuestionExample questionExample){
-        questionDao.createQuestion(questionExample);
+    public void createQuestion(Question question){
+        questionDao.createQuestion(question);
     }
 
     @Override
     @Transactional
-    public void updateQuestion(QuestionExample questionExample){
-        questionDao.updateQuestion(questionExample);
+    public void updateQuestion(Question question){
+        questionDao.updateQuestion(question);
     }
 
     @Override

@@ -1,9 +1,7 @@
 package com.onlinetest.backend.dao;
 
-
 import com.onlinetest.backend.dto.Example;
 import com.onlinetest.backend.dto.Question;
-import com.onlinetest.backend.dto.QuestionExample;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -31,12 +29,12 @@ public class QuestionDaoImpl {
         return sqlSeesion.selectOne(ns + "getQuestionById", id);
     }
 
-    public void createQuestion(QuestionExample questionExample){
-        sqlSeesion.insert(ns + "createQuestion", questionExample);
+    public void createQuestion(Question question){
+        sqlSeesion.insert(ns + "createQuestion", question);
     }
 
-    public void updateQuestion(QuestionExample questionExample){
-        sqlSeesion.update(ns + "updateQuestion", questionExample);
+    public void updateQuestion(Question question){
+        sqlSeesion.update(ns + "updateQuestion", question);
     }
 
     public void deleteQuestion(int id) {
