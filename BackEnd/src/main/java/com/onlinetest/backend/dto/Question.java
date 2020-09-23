@@ -9,21 +9,19 @@ public class Question {
     private String commentary;
     private boolean type;
     private int writer_id;
-    private int score;
-    private List<Example> exampleList;
+    private List<Example> examples;
 
     public Question() {
     }
 
-    public Question(int id, String content, String description, String commentary, boolean type, int writer_id, int score, List<Example> exampleList) {
+    public Question(int id, String content, String description, String commentary, boolean type, int writer_id, List<Example> examples) {
         this.id = id;
         this.content = content;
         this.description = description;
         this.commentary = commentary;
         this.type = type;
         this.writer_id = writer_id;
-        this.score = score;
-        this.exampleList = exampleList;
+        this.examples = examples;
     }
 
     public int getId() {
@@ -74,20 +72,12 @@ public class Question {
         this.writer_id = writer_id;
     }
 
-    public int getScore() {
-        return score;
+    public List<Example> getExamples() {
+        return examples;
     }
 
-    public void setScore(int score) {
-        this.score = score;
-    }
-
-    public List<Example> getExampleList() {
-        return exampleList;
-    }
-
-    public void setExampleList(List<Example> exampleList) {
-        this.exampleList = exampleList;
+    public void setExamples(List<Example> examples) {
+        this.examples = examples;
     }
 }
 

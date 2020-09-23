@@ -52,5 +52,4 @@ public class QuestionDaoImpl {
     public void deleteExamples(int question_id){
         sqlSeesion.delete(ns + "deleteExamples", question_id);
     }
-
 }
