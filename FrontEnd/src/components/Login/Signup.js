@@ -2,6 +2,7 @@ import React, { memo, useReducer, useMemo } from 'react';
 import { withRouter } from 'react-router-dom';
 import validation from '../../util/validation';
 import { reducer } from '../../util/reducer';
+import { signup } from '../../api/modules/user';
 import './Signup.css';
 
 const signupTitle = signupType => `${signupType === 'student' ? '학생용' : '선생님용'} 계정 회원가입`;
@@ -21,7 +22,7 @@ const Signup = memo(({ signupType, history }) => {
     dispatch(e.target);
   }
 
-  const onSubmit = e => {
+  const onSubmit = async e => {
     e.preventDefault();
     if (id.length === 0 && password.length === 0 && username.length === 0 && email.length === 0) {
       alert('회원가입 양식을 모두 작성해주세요.');
@@ -36,7 +37,7 @@ const Signup = memo(({ signupType, history }) => {
       return
     }
     if (!validation.usernameValidation(username)) {
-      alert('한글 이름을 다시 작성해주세요.');
+      alert('2자 이상 5자 이하의 한글 이름을 다시 작성해주세요.');
       return
     }
     if (!validation.emailValidation(email)) {
@@ -44,9 +45,29 @@ const Signup = memo(({ signupType, history }) => {
       return
     }
 
-    // 추후 이 부분에 state 값을 백엔드로 보내는 회원가입 로직 작성
-
-    history.push('/main');
+    // 회원가입 로직
+    const userData = {
+      'auth': signupType === 'student' ? 0 : 1,
+      'user_id': id,
+      'name': username,
+      password,
+      email,
+    };
+    try {
+      const response = await signup(userData);
+      console.log(response)
+      if (response.status === 400) {
+        alert('중복된 아이디나 이메일 주소가 있습니다.\n다른 아이디나 이메일 주소로 작성해주세요.');
+        return
+      }
+      if (response.status === 200) {
+        alert(`성공적으로 회원가입되었습니다!\n${username}님 환영합니다!`);
+        history.push('/main');
+      }
+    } catch {
+      alert('예기치 못한 에러가 발생했습니다. 관리자에게 문의해주세요.');
+      return
+    }
   }
 
   return (
@@ -67,7 +88,10 @@ const Signup = memo(({ signupType, history }) => {
           <label htmlFor="username" name="username">이름</label>
           <input type="text" id="username" value={username} onChange={onChange} />
         </article>
-        <small>(가입하시는 분의 한글 이름을 작성해주세요.)</small>
+        <small>
+          (가입하시는 분의 한글 이름(2자 이상 5자 이하)을 작성해주세요.)<br />
+          (5자 이상인 경우에는 앞 5글자만 작성해주세요.)
+        </small>
         <article className="input-email">
           <label htmlFor="email" name="email">이메일</label>
           <input type="email" id="email" value={email} onChange={onChange} />

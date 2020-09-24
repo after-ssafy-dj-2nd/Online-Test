@@ -6,31 +6,29 @@ const Modal = (props) => {
   const { isShow, close, title, children } = props;
 
   return (
-    <>
+    <ReactTransitionGroup
+      transitionName={'modal-anim'}
+      transitionEnterTimeout={200}
+      transitionLeaveTimeout={200}
+    >
       {isShow
-        ? <ReactTransitionGroup
-            transitionName={'modal-anim'}
-            transitionEnterTimeout={200}
-            transitionLeaveTimeout={200}
-          >
-            <div className="modal-overlay">
-              <div className="modal">
-                <div className="modal-title">
-                  { title }
-                  <i className="fas fa-times" onClick={close} />
-                </div>
-                <div className="modal-contents">
-                  { children }
-                </div>
-                <div className="button-wrapper">
-                  <button onClick={close} className="btn btn--xsmall">CLOSE</button>
-                </div>
+        ? (<div className="modal-overlay">
+            <div className="modal">
+              <div className="modal-title">
+                { title }
+                <i className="fas fa-times" onClick={close} />
+              </div>
+              <div className="modal-contents">
+                { children }
+              </div>
+              <div className="button-wrapper">
+                <button onClick={close} className="btn btn--xsmall">CLOSE</button>
               </div>
             </div>
-          </ReactTransitionGroup>
-        : <ReactTransitionGroup transitionName={'modal-anim'} transitionEnterTimeout={200} transitionLeaveTimeout={200} />
+          </div>)
+        : null
       }
-    </>
+    </ReactTransitionGroup>
   );
 };
 

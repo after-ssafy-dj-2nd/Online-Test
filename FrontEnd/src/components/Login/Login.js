@@ -1,23 +1,24 @@
-import React, { useReducer, useState, useEffect, useRef, useCallback } from 'react';
+import React, { useReducer, useState, useEffect, useRef, useCallback, memo } from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { storage } from '../../util/storage';
 import { reducer } from '../../util/reducer';
-import './Login.css';
+import { login } from '../../api/modules/user';
 import Modal from '../Common/Modal';
+import './Login.css';
 
-const Login = ({ history }) => {
+const Login = memo(({ history }) => {
   const [isSaveId, setIsSaveId] = useState(false);
   const checkBoxEl = useRef(null);
 
   const [isShowModal, setIsShowModal] = useState(false);
 
-  const showModal = () => {
+  const showModal = useCallback(() => {
     setIsShowModal(true);
-  };
+  }, []);
   
-  const closeModal = () => {
+  const closeModal = useCallback(() => {
     setIsShowModal(false);
-  };
+  }, []);
 
   const [state, dispatch] = useReducer(reducer, {
     id: '',
@@ -39,7 +40,7 @@ const Login = ({ history }) => {
       checkBoxEl.current.checked = false;
       setIsSaveId(false);
     }
-  }, []);
+  }, [checkBoxEl]);
   
   const onChange = e => {
     dispatch(e.target);
@@ -49,8 +50,10 @@ const Login = ({ history }) => {
     setIsSaveId(e.target.checked);
   }, []);
 
-  const onSubmit = e => {
+  const onSubmit = async e => {
     e.preventDefault();
+
+    // 아이디, 비밀번호 빈 값인지 확인하는 로직
     if (id.length === 0) {
       alert('아이디를 입력해주세요.');
       return
@@ -59,17 +62,28 @@ const Login = ({ history }) => {
       alert('비밀번호를 입력해주세요.');
       return
     }
-
+    
     // 아이디 저장 로직
     if (isSaveId) {
       storage(localStorage).setItem('saveId', id);
     } else {
       storage(localStorage).removeItem('saveId');
     }
-
-    // 추후 이 부분에 state 값을 백엔드로 보내는 로그인 로직 작성
-
-    history.push('/main');
+    
+    // 로그인 로직
+    const userData = { 'user_id': id, password };
+    try {
+      const { data } = await login(userData);
+      if (!data.login) {
+        alert('아이디나 비밀번호를 다시 확인해주세요.');
+        return
+      }
+      alert(`${data.userInfo.name}님 환영합니다!`);
+      history.push('/main');
+    } catch {
+      alert('예기치 못한 에러가 발생했습니다. 관리자에게 문의해주세요.');
+      return
+    }
   };
 
   return (
@@ -108,6 +122,6 @@ const Login = ({ history }) => {
       </Modal>
     </div>
   );
-};
+});
 
 export default withRouter(Login);
