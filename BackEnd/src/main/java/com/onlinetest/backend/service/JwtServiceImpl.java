@@ -1,6 +1,7 @@
 package com.onlinetest.backend.service;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -30,6 +31,7 @@ public class JwtServiceImpl implements IJwtService{
 		String jwt = Jwts.builder()
 						 .setHeaderParam("typ", "JWT")
 						 .setHeaderParam("regDate", System.currentTimeMillis())
+						 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24 ))
 						 .setSubject(subject)
 						 .claim(key, data)
 						 .signWith(SignatureAlgorithm.HS256, this.generateKey())
