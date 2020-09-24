@@ -1,9 +1,9 @@
-import React, { useReducer } from 'react';
+import React, { memo, useReducer } from 'react';
 import { withRouter } from 'react-router-dom';
 import { reducer } from '../../util/reducer';
 import './FindPassword.css';
 
-const FindPassword = ({ history }) => {
+const FindPassword = memo(({ history }) => {
   const [state, dispatch] = useReducer(reducer, {
     id: '',
     email: ''
@@ -58,6 +58,6 @@ const FindPassword = ({ history }) => {
       </form>
     </div>
   );
-};
+});
 
 export default withRouter(FindPassword);

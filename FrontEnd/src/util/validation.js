@@ -8,13 +8,13 @@ let specialMarkReg = /[~!@#$%^&*()_+|<>?:{}]/g;
 
 const validation = {
   idValidation: id => {
-    return id.match(alphabetLowerCaseReg).length >= 4 && id.match(numberReg).length >= 2;
+    return id.length >= 6 && id.match(alphabetLowerCaseReg).length >= 4 && id.match(numberReg).length >= 2;
   },
   passwordValidation: password => {
-    return password.match(alphabetLowerCaseReg).length >= 6 && password.match(numberReg).length >= 4;
+    return password.length >= 10 && password.match(alphabetLowerCaseReg).length >= 6 && password.match(numberReg).length >= 4;
   },
   usernameValidation: username => {
-    return koreanReg.test(username) && !numberReg.test(username) && !alphabetReg.test(username) && !specialMarkReg.test(username) && !koreanConsonantVowelReg.test(username);
+    return username.length >= 2 && username.length <= 5 && koreanReg.test(username) && !numberReg.test(username) && !alphabetReg.test(username) && !specialMarkReg.test(username) && !koreanConsonantVowelReg.test(username);
   },
   emailValidation: email => {
     return emailReg.test(String(email).toLowerCase());
