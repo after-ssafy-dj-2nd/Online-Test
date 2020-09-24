@@ -21,6 +21,12 @@ public class JwtInterceptor implements HandlerInterceptor{
 			throws Exception {
 		final String token = request.getHeader(HEADER_AUTH);
 
+		if (request.getMethod().equals("OPTIONS")) {
+			System.out.println("if request options method is options, return true");
+			
+			return true;
+		}
+		
 		if(token != null && jwtService.isUsable(token)){
 			return true;
 		}else{
