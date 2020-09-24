@@ -1,7 +1,5 @@
 package com.onlinetest.backend.dto;
 
-import java.util.List;
-
 public class Example {
     private int id;
     private int question_id;

@@ -3,30 +3,84 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="question">
+    <resultMap id="questionResultMap" type="com.onlinetest.backend.dto.Question">
+        <id property="id" column="q_id" javaType="int"/>
+        <result property="content" column="q_content"/>
+        <result property="description" column="q_description"/>
+        <result property="commentary" column="q_commentary"/>
+        <result property="type" column="q_type"/>
+        <result property="writer_id" column="q_writer_id"/>
+        <collection property="examples" ofType="com.onlinetest.backend.dto.Example">
+            <id property="id" column="e_id"/>
+            <result property="question_id" column="e_question_id"/>
+            <result property="content" column="e_content"/>
+            <result property="correct" column="e_correct"/>
+        </collection>
+    </resultMap>
 
-    <select id="getQuestions" parameterType="java.lang.Integer" resultType="com.onlinetest.backend.dto.Question">
-        select * from question where writer_id = #{user_id}
+    <select id="getQuestions" parameterType="java.lang.Integer" resultMap="questionResultMap">
+        select
+            q.id as q_id,
+            q.content as q_content,
+            q.description as q_description,
+            q.commentary as q_commentary,
+            q.type as q_type,
+            q.writer_id as q_writer_id,
+            e.id as e_id,
+            e.question_id as e_question_id,
+            e.content as e_content,
+            e.correct as e_correct
+        from question q
+            left join example e on q.id= e.question_id
+        where q.writer_id = #{id}
     </select>
 
-    <select id="getQuestion" parameterType="java.util.Map" resultType="com.onlinetest.backend.dto.Question">
-        select * from question where question.id = #{id} and writer_id = #{user_id}
+    <select id="getQuestion" parameterType="java.util.Map" resultMap="questionResultMap">
+        select
+            q.id as q_id,
+            q.content as q_content,
+            q.description as q_description,
+            q.commentary as q_commentary,
+            q.type as q_type,
+            q.writer_id as q_writer_id,
+            e.id as e_id,
+            e.question_id as e_question_id,
+            e.content as e_content,
+            e.correct as e_correct
+        from question q
+            left join example e on q.id= e.question_id
+        where q.id = #{id}
     </select>
 
-    <select id="getQuestionById" parameterType="java.lang.Integer" resultType="com.onlinetest.backend.dto.Question">
-        select * from question where question.id = #{id}
+    <select id="getQuestionById" parameterType="java.lang.Integer" resultMap="questionResultMap">
+        select
+            q.id as q_id,
+            q.content as q_content,
+            q.description as q_description,
+            q.commentary as q_commentary,
+            q.type as q_type,
+            q.writer_id as q_writer_id,
+            e.id as e_id,
+            e.question_id as e_question_id,
+            e.content as e_content,
+            e.correct as e_correct
+        from question q
+            left join example e on q.id= e.question_id
+        where q.id = #{id}
     </select>
 
-    <insert	id="createQuestion" useGeneratedKeys="true" keyProperty="id" parameterType="com.onlinetest.backend.dto.QuestionExample">
+    <insert	id="createQuestion" useGeneratedKeys="true" keyProperty="id" parameterType="com.onlinetest.backend.dto.Question">
         insert into question (content, description, commentary, type, writer_id)
         values (
-        #{content},
-        #{description},
-        #{commentary},
-        #{type},
-        #{writer_id})
+            #{content},
+            #{description},
+            #{commentary},
+            #{type},
+            #{writer_id}
+        )
     </insert>
 
-    <update id="updateQuestion" keyProperty="id" parameterType="com.onlinetest.backend.dto.QuestionExample">
+    <update id="updateQuestion" keyProperty="id" parameterType="com.onlinetest.backend.dto.Question">
         update question set
         content = #{content},
         description = #{description},

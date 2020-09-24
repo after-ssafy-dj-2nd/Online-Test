@@ -1,25 +1,24 @@
 package com.onlinetest.backend.dto.swagger;
 
 import com.onlinetest.backend.dto.Question;
-import com.onlinetest.backend.dto.QuestionExample;
 
 public class QuestionSwagger {
-    private QuestionExample questionExample;
+    private Question question;
 
     public QuestionSwagger() {
         super();
     }
 
-    public QuestionSwagger(QuestionExample questionExample) {
+    public QuestionSwagger(Question question) {
         super();
-        this.questionExample = questionExample;
+        this.question = question;
     }
 
-    public QuestionExample getQuestionExample() {
-        return questionExample;
+    public Question getQuestion() {
+        return question;
     }
 
-    public void setQuestionExample(QuestionExample questionExample) {
-        this.questionExample = questionExample;
+    public void setQuestion(Question question) {
+        this.question = question;
     }
 }
