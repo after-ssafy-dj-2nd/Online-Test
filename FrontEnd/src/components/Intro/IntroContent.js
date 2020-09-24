@@ -3,7 +3,7 @@ import './IntroDefault.css'
 import './IntroContent.css'
 const IntroContent = () => {
   return (
-    <div className="intro-content">
+    <div id="intorduceContent" className="intro-content">
       <div className="intro-content-wrap">
         <div className="intro-content-title">1</div>
         <div className="intro-content-explanation">2</div>
