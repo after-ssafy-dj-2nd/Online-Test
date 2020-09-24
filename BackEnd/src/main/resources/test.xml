@@ -39,5 +39,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             on q.id=e.question_id
 		where ex.exam_id=#{exam_id} and ex.question_id=q.id
 	</select>
+	
+	<select id="getExamStudent" parameterType="com.onlinetest.backend.dto.ExamStudent"
+		resultType="int">
+		select count(*)
+		from exam_student
+		where exam_id=#{exam_id} and student_id=#{student_id}
+	</select>
 
 </mapper>

@@ -51,7 +51,7 @@ public class TestController {
 	}
 	
 	@ApiResponses(value = { 
-            @ApiResponse(code = 200, message = "Successful", response = QuestionList.class)})
+            @ApiResponse(code = 200, message = "Successful / type - 객관식:true, 주관식:false / commentary, writer_id 사용안함", response = QuestionList.class)})
 	@ApiImplicitParam(name="exam_id", value="시험번호")
 	@ApiOperation(value = "시험 응시 시작")
 	@RequestMapping(value = "/starttest", method = RequestMethod.GET)
@@ -59,6 +59,10 @@ public class TestController {
 		logger.info("1-------------starttest-----------------------------" + new Date());
 		
 		int student_id = jwtservice.getId();
+		
+		if(testservice.getExamStudent(new ExamStudent(student_id, exam_id)) > 0) {
+			return new ResponseEntity<QuestionList>(HttpStatus.BAD_REQUEST);
+		}
 		
 		testservice.setStartTest(new ExamStudent(student_id, exam_id));
 		
