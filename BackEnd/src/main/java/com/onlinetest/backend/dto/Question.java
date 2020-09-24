@@ -9,6 +9,7 @@ public class Question {
     private String commentary;
     private boolean type;
     private int writer_id;
+    private int score;
     private List<Example> examples;
 
     public Question() {
@@ -23,8 +24,18 @@ public class Question {
         this.writer_id = writer_id;
         this.examples = examples;
     }
+    
+    public Question(int id, String content, String description, boolean type, int score, List<Example> examples) {
+		super();
+		this.id = id;
+		this.content = content;
+		this.description = description;
+		this.type = type;
+		this.score = score;
+		this.examples = examples;
+	}
 
-    public int getId() {
+	public int getId() {
         return id;
     }
 
@@ -71,8 +82,16 @@ public class Question {
     public void setWriter_id(int writer_id) {
         this.writer_id = writer_id;
     }
+    
+    public int getScore() {
+		return score;
+	}
 
-    public List<Example> getExamples() {
+	public void setScore(int score) {
+		this.score = score;
+	}
+
+	public List<Example> getExamples() {
         return examples;
     }
 

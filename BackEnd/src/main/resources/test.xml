@@ -3,27 +3,41 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="test">
-		
-		<insert id="setStartTest"
-			parameterType="com.onlinetest.backend.dto.ExamStudent">
-			insert into exam_student (student_id, exam_id, starttime) 
-			VALUES (#{student_id}, #{exam_id}, now());
-		</insert>
-		
-		<select id="getExam"
-		parameterType="int"
+
+	<insert id="setStartTest"
+		parameterType="com.onlinetest.backend.dto.ExamStudent">
+		insert into exam_student (student_id, exam_id, starttime)
+		VALUES (#{student_id}, #{exam_id}, now());
+	</insert>
+
+	<select id="getExam" parameterType="int"
 		resultType="com.onlinetest.backend.dto.Exam">
-			select e.id, e.name, starttime, endtime, u.name teacher_name
-			from exam e, user u
-			where e.id=#{exam_id} and e.teacher_id=u.id
-		</select>
-		
-		<select id="getQuestion"
-			parameterType="int"
-			resultType="com.onlinetest.backend.dto.Question">
-			select id, content, description, type, e.score score
-			from question_exam e, question q
-			where e.exam_id=#{exam_id} and e.question_id=q.id
-		</select>
-		
-	</mapper>
+		select e.id, e.name, starttime, endtime, u.name teacher_name
+		from exam e, user u
+		where e.id=#{exam_id} and e.teacher_id=u.id
+	</select>
+
+	<resultMap id="questionResultMap"
+		type="com.onlinetest.backend.dto.Question">
+		<id property="id" column="q_id" javaType="int" />
+		<result property="content" column="q_content" />
+		<result property="description" column="description" />
+		<result property="type" column="type" />
+		<result property="score" column="score" />
+		<collection property="examples" ofType="com.onlinetest.backend.dto.Example">
+			<id property="id" column="e_id" />
+			<result property="content" column="e_content" />
+		</collection>
+	</resultMap>
+
+	<select id="getQuestion" parameterType="int" resultMap="questionResultMap">
+		select q.id q_id, q.content q_content, description, type, score, e.id e_id, e.content e_content 
+		from question_exam ex, question q
+        left join (select e.id, e.question_id, e.content 
+				from example e, question q 
+				where e.question_id=q.id and q.type=1) e 
+            on q.id=e.question_id
+		where ex.exam_id=#{exam_id} and ex.question_id=q.id
+	</select>
+
+</mapper>
