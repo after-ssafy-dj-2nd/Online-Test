@@ -3,22 +3,13 @@ import { withRouter, Link } from 'react-router-dom';
 import { storage } from '../../util/storage';
 import { reducer } from '../../util/reducer';
 import { login } from '../../api/modules/user';
-import Modal from '../Common/Modal';
+import { saveUserInfo, toggleLoginStatus } from '../../store/users';
+import { useDispatch } from 'react-redux';
 import './Login.css';
 
 const Login = memo(({ history }) => {
   const [isSaveId, setIsSaveId] = useState(false);
   const checkBoxEl = useRef(null);
-
-  const [isShowModal, setIsShowModal] = useState(false);
-
-  const showModal = useCallback(() => {
-    setIsShowModal(true);
-  }, []);
-  
-  const closeModal = useCallback(() => {
-    setIsShowModal(false);
-  }, []);
 
   const [state, dispatch] = useReducer(reducer, {
     id: '',
@@ -26,6 +17,7 @@ const Login = memo(({ history }) => {
   });
 
   const { id, password } = state;
+
 
   useEffect(() => {
     const saveId = storage(localStorage).getItem('saveId');
@@ -49,6 +41,11 @@ const Login = memo(({ history }) => {
   const onChangeIsSaveId = useCallback(e => {
     setIsSaveId(e.target.checked);
   }, []);
+
+
+  const loginDispatch = useDispatch();
+  const onLogin = useCallback(userInfo => loginDispatch(saveUserInfo(userInfo)), [loginDispatch]);
+  const onToggleLoginStatus = useCallback(() => loginDispatch(toggleLoginStatus()), [loginDispatch]);
 
   const onSubmit = async e => {
     e.preventDefault();
@@ -79,6 +76,8 @@ const Login = memo(({ history }) => {
         return
       }
       alert(`${data.userInfo.name}님 환영합니다!`);
+      onLogin(data.userInfo);
+      onToggleLoginStatus();
       history.push('/main');
     } catch {
       alert('예기치 못한 에러가 발생했습니다. 관리자에게 문의해주세요.');
@@ -110,16 +109,6 @@ const Login = memo(({ history }) => {
           <i className="fas fa-key" /> 비밀번호 찾기
         </Link>
       </form>
-
-      {/* 모달 테스트(추후 삭제할 예정) */}
-      <button onClick={showModal} className="btn btn--small">모달 열기(테스트용)</button>
-      <Modal isShow={isShowModal} close={closeModal} title="Modal Title">
-        <div>
-          <p>컨텐츠1</p>
-          <p>컨텐츠2</p>
-          <img src="https://via.placeholder.com/150" alt="임시 이미지" />
-        </div>
-      </Modal>
     </div>
   );
 });
