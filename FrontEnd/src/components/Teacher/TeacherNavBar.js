@@ -11,6 +11,10 @@ const menus = [{
 	path: 'student'
 },
 {
+	title: 'Questions',
+	path : 'questions'
+},
+{
 	title: 'EXAM',
 	path: 'exam'
 },
