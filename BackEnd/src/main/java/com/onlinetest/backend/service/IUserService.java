@@ -8,4 +8,9 @@ public interface IUserService {
 	int idCheck(String user_id);	
 	
 	User login(User user);
+
+	String getEmail(String user_id);
+
+	void updatePwd(User user);
+
 }	

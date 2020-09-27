@@ -31,6 +31,16 @@ public class UserServiceImpl implements IUserService{
 		return userdao.login(user);
 	}
 
-	
+	@Override
+	@Transactional(readOnly=true)
+	public String getEmail(String user_id) {
+		return userdao.getEmail(user_id);
+	}
+
+	@Override
+	@Transactional
+	public void updatePwd(User user) {
+		userdao.updatePwd(user);
+	}
 
 }

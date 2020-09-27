@@ -26,4 +26,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where user_id=#{user_id} and password=hex(aes_encrypt(#{password}, 'test'))
 	</select>
 	
+	<select id="getEmail"
+	parameterType="string"
+	resultType="string">
+		select email
+		from user
+		where user_id=#{user_id}
+	</select>
+	
+	<update id="updatePwd"
+	parameterType="com.onlinetest.backend.dto.User">
+		update user 
+		set password=hex(aes_encrypt(#{password}, 'test')) 
+		where `user_id` = #{user_id}
+	</update>
 </mapper>
