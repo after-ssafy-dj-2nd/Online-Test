@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import { saveUserInfo, removeUserInfo, toggleLoginStatus } from '../../store/users';
+import { saveUserInfo, removeUserInfo, changeLoginStatus } from '../../store/users';
 import { useSelector, useDispatch } from 'react-redux';
 import './Header.css';
 import Modal from './Modal';
@@ -22,17 +22,17 @@ const Header = ({ history }) => {
   const userDispatch = useDispatch();
   const onLogin = useCallback(userInfo => userDispatch(saveUserInfo(userInfo)), [userDispatch]);
   const onLogout = useCallback(() => userDispatch(removeUserInfo()), [userDispatch]);
-  const onToggleLoginStatus = useCallback(() => userDispatch(toggleLoginStatus()), [userDispatch]);
+  const onChangeLoginStatus = useCallback(loginStatus => userDispatch(changeLoginStatus(loginStatus)), [userDispatch]);
 
   // 새로고침할 때만 동작
   useEffect(() => {
     const refreshLoginStatus = storage(sessionStorage).getItem('loginStatus');
     const refreshLoginInfo = storage(sessionStorage).getItem('userInfo');
-    if (refreshLoginStatus && refreshLoginInfo) {
+    if (refreshLoginInfo && refreshLoginStatus) {
+      onChangeLoginStatus(refreshLoginStatus);
       onLogin(refreshLoginInfo);
-      onToggleLoginStatus();
     }
-  }, [onLogin, onToggleLoginStatus]);
+  }, [onLogin, onChangeLoginStatus]);
 
   // 새로고침시 로그인 상태 유지하기 위해 sessionStorage에 정보 저장
   useEffect(() => {
@@ -51,7 +51,7 @@ const Header = ({ history }) => {
   // 로그아웃 로직
   const logout = () => {
     onLogout();
-    onToggleLoginStatus();
+    onChangeLoginStatus(false);
     alert('로그아웃 되었습니다.');
     storage(sessionStorage).removeItem('loginStatus');
     storage(sessionStorage).removeItem('userInfo');
@@ -72,7 +72,7 @@ const Header = ({ history }) => {
               )
             : <span onClick={showModal}>로그아웃</span>
           }
-          <Link to="/teacher">선생님</Link>
+          {loginStatus && userInfo.auth === 1 && <Link to="/teacher">선생님</Link>}
         </div>
         <div>
           {userName && <span>Welcome, {userName}</span>}

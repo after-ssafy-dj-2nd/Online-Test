@@ -2,11 +2,11 @@ import { createAction, handleActions } from 'redux-actions';
 
 const LOGIN = 'users/LOGIN';
 const LOGOUT = 'users/LOGOUT';
-const TOGGLE_LOGIN_STATUS = 'users/TOGGLE_LOGIN_STATUS';
+const CHANGE_LOGIN_STATUS = 'users/CHANGE_LOGIN_STATUS';
 
 export const saveUserInfo = createAction(LOGIN, userInfo => userInfo);
 export const removeUserInfo = createAction(LOGOUT);
-export const toggleLoginStatus = createAction(TOGGLE_LOGIN_STATUS);
+export const changeLoginStatus = createAction(CHANGE_LOGIN_STATUS, loginStatus => loginStatus);
 
 const initialState = {
   loginStatus: false,
@@ -23,9 +23,9 @@ const userInfo = handleActions(
       ...state,
       userInfo: null
     }),
-    [TOGGLE_LOGIN_STATUS]: (state) => ({
+    [CHANGE_LOGIN_STATUS]: (state, { payload: loginStatus }) => ({
       ...state,
-      loginStatus: !state.loginStatus
+      loginStatus
     })
   },
   initialState,

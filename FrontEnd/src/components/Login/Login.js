@@ -3,7 +3,7 @@ import { withRouter, Link } from 'react-router-dom';
 import { storage } from '../../util/storage';
 import { reducer } from '../../util/reducer';
 import { login } from '../../api/modules/user';
-import { saveUserInfo, toggleLoginStatus } from '../../store/users';
+import { saveUserInfo, changeLoginStatus } from '../../store/users';
 import { useDispatch } from 'react-redux';
 import './Login.css';
 
@@ -45,7 +45,7 @@ const Login = memo(({ history }) => {
 
   const loginDispatch = useDispatch();
   const onLogin = useCallback(userInfo => loginDispatch(saveUserInfo(userInfo)), [loginDispatch]);
-  const onToggleLoginStatus = useCallback(() => loginDispatch(toggleLoginStatus()), [loginDispatch]);
+  const onChangeLoginStatus = useCallback(loginStatus => loginDispatch(changeLoginStatus(loginStatus)), [loginDispatch]);
 
   const onSubmit = async e => {
     e.preventDefault();
@@ -77,7 +77,7 @@ const Login = memo(({ history }) => {
       }
       alert(`${data.userInfo.name}님 환영합니다!`);
       onLogin(data.userInfo);
-      onToggleLoginStatus();
+      onChangeLoginStatus(true);
       history.push('/main');
     } catch {
       alert('예기치 못한 에러가 발생했습니다. 관리자에게 문의해주세요.');
