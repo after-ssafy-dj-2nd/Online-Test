@@ -25,7 +25,7 @@ const unicode = {
 const Question = (props) => {
   const {question} = props
   const [shorthen, setShorthen] = useState(true)
-  const [ShowDescription,setShowDescription] = useState(false)
+  const [showDescription,setShowDescription] = useState(false)
   const showQuestion = () => {
     setShorthen(!shorthen)
   }
@@ -46,10 +46,10 @@ const Question = (props) => {
             </div>
           )}
         </div>
-        <div className="toggle-description" onClick={()=> setShowDescription(!ShowDescription)}>
-            {ShowDescription ? '해설 닫기' : '해설 펼쳐보기'}
+        <div className="toggle-description" onClick={()=> setShowDescription(!showDescription)}>
+            {showDescription ? '해설 닫기' : '해설 펼쳐보기'}
         </div>
-        <div className={(ShowDescription ? '' : 'hide ') + "question-description"}>
+        <div className={(showDescription ? '' : 'hide ') + "question-description"}>
           {question.description}
         </div>
       </div>
