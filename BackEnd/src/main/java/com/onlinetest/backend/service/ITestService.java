@@ -12,4 +12,6 @@ public interface ITestService {
 	Exam getExam(int exam_id);
 
 	List<Question> getQuestion(int exam_id);
+
+	int getExamStudent(ExamStudent examStudent);
 }	

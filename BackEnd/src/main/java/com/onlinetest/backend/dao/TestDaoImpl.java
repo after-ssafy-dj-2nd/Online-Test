@@ -29,4 +29,8 @@ public class TestDaoImpl {
 	public List<Question> getQuestion(int exam_id) {
 		return sqlSeesion.selectList(ns+"getQuestion", exam_id);
 	}
+
+	public int getExamStudent(ExamStudent examStudent) {
+		return sqlSeesion.selectOne(ns+"getExamStudent", examStudent);
+	}
 }

@@ -17,8 +17,14 @@ public class Example {
         this.content = content;
         this.correct = correct;
     }
+    
+    public Example(int id, String content) {
+		super();
+		this.id = id;
+		this.content = content;
+	}
 
-    public int getId() {
+	public int getId() {
         return id;
     }
 

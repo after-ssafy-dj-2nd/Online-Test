@@ -35,6 +35,12 @@ public class TestServiceImpl implements ITestService{
 		return testdao.getQuestion(exam_id);
 	}
 
+	@Override
+	@Transactional(readOnly=true)
+	public int getExamStudent(ExamStudent examStudent) {
+		return testdao.getExamStudent(examStudent);
+	}
+
 	
 
 	
