@@ -105,17 +105,19 @@ public class UserController {
             @ApiResponse(code = 200, message = "Successful / 성공 - login:true, user:user정보, 실패 - login:false", response = UserSwagger.class)})
 	@ApiOperation(value = "로그인 (Authorization 필요없음)", response = UserSwagger.class)
 	@RequestMapping(value = "/findpwd", method = RequestMethod.POST)
-	public ResponseEntity<Map<String, String>> findPwd(@RequestBody @ApiParam(value="user_id, email만 입력") User user) throws Exception {
+	public ResponseEntity<Map<String, Object>> findPwd(@RequestBody @ApiParam(value="user_id, email만 입력") User user) throws Exception {
 		logger.info("1-------------findPwd-----------------------------" + new Date());
-		Map<String, String> resultMap = new HashMap<>();
+		Map<String, Object> resultMap = new HashMap<>();
 		
 		String email = userservice.getEmail(user.getUser_id());
 		if(email == null) {
-			resultMap.put("resultMap", "귀하의 이메일로 가입된 아이디가 존재하지 않습니다.");
-			return new ResponseEntity<Map<String, String>>(resultMap, HttpStatus.BAD_REQUEST);
+			resultMap.put("status", false);
+			resultMap.put("resultMsg", "귀하의 이메일로 가입된 아이디가 존재하지 않습니다.");
+			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.BAD_REQUEST);
 		}else if(!email.equals(user.getEmail())) {
-			resultMap.put("resultMap", "입력하신 이메일의 회원정보와 가입된 아이디가 일치하지 않습니다.");
-			return new ResponseEntity<Map<String, String>>(resultMap, HttpStatus.BAD_REQUEST);
+			resultMap.put("status", false);
+			resultMap.put("resultMsg", "입력하신 이메일의 회원정보와 가입된 아이디가 일치하지 않습니다.");
+			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.BAD_REQUEST);
 		}
 		
 		char[] charSet = {'!', '@', '#', '$', '%', '^', '&', '*', '?'};
@@ -143,18 +145,24 @@ public class UserController {
 		
 		String key = sb.toString();
 		
-		//db 변경
 		user.setPassword(key);
 		userservice.updatePwd(user);
 		
-		//mail 전송
-		String subject = "임시 비밀번호 발급 안내 입니다.";
-		String pwdMsg = "귀하의 임시 비밀번호는 " + key + " 입니다.";
+		String subject = "[online-test] 임시 비밀번호 발급 안내 입니다.";
+		
+		sb = new StringBuilder();
+		sb.append("<div align='center' style='border:1px solid black; font-family:verdana'>");
+		sb.append("<h3 style='color:blue;'>임시 비밀번호 발급 안내 입니다.</h3>");
+		sb.append("<div style='font-size:130%'>");
+		sb.append("귀하의 임시 비밀번호는 <strong>");
+		sb.append(key);
+		sb.append("</strong> 입니다.</div><br/>");
 
-		userservice.sendEamil(subject, pwdMsg, "아이디@gmail.com", email, null);
+		userservice.sendEamil(subject, sb.toString(), email);
 
-		resultMap.put("resultMap", "귀하의 이메일 주소로 새로운 임시 비밀번호를 발송 하였습니다.");
-		return new ResponseEntity<Map<String, String>>(resultMap, HttpStatus.OK);
+		resultMap.put("status", true);
+		resultMap.put("resultMsg", "귀하의 이메일 주소로 새로운 임시 비밀번호를 발송 하였습니다.");
+		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
 	}
 
 }
