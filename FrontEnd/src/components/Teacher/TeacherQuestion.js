@@ -2,7 +2,7 @@ import React from 'react'
 
 const TeacherQuestion = (props)=>{
   const {question ,setQuestion} = props
-  const {score, content, description, examples} = question
+  const {content, description, examples} = question
 
   const reducer = (key,value) => {
     return {
@@ -21,10 +21,6 @@ const TeacherQuestion = (props)=>{
 
   const setDescription = (e) => {
     setQuestion(reducer('description', e.target.value))
-  }
-
-  const setScore = (e)=> {
-    setQuestion(reducer('score',e.target.value))
   }
 
   const deleteExample = (e,index) => {
@@ -58,20 +54,16 @@ const TeacherQuestion = (props)=>{
   
   return (
     <form className="question-form">
-      <article className="question-score">
-        <label htmlFor="score"> 점수 </label>
-        <input id="score" type="number" value={score} onChange={e=>setScore(e)}/> 점
-      </article>
-      <article className="question-content">
+      <article className="question-content-input">
         <label htmlFor="content"> 문제 </label>
-        <textarea id="content" value={content} onChange={e=>setContent(e)}/>
+        <textarea className="resize-none" id="content" value={content} onChange={e=>setContent(e)}/>
       </article>
-      <article className="question-description">
-        <textarea id="description" value={description} onChange={e=>setDescription(e)}/>
+      <article className="question-description-input">
+        <textarea className="resize-none" id="description" value={description} onChange={e=>setDescription(e)}/>
       </article>
-      <article className="question-examples">
+      <article className="question-examples-input">
         {examples.map((example,index)=> (
-          <div className='question-example' key={index}>
+          <div className='question-example-input' key={index}>
             <span>{index+1} . </span>
             <input type="checkbox" checked={example.correct} onChange={e => onCorrectChange(index,e)}/>
             <input value={example.content} onChange={e=>onExampleChange(index, e)}/>

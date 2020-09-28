@@ -50,9 +50,9 @@ const TeacherExam = () => {
 
     // api 저장 로직
     console.log(state)
-
+    
     // 문제생성부분으로 전달
-    window.location.href="/teacher/exam/questions"
+    window.location.href="/teacher/home"
   }
 
   return (
