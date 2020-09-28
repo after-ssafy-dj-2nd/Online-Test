@@ -104,7 +104,7 @@
         where exam.id = #{id}
     </select>
 
-    <insert	id="createExam" useGeneratedKeys="true" keyProperty="id" parameterType="com.onlinetest.backend.dto.swagger.ExamQuestionsSwagger">
+    <insert id="createExam" useGeneratedKeys="true" keyProperty="id" parameterType="com.onlinetest.backend.dto.swagger.ExamQuestionsSwagger">
         insert into exam (name, starttime, endtime, teacher_id)
         values (#{name}, #{starttime}, #{endtime}, #{teacher_id})
     </insert>
@@ -121,7 +121,7 @@
         delete from exam where id = #{exam_id}
     </delete>
 
-    <insert	id="createQuestionExam" useGeneratedKeys="true" keyProperty="id" parameterType="com.onlinetest.backend.dto.QuestionExam">
+    <insert id="createQuestionExam" useGeneratedKeys="true" keyProperty="id" parameterType="com.onlinetest.backend.dto.QuestionExam">
         insert into question_exam (exam_id, question_id, score)
         values (#{exam_id}, #{question_id}, #{score})
     </insert>
