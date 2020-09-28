@@ -102,8 +102,8 @@ public class UserController {
 	}
 	
 	@ApiResponses(value = { 
-            @ApiResponse(code = 200, message = "Successful / 성공 - login:true, user:user정보, 실패 - login:false", response = UserSwagger.class)})
-	@ApiOperation(value = "로그인 (Authorization 필요없음)", response = UserSwagger.class)
+            @ApiResponse(code = 200, message = "Successful / 성공 - status:true, 실패 - status:false", response = UserSwagger.class)})
+	@ApiOperation(value = "비밀번호 찾기 (Authorization 필요없음)", response = UserSwagger.class)
 	@RequestMapping(value = "/findpwd", method = RequestMethod.POST)
 	public ResponseEntity<Map<String, Object>> findPwd(@RequestBody @ApiParam(value="user_id, email만 입력") User user) throws Exception {
 		logger.info("1-------------findPwd-----------------------------" + new Date());
