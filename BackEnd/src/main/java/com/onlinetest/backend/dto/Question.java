@@ -89,15 +89,15 @@ public class Question {
 
     public void setScore(int score) {
         this.score = score;
-	}
+    }
 
     public List<Example> getExamples() {
         return examples;
-	}
+    }
 
     public void setExamples(List<Example> examples) {
         this.examples = examples;
-	}  
+    }  
 }
 
 
