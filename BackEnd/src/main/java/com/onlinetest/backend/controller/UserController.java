@@ -3,6 +3,7 @@ package com.onlinetest.backend.controller;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -97,6 +98,70 @@ public class UserController {
 			response.setHeader("access-token", token);
 		}
 
+		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+	}
+	
+	@ApiResponses(value = { 
+            @ApiResponse(code = 200, message = "Successful / 성공 - status:true, 실패 - status:false", response = UserSwagger.class)})
+	@ApiOperation(value = "비밀번호 찾기 (Authorization 필요없음)", response = UserSwagger.class)
+	@RequestMapping(value = "/findpwd", method = RequestMethod.POST)
+	public ResponseEntity<Map<String, Object>> findPwd(@RequestBody @ApiParam(value="user_id, email만 입력") User user) throws Exception {
+		logger.info("1-------------findPwd-----------------------------" + new Date());
+		Map<String, Object> resultMap = new HashMap<>();
+		
+		String email = userservice.getEmail(user.getUser_id());
+		if(email == null) {
+			resultMap.put("status", false);
+			resultMap.put("resultMsg", "귀하의 이메일로 가입된 아이디가 존재하지 않습니다.");
+			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.BAD_REQUEST);
+		}else if(!email.equals(user.getEmail())) {
+			resultMap.put("status", false);
+			resultMap.put("resultMsg", "입력하신 이메일의 회원정보와 가입된 아이디가 일치하지 않습니다.");
+			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.BAD_REQUEST);
+		}
+		
+		char[] charSet = {'!', '@', '#', '$', '%', '^', '&', '*', '?'};
+		StringBuilder sb = new StringBuilder();
+		Random random = new Random();
+		
+		for (int i = 0; i < 10; i++) {
+			int idx = random.nextInt(4);
+			
+			switch(idx) {
+				case 0:
+					sb.append((char) (random.nextInt(26) + 65));
+					break;
+				case 1:
+					sb.append((char) (random.nextInt(26) + 97));
+					break;
+				case 2:
+					sb.append(random.nextInt(10));
+					break;
+				case 3:
+					sb.append(charSet[random.nextInt(9)]);
+					break;
+			}
+		}
+		
+		String key = sb.toString();
+		
+		user.setPassword(key);
+		userservice.updatePwd(user);
+		
+		String subject = "[online-test] 임시 비밀번호 발급 안내 입니다.";
+		
+		sb = new StringBuilder();
+		sb.append("<div align='center' style='border:1px solid black; font-family:verdana'>");
+		sb.append("<h3 style='color:blue;'>임시 비밀번호 발급 안내 입니다.</h3>");
+		sb.append("<div style='font-size:130%'>");
+		sb.append("귀하의 임시 비밀번호는 <strong>");
+		sb.append(key);
+		sb.append("</strong> 입니다.</div><br/>");
+
+		userservice.sendEamil(subject, sb.toString(), email);
+
+		resultMap.put("status", true);
+		resultMap.put("resultMsg", "귀하의 이메일 주소로 새로운 임시 비밀번호를 발송 하였습니다.");
 		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
 	}
 
