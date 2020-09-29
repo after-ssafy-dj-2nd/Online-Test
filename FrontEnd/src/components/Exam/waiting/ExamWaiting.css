@@ -1,0 +1,33 @@
+.examwaiting-content {
+  margin : auto;
+  width: 60%;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  padding: 2rem;
+  border: 1px solid black;
+  border-radius: 1%;
+}
+
+.title {
+  font-size: small;
+  padding-bottom: 1rem;
+}
+
+.examwaiting-section {
+  padding:1rem 0;
+}
+
+.examwaiting-section:first-child {
+  padding-bottom: 1rem;
+  padding-top: 0;
+}
+
+.examwaiting-section:last-child {
+  padding-top: 1rem;
+  padding-bottom: 0;
+}
+
+.examnotice > ol > li {
+  list-style: decimal inside;
+}
+
