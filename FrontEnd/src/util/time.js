@@ -4,10 +4,10 @@ export const timeDiff = (sec) => {
   const h = parseInt((sec/60/60)%24)
   const d = parseInt((sec/60/60/24))
   let diff = ''
-  if (d) {diff += `${d}일 `}
-  if (h) {diff += `${h}시간 `}
-  if (m) {diff += `${m}분 `} 
-  if (!d && s) {diff += `${s}초`}
+  if (d) {diff += `${d}`.padStart(2, '0') + '일 '}
+  diff += `${h}`.padStart(2, '0') + '시간 '
+  diff += `${m}`.padStart(2, '0') + '분'
+  if (!d) {diff += ' ' + `${s}`.padStart(2, '0') + '초'}
   return diff
 }
 export const timeToString = (time) => {

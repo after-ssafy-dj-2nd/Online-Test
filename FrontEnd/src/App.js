@@ -8,6 +8,7 @@ import MainPage from './pages/MainPage';
 import ExamPage from './pages/ExamPage';
 import TeacherPage from './pages/TeacherPage';
 import NotFoundPage from './pages/NotFoundPage';
+import ExamWaitingPage from './pages/ExamWaitingPage';
 import { Switch } from 'react-router';
 import { Route } from 'react-router-dom';
 
@@ -22,6 +23,7 @@ function App() {
           <Route path="/signup" render={() => <SignupPage />} />
           <Route path="/exam" render={() => <ExamPage />} />
           <Route path="/teacher" render={() => <TeacherPage />} />
+          <Route path="/examwait" render={()=> <ExamWaitingPage/>}/>
           <Route component={NotFoundPage} />
         </Switch>
       </main>
