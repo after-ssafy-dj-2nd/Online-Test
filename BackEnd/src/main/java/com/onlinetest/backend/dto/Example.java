@@ -17,6 +17,13 @@ public class Example {
         this.content = content;
         this.correct = correct;
     }
+
+    public Example(int question_id, String content, Boolean correct) {
+        super();
+        this.question_id = question_id;
+        this.content = content;
+        this.correct = correct;
+    }
     
     public Example(int id, String content) {
 		super();
