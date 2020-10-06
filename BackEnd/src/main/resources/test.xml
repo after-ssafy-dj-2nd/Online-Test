@@ -40,11 +40,50 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where ex.exam_id=#{exam_id} and ex.question_id=q.id
 	</select>
 	
-	<select id="getExamStudent" parameterType="com.onlinetest.backend.dto.ExamStudent"
+	<select id="isExamStudent" parameterType="com.onlinetest.backend.dto.ExamStudent"
 		resultType="int">
 		select count(*)
 		from exam_student
 		where exam_id=#{exam_id} and student_id=#{student_id}
 	</select>
+	
+	<select id="getExamStudent" parameterType="com.onlinetest.backend.dto.ExamStudent"
+		resultType="com.onlinetest.backend.dto.ExamStudent">
+		select id, student_id, exam_id, starttime, endtime, student_score
+		from exam_student
+		where exam_id=#{exam_id} and student_id=#{student_id}
+	</select>
+	
+	<resultMap id="answerResultMap"
+		type="com.onlinetest.backend.dto.Submit">
+		<id property="question_id" column="q_id" javaType="int" />
+		<result property="type" column="type" />
+		<result property="score" column="score" />
+		<collection property="answer" javaType="List" ofType="string">
+			<id property="answer" column="e_id"/>
+		</collection>
+	</resultMap>
+	
+	<select id="getAnswer" parameterType="int"
+		resultMap="answerResultMap">
+		select q.id q_id, type, score, if(type=1, e.id, e.content) e_id
+		from question_exam ex, question q
+        left join example e 
+            on q.id=e.question_id
+		where ex.exam_id=#{exam_id} and ex.question_id=q.id and e.correct=1
+	</select>
+	
+	<insert id="setAnswer"
+		parameterType="com.onlinetest.backend.dto.Answer">
+		insert into answer (exam_student_id, question_id, answer, correct)
+		VALUES (#{exam_student_id}, #{question_id}, #{answer}, #{correct})
+	</insert>
+	
+	<update id="setScore"
+	parameterType="com.onlinetest.backend.dto.ExamStudent">
+		update exam_student 
+		set student_score=#{student_score}, endtime=now()
+		where id = #{id}
+	</update>
 
 </mapper>
