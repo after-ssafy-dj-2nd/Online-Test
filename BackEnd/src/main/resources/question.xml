@@ -49,7 +49,7 @@
             e.correct as e_correct
         from question q
             left join example e on q.id= e.question_id
-        where q.id = #{id}
+        where q.id = #{id} and q.writer_id = #{user_id}
     </select>
 
     <select id="getQuestionById" parameterType="java.lang.Integer" resultMap="questionResultMap">

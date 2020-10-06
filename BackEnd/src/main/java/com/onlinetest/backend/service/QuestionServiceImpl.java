@@ -4,6 +4,7 @@ import com.onlinetest.backend.dto.Example;
 import com.onlinetest.backend.dto.Question;
 import com.onlinetest.backend.dao.QuestionDaoImpl;
 
+import com.onlinetest.backend.dto.swagger.QuestionList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +20,7 @@ public class QuestionServiceImpl implements IQuestionService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Question> getQuestions(int user_id){
+    public QuestionList getQuestions(int user_id){
         return questionDao.getQuestions(user_id);
     }
 

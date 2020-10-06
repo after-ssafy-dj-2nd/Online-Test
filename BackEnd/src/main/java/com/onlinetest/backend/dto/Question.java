@@ -24,6 +24,15 @@ public class Question {
         this.examples = examples;
     }
 
+    public Question(int id, String content, String description, String commentary, boolean type, int writer_id) {
+        this.id = id;
+        this.content = content;
+        this.description = description;
+        this.commentary = commentary;
+        this.type = type;
+        this.writer_id = writer_id;
+    }
+
     public Question(String content, String description, String commentary, boolean type, int writer_id) {
         super();
         this.content = content;
@@ -32,7 +41,16 @@ public class Question {
         this.type = type;
         this.writer_id = writer_id;
     }
-    
+
+    public Question(String content, String description, String commentary, boolean type, int writer_id, List<Example> examples) {
+        this.content = content;
+        this.description = description;
+        this.commentary = commentary;
+        this.type = type;
+        this.writer_id = writer_id;
+        this.examples = examples;
+    }
+
     public Question(int id, String content, String description, boolean type, List<Example> examples) {
         super();
         this.id = id;

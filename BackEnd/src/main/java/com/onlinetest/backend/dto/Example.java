@@ -24,7 +24,13 @@ public class Example {
         this.content = content;
         this.correct = correct;
     }
-    
+
+    public Example(String content, Boolean correct) {
+        super();
+        this.content = content;
+        this.correct = correct;
+    }
+
     public Example(int id, String content) {
 		super();
 		this.id = id;
