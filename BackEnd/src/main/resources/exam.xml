@@ -7,7 +7,7 @@
         <id property="id" column="exam_id" javaType="int"/>
         <result property="name" column="exam_name"/>
         <result property="starttime" column="exam_starttime"/>
-        <result property="endtime" column="endtime"/>
+        <result property="endtime" column="exam_endtime"/>
         <result property="teacher_id" column="exam_teacher_id"/>
         <result property="teacher_name" column="exam_teacher_name"/>
         <collection property="questions" ofType="com.onlinetest.backend.dto.Question">
@@ -52,7 +52,7 @@
         where exam.teacher_id = #{user_id}
     </select>
 
-    <select id="getExam" parameterType="java.util.Map" resultMap="examResultMap">
+    <select id="getExam" parameterType="java.lang.Integer" resultMap="examResultMap">
         select
         exam.id as exam_id,
         exam.name as exam_name,

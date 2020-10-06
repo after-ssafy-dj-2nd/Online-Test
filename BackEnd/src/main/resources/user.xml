@@ -40,4 +40,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		set password=hex(aes_encrypt(#{password}, 'test')) 
 		where `user_id` = #{user_id}
 	</update>
+
+	<select id="getUserName" parameterType="int" resultType="string">
+		select name from user where id = #{user_id}
+	</select>
 </mapper>

@@ -4,6 +4,7 @@ import com.onlinetest.backend.dto.Exam;
 import com.onlinetest.backend.dto.Question;
 import com.onlinetest.backend.dto.QuestionExam;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class ExamQuestionsSwagger extends Exam {
@@ -11,6 +12,14 @@ public class ExamQuestionsSwagger extends Exam {
 
     public ExamQuestionsSwagger() {
         super();
+    }
+
+    public ExamQuestionsSwagger(String name, LocalDateTime starttime, LocalDateTime endtime, int teacher_id) {
+        super(name, starttime, endtime, teacher_id);
+    }
+
+    public ExamQuestionsSwagger(int id, String name, LocalDateTime starttime, LocalDateTime endtime, int teacher_id) {
+        super(id, name, starttime, endtime, teacher_id);
     }
 
     public ExamQuestionsSwagger(Exam exam) {
