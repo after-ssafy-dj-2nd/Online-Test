@@ -2,7 +2,8 @@ package com.onlinetest.backend.daoTest;
 
 import com.onlinetest.backend.dao.ExamDaoImpl;
 import com.onlinetest.backend.dao.UserDaoImpl;
-import com.onlinetest.backend.dto.Exam;
+import com.onlinetest.backend.dto.Question;
+import com.onlinetest.backend.dto.QuestionExam;
 import com.onlinetest.backend.dto.swagger.ExamQuestionsSwagger;
 import com.onlinetest.backend.dto.swagger.ExamSwagger;
 import org.junit.Test;
@@ -18,7 +19,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
@@ -200,95 +200,78 @@ public class ExamDaoTest {
         assertThat(exam.getTeacher_id()).isEqualTo(teacher_id).isEqualTo(origin.getTeacher_id());
         assertThat(exam.getTeacher_name()).isEqualTo(userDao.getUserName(teacher_id));
     }
-}
+    @Test
+    @Transactional
+    @Rollback(true)
+    public void deleteExamTest(){
+        // 시험 삭제 테스트
+        int teacher_id = 4;
+        ExamQuestionsSwagger origin = new ExamQuestionsSwagger( "시험 이름", LocalDateTime.of(2020, 10, 6, 13,0,0),
+                LocalDateTime.of(2020, 10, 6, 15,0,0), teacher_id );
+        examDao.createExam(origin);
+        int len = examDao.getExams(teacher_id).size();
+        int exam_id = origin.getId();
 
-//    @Test
-//    @Transactional
-//    @Rollback(true)
-//    public void deleteExamTest(){
-//        // 문제 삭제 테스트
-//        // given
-//        int writer_id = 2;
-//        int origin_len = questionDao.getQuestions(writer_id).getQuestion().size();
-//        int last_id = questionDao.getQuestions(writer_id).getQuestion().get(origin_len-1).getId();
-//        // 문제 생성을 기반으로 빌드
-//        Question test_question = new Question("문제 제목", "문제 설명", "문제 해설", true, writer_id);
-//        questionDao.createQuestion(test_question);
-//        int questionId = test_question.getId();
-//
-//        // when
-//        questionDao.deleteQuestion(questionId);
-//
-//        // then
-//        // 문제 pk를 바탕으로 문제 가져오는 부분을 기반으로 테스트 진행
-//        List<Question> questionList = questionDao.getQuestions(writer_id).getQuestion();
-//        int len = questionList.size();
-//        Question question = questionList.get(len-1);
-//        assertThat(question.getId()).isNotEqualTo(questionId);
-//        assertThat(len).isEqualTo(origin_len);
-//        assertThat(question.getId()).isEqualTo(last_id);
-//    }
-//
-//
-//    @Test
-//    @Transactional
-//    @Rollback(true)
-//    public void createExampleTest(){
-//        // 보기 생성 테스트
-//        // given
-//        int writer_id = 2;
-//        // 문제 생성을 기반으로 빌드
-//        Question test_question = new Question("문제 제목", "문제 설명", "문제 해설", true, writer_id);
-//        questionDao.createQuestion(test_question);
-//        int question_id = test_question.getId();
-//
-//        String content1 = "보기1";
-//        Boolean correct1 = false;
-//        String content2 = "보기2";
-//        Boolean correct2 = true;
-//
-//        // when
-//        Example example1 = new Example(test_question.getId(), content1, correct1);
-//        Example example2 = new Example(test_question.getId(), content2, correct2);
-//        questionDao.createExample(example1);
-//        questionDao.createExample(example2);
-//
-//        // then
-//        // 문제 pk를 바탕으로 문제 가져오는 부분을 기반으로 테스트 진행
-//        List<Example> exampleList = questionDao.getQuestionById(question_id).getExamples();
-//        Example test_example1 = exampleList.get(0);
-//        Example test_example2 = exampleList.get(1);
-//        assertThat(exampleList.size()).isEqualTo(2);
-//        assertThat(test_example1.getQuestion_id()).isEqualTo(question_id);
-//        assertThat(test_example1.getContent()).isEqualTo(content1);
-//        assertThat(test_example1.getCorrect()).isEqualTo(correct1);
-//        assertThat(test_example2.getQuestion_id()).isEqualTo(question_id);
-//        assertThat(test_example2.getContent()).isEqualTo(content2);
-//        assertThat(test_example2.getCorrect()).isEqualTo(correct2);
-//    }
-//
-//    @Test
-//    @Transactional
-//    public void deleteQuestionExamTest(){
-//        // given
-//        int writer_id = 2;
-//        // 문제 생성을 기반으로 빌드
-//        Question test_question = new Question("문제 제목", "문제 설명", "문제 해설", true, writer_id);
-//        questionDao.createQuestion(test_question);
-//        int question_id = test_question.getId();
-//
-//        String content = "보기";
-//        Boolean correct = false;
-//        for (int i = 1; i < 5; i++) {
-//            Example example = new Example(question_id, content.concat(Integer.toString(i)), correct);
-//            questionDao.createExample(example);
-//        }
-//
-//
-//        // when
-//        questionDao.deleteExamples(question_id);
-//
-//        // then
-//        test_question = questionDao.getQuestionById(question_id);
-//        assertThat(test_question.getExamples().isEmpty()).isEqualTo(true);
-//    }
+        // when
+        examDao.deleteExam(exam_id);
+
+        // then
+        assertThat(examDao.getExamById(exam_id)).isNull();
+        assertThat(examDao.getExams(teacher_id).size()).isEqualTo(len-1);
+    }
+
+    @Test
+    @Transactional
+    @Rollback(true)
+    public void createQuestionExamTest(){
+        // 시험과 문제 다대다 관계 테이블 생성 테스트
+        // given
+        int teacher_id = 4;
+        ExamQuestionsSwagger origin = new ExamQuestionsSwagger(
+                "시험 이름", LocalDateTime.of(2020, 10, 6, 13,0,0),
+                LocalDateTime.of(2020, 10, 6, 15,0,0), teacher_id
+        );
+        examDao.createExam(origin);
+        int exam_id = origin.getId();
+        int score = 5;
+        int question_id = 51;
+        QuestionExam table = new QuestionExam(exam_id, question_id, score);
+
+        // when
+        examDao.createQuestionExam(table);
+
+        // then
+        ExamSwagger exam = examDao.getExamById(exam_id);
+        List<Question> questionList = exam.getQuestions();
+        Question question = questionList.get(0);
+        assertThat(questionList.size()).isEqualTo(1);
+        assertThat(question.getId()).isEqualTo(question_id);
+        assertThat(question.getWriter_id()).isEqualTo(teacher_id);
+        assertThat(question.getScore()).isEqualTo(score);
+    }
+
+    @Test
+    @Transactional
+    @Rollback(true)
+    public void deleteQuestionExamTest(){
+        // 시험과 문제 다대다 관계 테이블 삭제 테스트
+        // given
+        int teacher_id = 4;
+        ExamQuestionsSwagger origin = new ExamQuestionsSwagger(
+                "시험 이름", LocalDateTime.of(2020, 10, 6, 13,0,0),
+                LocalDateTime.of(2020, 10, 6, 15,0,0), teacher_id
+        );
+        examDao.createExam(origin);
+        int exam_id = origin.getId();
+        QuestionExam table = new QuestionExam(exam_id,51,5);
+        examDao.createQuestionExam(table);
+
+        // when
+        examDao.deleteQuestionExam(exam_id);
+
+        // then
+        ExamSwagger exam = examDao.getExamById(exam_id);
+        List<Question> questionList = exam.getQuestions();
+        assertThat(questionList.size()).isEqualTo(0);
+    }
+}

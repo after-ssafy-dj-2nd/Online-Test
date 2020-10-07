@@ -1,7 +1,6 @@
 package com.onlinetest.backend.dto.swagger;
 
 import com.onlinetest.backend.dto.Exam;
-import com.onlinetest.backend.dto.Question;
 import com.onlinetest.backend.dto.QuestionExam;
 
 import java.time.LocalDateTime;

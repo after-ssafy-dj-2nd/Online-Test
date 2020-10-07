@@ -143,7 +143,6 @@ public class QuestionControllerTest {
     }
 
     @Test
-
     public void createQuestionTest() {
         // 문제 생성 기능
         // given
@@ -258,7 +257,7 @@ public class QuestionControllerTest {
     }
 
     @Test
-    public void questionDeleteTest(){
+    public void deleteQuestionTest(){
         // 문제 삭제 기능
         // given
         String uri = url + "/question?id=";
