@@ -32,7 +32,6 @@ public class ExamController {
     @ResponseBody
     public ResponseEntity<List<ExamSwagger>> getQuestions() {
         int user_id = jwtservice.getId();
-
         List<ExamSwagger> exams = examService.getExams(user_id);
         return new ResponseEntity<List<ExamSwagger>>(exams, HttpStatus.OK);
     }
@@ -73,6 +72,7 @@ public class ExamController {
         List<QuestionExam> questionExamTable = examQuestion.getQuestions();
         for (QuestionExam questionExam: questionExamTable) {
             questionExam.setExam_id(exam_id);
+
             examService.createQuestionExam(questionExam);
         }
         ExamSwagger exam = examService.getExamById(exam_id);

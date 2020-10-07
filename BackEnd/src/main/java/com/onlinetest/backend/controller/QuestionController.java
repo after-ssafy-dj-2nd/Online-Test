@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,11 +32,11 @@ public class QuestionController {
     @ApiOperation(value = "모든 문제 보기", response = QuestionList.class)
     @RequestMapping(value = "/questions", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<List<Question>> getQuestions() {
+    public ResponseEntity<QuestionList> getQuestions() {
         int user_id = jwtservice.getId();
 
-        List<Question> questions = questionService.getQuestions(user_id);
-        return new ResponseEntity<List<Question>>(questions, HttpStatus.OK);
+        QuestionList questions = questionService.getQuestions(user_id);
+        return new ResponseEntity<QuestionList>(questions, HttpStatus.OK);
     }
 
     @ApiOperation(value = "문제 상세 보기", response = QuestionSwagger.class)
@@ -56,6 +57,35 @@ public class QuestionController {
         }
     }
 
+    @ApiOperation(value = "문제 생성", response = QuestionList.class)
+    @RequestMapping(value = "/questions", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<QuestionList> addQuestions(@RequestBody QuestionList questionList){
+        int user_id = jwtservice.getId();
+        List<Question> result = new ArrayList<>();
+        for (Question question: questionList.getQuestion()) {
+            if (question.getWriter_id() != user_id){
+                return new ResponseEntity<QuestionList>(new QuestionList(), HttpStatus.UNAUTHORIZED);
+            }
+            else if (question.getContent() == null || question.getExamples() == null){
+                return new ResponseEntity<QuestionList>(new QuestionList(), HttpStatus.BAD_REQUEST);
+            }
+
+        }
+        for (Question question: questionList.getQuestion()) {
+            questionService.createQuestion(question);
+            int q_id = question.getId();
+            List<Example> examples = question.getExamples();
+            for (Example example:examples) {
+                example.setQuestion_id(q_id);
+                questionService.createExample(example);
+            }
+            result.add(questionService.getQuestionById(q_id));
+        }
+        return new ResponseEntity<QuestionList>(new QuestionList(result), HttpStatus.OK);
+    }
+
+
     @ApiOperation(value = "문제 생성", response = QuestionSwagger.class)
     @RequestMapping(value = "/question", method = RequestMethod.POST)
     @ResponseBody
@@ -65,7 +95,7 @@ public class QuestionController {
         if (question.getWriter_id() != user_id){
             return new ResponseEntity<Question>(new Question(), HttpStatus.UNAUTHORIZED);
         }
-        else if (question.getContent() == null){
+        else if (question.getContent() == null || question.getExamples() == null){
             return new ResponseEntity<Question>(new Question(), HttpStatus.BAD_REQUEST);
         }
         questionService.createQuestion(question);
@@ -84,15 +114,20 @@ public class QuestionController {
     @ResponseBody
     public ResponseEntity<Question> updateQuestion(@RequestBody Question question) {
         int user_id = jwtservice.getId();
+        int q_id = question.getId();
         Map<String, Object> resultMap = new HashMap<>();
-
-        if (question.getWriter_id() != user_id){
-            return new ResponseEntity<Question>(new Question(), HttpStatus.UNAUTHORIZED);
-        }
-        else if (question.getContent() == null){
+        Question origin = questionService.getQuestionById(q_id);
+        if (origin == null || origin.getWriter_id() != user_id){
             return new ResponseEntity<Question>(new Question(), HttpStatus.BAD_REQUEST);
         }
-        int q_id = question.getId();
+        else if (question.getWriter_id() != user_id){
+            return new ResponseEntity<Question>(new Question(), HttpStatus.UNAUTHORIZED);
+        }
+        else if (question.getContent() == null || question.getExamples() == null){
+            return new ResponseEntity<Question>(new Question(), HttpStatus.BAD_REQUEST);
+        }
+
+
         List<Example>examples = question.getExamples();
         questionService.deleteExamples(q_id);
         questionService.updateQuestion(question);
