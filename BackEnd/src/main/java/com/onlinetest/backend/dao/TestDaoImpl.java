@@ -51,4 +51,8 @@ public class TestDaoImpl {
 	public void setScore(ExamStudent exam_student) {
 		sqlSeesion.update(ns+"setScore", exam_student);
 	}
+
+	public int isPossible(int exam_id) {
+		return sqlSeesion.selectOne(ns+"isPossible", exam_id);
+	}
 }

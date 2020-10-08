@@ -85,5 +85,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		set student_score=#{student_score}, endtime=now()
 		where id = #{id}
 	</update>
+	
+	<select id="isPossible" parameterType="int"
+		resultType="int">
+		<![CDATA[
+		select count(*) 
+		from exam
+		where id=#{exam_id} and starttime<now() and endtime>now()
+		]]>
+	</select>
 
 </mapper>
