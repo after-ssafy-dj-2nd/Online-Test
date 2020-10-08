@@ -25,6 +25,12 @@ public class ExamQuestionsSwagger extends Exam {
         super(exam.getId(), exam.getName(), exam.getStarttime(), exam.getEndtime(), exam.getTeacher_id());
     }
 
+
+    public ExamQuestionsSwagger(Exam exam, List<QuestionExam> questions) {
+        super(exam.getId(), exam.getName(), exam.getStarttime(), exam.getEndtime(), exam.getTeacher_id());
+        this.questions = questions;
+    }
+
     public ExamQuestionsSwagger(List<QuestionExam> questions) {
         this.questions = questions;
     }
