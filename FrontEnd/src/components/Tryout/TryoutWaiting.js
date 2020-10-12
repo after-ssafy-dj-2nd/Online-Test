@@ -1,9 +1,9 @@
 import React, { useReducer, useEffect } from 'react';
-import '../components/Exam/waiting/ExamWaiting.css'
-import ExamWaitingSection from '../components/Exam/waiting/ExamWaitingSection'
-import ExamInfo from '../components/Exam/waiting/ExamInfo'
-import ExamNotice from '../components/Exam/waiting/ExamNotice'
-import StartExamButton from '../components/Exam/waiting/StartExamButton'
+import './waiting/ExamWaiting.css'
+import ExamWaitingSection from './waiting/ExamWaitingSection'
+import ExamInfo from './waiting/ExamInfo'
+import ExamNotice from './waiting/ExamNotice'
+import StartExamButton from './waiting/StartExamButton'
 import axios from 'axios'
 
 const getExamInfo = () => {
