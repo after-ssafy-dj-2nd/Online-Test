@@ -7,10 +7,12 @@ import com.onlinetest.backend.dto.QuestionExam;
 import com.onlinetest.backend.dto.swagger.*;
 import com.onlinetest.backend.service.IExamService;
 import com.onlinetest.backend.service.IJwtService;
+import com.onlinetest.backend.service.IQuestionService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -25,15 +27,18 @@ public class ExamController {
     private IExamService examService;
 
     @Autowired
+    private IQuestionService questionService;
+
+    @Autowired
     private IJwtService jwtservice;
 
     @ApiOperation(value = "모든 시험 보기", response = ExamListSwagger.class)
     @RequestMapping(value = "/exams", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<List<ExamSwagger>> getQuestions() {
+    public ResponseEntity<ExamListSwagger> getQuestions() {
         int user_id = jwtservice.getId();
-        List<ExamSwagger> exams = examService.getExams(user_id);
-        return new ResponseEntity<List<ExamSwagger>>(exams, HttpStatus.OK);
+        ExamListSwagger examList = new ExamListSwagger(examService.getExams(user_id));
+        return new ResponseEntity<ExamListSwagger>(examList, HttpStatus.OK);
     }
 
     @ApiOperation(value = "시험 상세 보기", response = ExamSwagger.class)
@@ -55,53 +60,89 @@ public class ExamController {
         }
     }
 
+    @Transactional
     @ApiOperation(value = "시험 생성", response = ExamSwagger.class)
     @RequestMapping(value = "/exam", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<ExamSwagger> createExam(@RequestBody ExamQuestionsSwagger examQuestion){
         int user_id = jwtservice.getId();
-
+        // 검증
         if (examQuestion.getTeacher_id() != user_id){
             return new ResponseEntity<ExamSwagger>(new ExamSwagger(), HttpStatus.UNAUTHORIZED);
         }
-        else if (examQuestion.getName() == null){
+        else if (examQuestion.getName() == null || examQuestion.getQuestions() == null
+                || examQuestion.getStarttime() == null || examQuestion.getEndtime() == null){
             return new ResponseEntity<ExamSwagger>(new ExamSwagger(), HttpStatus.BAD_REQUEST);
         }
-        examService.createExam(examQuestion);
-        int exam_id = examQuestion.getId();
+        else if (examQuestion.getStarttime().isAfter(examQuestion.getEndtime())){
+            return new ResponseEntity<ExamSwagger>(new ExamSwagger(), HttpStatus.BAD_REQUEST);
+        }
         List<QuestionExam> questionExamTable = examQuestion.getQuestions();
         for (QuestionExam questionExam: questionExamTable) {
+            if (questionExam.getScore() == 0){
+                return new ResponseEntity<ExamSwagger>(new ExamSwagger(), HttpStatus.BAD_REQUEST);
+            }
+            else{
+                Question question = questionService.getQuestionById(questionExam.getQuestion_id());
+                if (question == null){
+                    return new ResponseEntity<ExamSwagger>(new ExamSwagger(), HttpStatus.BAD_REQUEST);
+                }
+                else if (question.getWriter_id() != user_id){
+                    return new ResponseEntity<ExamSwagger>(new ExamSwagger(), HttpStatus.UNAUTHORIZED);
+                }
+            }
+        }
+        // 실행
+        examService.createExam(examQuestion);
+        int exam_id = examQuestion.getId();
+        for (QuestionExam questionExam: questionExamTable) {
             questionExam.setExam_id(exam_id);
-
             examService.createQuestionExam(questionExam);
         }
         ExamSwagger exam = examService.getExamById(exam_id);
         return new ResponseEntity<ExamSwagger>(exam, HttpStatus.OK);
     }
 
+    @Transactional
     @ApiOperation(value = "시험 수정", response = QuestionSwagger.class)
     @RequestMapping(value = "/exam", method = RequestMethod.PUT)
     @ResponseBody
     public ResponseEntity<ExamSwagger> updateExam(@RequestBody ExamQuestionsSwagger examQuestion) {
         int user_id = jwtservice.getId();
-        Map<String, Object> resultMap = new HashMap<>();
-
+        // 검증
         if (examQuestion.getTeacher_id() != user_id){
             return new ResponseEntity<ExamSwagger>(new ExamSwagger(), HttpStatus.UNAUTHORIZED);
         }
-        else if (examQuestion.getName() == null){
+        else if (examQuestion.getName() == null || examQuestion.getQuestions() == null
+                || examQuestion.getStarttime() == null || examQuestion.getEndtime() == null){
             return new ResponseEntity<ExamSwagger>(new ExamSwagger(), HttpStatus.BAD_REQUEST);
         }
-
+        else if (examQuestion.getStarttime().isAfter(examQuestion.getEndtime())){
+            return new ResponseEntity<ExamSwagger>(new ExamSwagger(), HttpStatus.BAD_REQUEST);
+        }
         int exam_id = examQuestion.getId();
         if (examService.getExamById(exam_id) == null){
             return new ResponseEntity<ExamSwagger>(new ExamSwagger(), HttpStatus.BAD_REQUEST);
         }
 
         List<QuestionExam> questionExamTable = examQuestion.getQuestions();
+        for (QuestionExam questionExam: questionExamTable) {
+            if (questionExam.getScore() == 0){
+                return new ResponseEntity<ExamSwagger>(new ExamSwagger(), HttpStatus.BAD_REQUEST);
+            }
+            else{
+                Question question = questionService.getQuestionById(questionExam.getQuestion_id());
+                if (question == null){
+                    return new ResponseEntity<ExamSwagger>(new ExamSwagger(), HttpStatus.BAD_REQUEST);
+                }
+                else if (question.getWriter_id() != user_id){
+                    return new ResponseEntity<ExamSwagger>(new ExamSwagger(), HttpStatus.UNAUTHORIZED);
+                }
+            }
+        }
+        // 실행
         examService.deleteQuestionExam(exam_id);
         examService.updateExam(examQuestion);
-
         for (QuestionExam questionExam: questionExamTable) {
             questionExam.setExam_id(exam_id);
             examService.createQuestionExam(questionExam);
@@ -110,12 +151,13 @@ public class ExamController {
         return new ResponseEntity<ExamSwagger>(exam, HttpStatus.OK);
     }
 
+    @Transactional
     @ApiOperation(value = "시험 삭제", response = Boolean.class)
-    @RequestMapping(value = "/Exam", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/exam", method = RequestMethod.DELETE)
     @ResponseBody
-    public ResponseEntity<Boolean> deleteExam(@RequestParam int exam_id) {
+    public ResponseEntity<Boolean> deleteExam(@RequestParam int id) {
         int user_id = jwtservice.getId();
-        ExamSwagger exam = examService.getExamById(exam_id);
+        ExamSwagger exam = examService.getExamById(id);
 
         if (exam == null){
             return new ResponseEntity<Boolean>(false, HttpStatus.NOT_FOUND);
@@ -124,8 +166,8 @@ public class ExamController {
             return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
         }
 
-        examService.deleteQuestionExam(exam_id);
-        examService.deleteExam(exam_id);
+        examService.deleteQuestionExam(id);
+        examService.deleteExam(id);
 
         return new ResponseEntity<Boolean>(true, HttpStatus.OK);
     }

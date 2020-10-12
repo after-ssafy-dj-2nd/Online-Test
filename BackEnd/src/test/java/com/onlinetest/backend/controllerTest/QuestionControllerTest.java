@@ -9,7 +9,6 @@ import com.onlinetest.backend.dto.swagger.QuestionList;
 import com.onlinetest.backend.service.IJwtService;
 import com.onlinetest.backend.service.IUserService;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,7 +17,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.*;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -143,7 +141,6 @@ public class QuestionControllerTest {
     }
 
     @Test
-
     public void createQuestionTest() {
         // 문제 생성 기능
         // given
@@ -258,7 +255,7 @@ public class QuestionControllerTest {
     }
 
     @Test
-    public void questionDeleteTest(){
+    public void deleteQuestionTest(){
         // 문제 삭제 기능
         // given
         String uri = url + "/question?id=";

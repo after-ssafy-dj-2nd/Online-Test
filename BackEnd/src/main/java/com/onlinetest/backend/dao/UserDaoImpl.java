@@ -33,4 +33,8 @@ public class UserDaoImpl {
 	public void updatePwd(User user) {
 		sqlSeesion.update(ns+"updatePwd", user);
 	}
+
+	public String getUserName(int id) {
+		return sqlSeesion.selectOne(ns + "getUserName", id);
+	}
 }

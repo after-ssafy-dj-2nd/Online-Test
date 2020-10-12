@@ -1,5 +1,6 @@
 package com.onlinetest.backend.controller;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -163,6 +164,12 @@ public class UserController {
 		resultMap.put("status", true);
 		resultMap.put("resultMsg", "귀하의 이메일 주소로 새로운 임시 비밀번호를 발송 하였습니다.");
 		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/time", method = RequestMethod.GET)
+	public ResponseEntity<LocalDateTime> getLocalTime() throws Exception {
+		LocalDateTime now = LocalDateTime.now();
+		return new ResponseEntity<LocalDateTime> (now, HttpStatus.OK);
 	}
 
 }

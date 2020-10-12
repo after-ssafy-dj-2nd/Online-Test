@@ -7,7 +7,7 @@
         <id property="id" column="exam_id" javaType="int"/>
         <result property="name" column="exam_name"/>
         <result property="starttime" column="exam_starttime"/>
-        <result property="endtime" column="endtime"/>
+        <result property="endtime" column="exam_endtime"/>
         <result property="teacher_id" column="exam_teacher_id"/>
         <result property="teacher_name" column="exam_teacher_name"/>
         <collection property="questions" ofType="com.onlinetest.backend.dto.Question">
@@ -17,6 +17,7 @@
             <result property="commentary" column="q_commentary"/>
             <result property="type" column="q_type"/>
             <result property="writer_id" column="q_writer_id"/>
+            <result property="score" column="q_score"/>
             <collection property="examples" ofType="com.onlinetest.backend.dto.Example">
                 <id property="id" column="e_id"/>
                 <result property="question_id" column="e_question_id"/>
@@ -40,6 +41,7 @@
         q.commentary as q_commentary,
         q.type as q_type,
         q.writer_id as q_writer_id,
+        qe.score as q_score,
         e.id as e_id,
         e.question_id as e_question_id,
         e.content as e_content,
@@ -52,7 +54,7 @@
         where exam.teacher_id = #{user_id}
     </select>
 
-    <select id="getExam" parameterType="java.util.Map" resultMap="examResultMap">
+    <select id="getExam" parameterType="java.lang.Integer" resultMap="examResultMap">
         select
         exam.id as exam_id,
         exam.name as exam_name,
@@ -66,6 +68,7 @@
         q.commentary as q_commentary,
         q.type as q_type,
         q.writer_id as q_writer_id,
+        qe.score as q_score,
         e.id as e_id,
         e.question_id as e_question_id,
         e.content as e_content,
@@ -92,6 +95,7 @@
         q.commentary as q_commentary,
         q.type as q_type,
         q.writer_id as q_writer_id,
+        qe.score as q_score,
         e.id as e_id,
         e.question_id as e_question_id,
         e.content as e_content,

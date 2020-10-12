@@ -119,7 +119,7 @@ public class QuestionDaoTest {
     @Test
     @Transactional
     @Rollback(true)
-    public void updateExamTest(){
+    public void updateQuestionTest(){
         // 문제 수정 테스트
         // given
             // 문제 생성을 기반으로 빌드
@@ -159,7 +159,7 @@ public class QuestionDaoTest {
     @Test
     @Transactional
     @Rollback(true)
-    public void deleteExamTest(){
+    public void deleteQuestionTest(){
         // 문제 삭제 테스트
         // given
         int writer_id = 2;

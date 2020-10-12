@@ -15,6 +15,15 @@ public class QuestionExam {
         this.score = score;
     }
 
+    public QuestionExam(int question_id, int score) {
+        this.question_id = question_id;
+        this.score = score;
+    }
+
+    public QuestionExam(int question_id) {
+        this.question_id = question_id;
+    }
+
     public int getExam_id() {
         return exam_id;
     }
