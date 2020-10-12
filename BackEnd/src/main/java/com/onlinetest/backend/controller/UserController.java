@@ -166,7 +166,7 @@ public class UserController {
 		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/getTime", method = RequestMethod.GET)
+	@RequestMapping(value = "/time", method = RequestMethod.GET)
 	public ResponseEntity<LocalDateTime> getLocalTime() throws Exception {
 		LocalDateTime now = LocalDateTime.now();
 		return new ResponseEntity<LocalDateTime> (now, HttpStatus.OK);
