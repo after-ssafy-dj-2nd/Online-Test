@@ -23,7 +23,7 @@ const tryoutInfo = handleActions(
     [SAVE_AUTH_INFO]: (state, { payload }) => ({
       ...state,
       examInfo: payload.examInfo,
-      studentInfo: payload.examInfo
+      studentInfo: payload.studentInfo
     }),
     [REMOVE_AUTH_INFO]: () => ({
       auth: false,
