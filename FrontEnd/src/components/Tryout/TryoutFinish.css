@@ -1,0 +1,29 @@
+.finish-box {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  border: 2px solid var(--beige);
+  border-radius: 20px;
+  box-shadow: var(--box-shadow);
+  text-align: center;
+  padding: 50px 0;
+}
+
+.finish-box i {
+  font-size: 80px;
+  margin-bottom: 30px;
+  color: var(--black);
+}
+
+.finish-box p {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.75;
+  color: var(--red);
+}
+
+.finish-box .main-btn {
+  margin-top: 10px;
+}

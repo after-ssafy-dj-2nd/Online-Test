@@ -10,6 +10,7 @@ import './assets/css/normalize.css';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import IntroPage from './pages/IntroPage';
 import rootReducer from './store';
+import TryoutPage from './pages/TryoutPage';
 
 const store = createStore(rootReducer, composeWithDevTools());
 
@@ -18,6 +19,7 @@ ReactDOM.render(
     <BrowserRouter>
       <Switch>
         <Route path="/" render={() => <IntroPage />} exact />
+        <Route path={["/tryout/:examId/", "/tryout/:examId/:status"]} render={() => <TryoutPage />} />
         <Route path="/" render={() => <App/>} />
       </Switch>
     </BrowserRouter>

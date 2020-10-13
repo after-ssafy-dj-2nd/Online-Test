@@ -1,36 +1,48 @@
-# Solving Algorithm
+# :school: Untact Online Test
 
----
+<br>
 
-▶️ 코딩 테스트 통과를 위해 특별 알고리즘 문제풀이 기간 동안 해결할 알고리즘 문제 리스트
+## :one: Overview
 
-▶️ 문제 풀이 후 아래 github repository에 코드 업로드
+- 코로나 19로 인해 언택트 비대면 환경에서 온라인에서 시험을 볼 수 있도록 환경을 제공해주는 시험 플랫폼 서비스
 
-[after-ssafy-dj-2nd/algorithm-problem](https://github.com/after-ssafy-dj-2nd/algorithm-problem)
+- 포스트 코로나 시대에 대비하여 온라인 환경에서도 장소와 인원에 구애받지 않고 시험을 볼 수 있다는 큰 장점이 있다.
+- 프로젝트 기간 : 20.09.01 ~ now
 
-▶️ 다 푼 경우 Daily Algorithm으로 지정하지 않은 남은 알고리즘 문제도 풀어보기
+<br>
 
----
+## :two: Tech Stack
 
-## 📜 Daily Algorithm List
+:round_pushpin: <b>Frontend</b> : `React.js`
 
-### 2020.09.09(수) - (Programmers / 2020 KAKAO BLIND RECRUITMENT)
+:round_pushpin: <b>Backend</b> : `Spring Boot`
 
-- 문자열 압축
-- 괄호 변환
-- 자물쇠와 열쇠
-- 기둥과 보 설치
-- 블록 이동하기
+:round_pushpin: <b>Database</b> : `MySQL` 
 
-### 2020.09.10(목) - (Programmers / 2020, 2019 KAKAO BLIND RECRUITMENT)
+:round_pushpin: <b>Using Editor</b> : Visual Studio Code
 
-- 외벽 점검(2020)
-- 가사 검색(2020)
-- 오픈채팅방(2019)
-- 실패율(2019)
-- 후보키(2019)
+<br>
 
-### 2020.10.08(목)
+## :three: Quick Start
 
-- [BOJ]구슬 탈출 2
-- [BOJ]낚시왕
+### :pushpin: Local에서 실행
+
+- Coming Soon...
+
+### :pushpin: Production Mode
+
+- Coming Soon...
+
+<br>
+
+## :four: Service Architecture
+
+<br>
+
+## :five: ERD Diagram
+
+<br>
+
+## :six: Description
+
+<br>

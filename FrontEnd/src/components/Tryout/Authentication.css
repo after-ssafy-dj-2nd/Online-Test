@@ -1,0 +1,32 @@
+.test-authentication {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  text-align: center;
+}
+
+.test-authentication i {
+  font-size: 80px;
+  margin-bottom: 30px;
+  color: var(--gray);
+  animation: flicker 1s linear alternate infinite;
+}
+
+.test-authentication p {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.75;
+  color: var(--red);
+}
+
+@keyframes flicker {
+  0% {
+    color: var(--gray);
+  }
+
+  100% {
+    color: var(--black);
+  }
+}
