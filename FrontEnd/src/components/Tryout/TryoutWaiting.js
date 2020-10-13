@@ -20,7 +20,7 @@ const reducer = (state, action) => {
   const result = action.payload
   return {
     ...state,
-    diffTime: 40000,
+    diffTime: 5,
     id : result.data.id,
     name : result.data.name,
     endTime : result.data.endtime,
@@ -54,7 +54,7 @@ const ExamWaitingPage = () => {
   ]
   return (
     <div className="examwaiting-wrap">
-      <StartExamButton diffTime={state.diffTime}/>
+      <StartExamButton diffTime={state.diffTime} examId={state.id}/>
       <div className="examwaiting-content">
         {examContentList.map((content, i) => {
           return (<ExamWaitingSection key={i} title={content.title}>
