@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import TeacherQuestion from './TeacherQuestion'
-import {$} from '../../util/DOM'
+import {$} from '../../../util/DOM'
 
 const defaultQuestion = [
   {content:'', examples : [{content : '', correct:false},{content : '', correct:false},{content : '', correct:false}], description: '' ,correct : [0,1]},
