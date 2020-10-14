@@ -10,7 +10,7 @@ import { Switch, withRouter } from 'react-router';
 import { Route } from 'react-router-dom';
 
 const TryoutPage = ({ location }) => {
-  const authenticationStatus = location.pathname.split('/').length == 4 && !location.pathname.includes('finish')
+  const authenticationStatus = location.pathname.split('/').length === 4 && !location.pathname.includes('finish');
 
   return (
     <>

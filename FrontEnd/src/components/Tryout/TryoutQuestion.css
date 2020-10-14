@@ -1,0 +1,7 @@
+.tryout-question-header {
+  font-size: 1.2rem;
+  font-weight: 600;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--light-gray);
+}

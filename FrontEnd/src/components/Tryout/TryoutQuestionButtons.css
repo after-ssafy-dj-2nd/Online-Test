@@ -1,0 +1,16 @@
+.tryout-question-buttons {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.5rem;
+  padding-bottom: 1.25rem
+}
+
+.tryout-question-buttons .tryout-question-button {
+  background-color: var(--beige);
+  box-shadow: var(--box-shadow);
+  padding: 0.2rem 0;
+}
+
+.tryout-question-buttons .tryout-question-button:hover {
+  cursor: pointer;
+}
