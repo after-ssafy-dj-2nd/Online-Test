@@ -52,6 +52,10 @@ public class TestController {
 		
 		Exam exam = testservice.getExam(exam_id);
 		
+		if(exam == null) {
+			return new ResponseEntity<Exam>(HttpStatus.NO_CONTENT);
+		}
+		
 		return new ResponseEntity<Exam>(exam, HttpStatus.OK);
 	}
 	
@@ -66,6 +70,10 @@ public class TestController {
 		int student_id = jwtservice.getId();
 		
 		if(testservice.isExamStudent(new ExamStudent(student_id, exam_id)) > 0) {
+			return new ResponseEntity<QuestionList>(HttpStatus.BAD_REQUEST);
+		}
+		
+		if(testservice.isPossible(exam_id) == 0) {
 			return new ResponseEntity<QuestionList>(HttpStatus.BAD_REQUEST);
 		}
 		
