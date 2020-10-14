@@ -2,6 +2,7 @@ package com.onlinetest.backend.dao;
 
 import com.onlinetest.backend.dto.Example;
 import com.onlinetest.backend.dto.Question;
+import com.onlinetest.backend.dto.swagger.QuestionList;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -17,8 +18,9 @@ public class QuestionDaoImpl {
     @Autowired
     private SqlSession sqlSeesion;
 
-    public List<Question> getQuestions(int user_id){
-        return sqlSeesion.selectList(ns + "getQuestions", user_id);
+    public QuestionList getQuestions(int user_id){
+        List<Question> questions = sqlSeesion.selectList(ns + "getQuestions", user_id);
+        return new QuestionList(questions);
     }
 
     public Question getQuestion(Map<String, Integer> paramMap){

@@ -17,6 +17,7 @@ public class Exam {
 	private LocalDateTime endtime;
 	private int teacher_id;
 	private String teacher_name;
+
 	
 	public Exam() {
 		super();
@@ -29,6 +30,24 @@ public class Exam {
 		this.starttime = starttime;
 		this.endtime = endtime;
 		this.teacher_id = teacher_id;
+	}
+
+	public Exam(LocalDateTime starttime, LocalDateTime endtime, int teacher_id) {
+		this.starttime = starttime;
+		this.endtime = endtime;
+		this.teacher_id = teacher_id;
+	}
+
+	public Exam(String name, LocalDateTime starttime, int teacher_id) {
+		this.name = name;
+		this.starttime = starttime;
+		this.teacher_id = teacher_id;
+	}
+
+	public Exam(String name, LocalDateTime starttime, LocalDateTime endtime) {
+		this.name = name;
+		this.starttime = starttime;
+		this.endtime = endtime;
 	}
 
 	public Exam(int id, String name, LocalDateTime starttime, LocalDateTime endtime, int teacher_id) {
@@ -47,6 +66,27 @@ public class Exam {
 		this.starttime = starttime;
 		this.endtime = endtime;
 		this.teacher_name = teacher_name;
+	}
+
+	public Exam(int id, LocalDateTime starttime, LocalDateTime endtime, int teacher_id) {
+		this.id = id;
+		this.starttime = starttime;
+		this.endtime = endtime;
+		this.teacher_id = teacher_id;
+	}
+
+	public Exam(int id, String name, LocalDateTime endtime, int teacher_id) {
+		this.id = id;
+		this.name = name;
+		this.endtime = endtime;
+		this.teacher_id = teacher_id;
+	}
+
+	public Exam(int id, String name, LocalDateTime starttime, LocalDateTime endtime) {
+		this.id = id;
+		this.name = name;
+		this.starttime = starttime;
+		this.endtime = endtime;
 	}
 
 	public int getId() {

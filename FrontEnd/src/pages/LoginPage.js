@@ -1,13 +1,20 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
 import Login from '../components/Login/Login';
 import FindPassword from '../components/Login/FindPassword';
+import { useSelector } from 'react-redux';
 
 const LoginPage = ({ location }) => {
   const { pathname } = location;
+  const { loginStatus } = useSelector(state => state.users);
 
   return (
-    pathname === '/login' ? <Login /> : <FindPassword />
+    <>
+      {!loginStatus
+        ? pathname === '/login' ? <Login /> : <FindPassword />
+        : <Redirect to="/main" />
+      }
+    </>
   );
 };
 

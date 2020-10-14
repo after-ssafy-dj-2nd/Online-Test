@@ -11,8 +11,10 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<mappers>
+		<mapper resource="exam.xml" />
 		<mapper resource="question.xml" />
 		<mapper resource="user.xml" />
 		<mapper resource="test.xml" />
+
 	</mappers>
 </configuration>

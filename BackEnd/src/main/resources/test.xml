@@ -3,27 +3,96 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="test">
-		
-		<insert id="setStartTest"
-			parameterType="com.onlinetest.backend.dto.ExamStudent">
-			insert into exam_student (student_id, exam_id, starttime) 
-			VALUES (#{student_id}, #{exam_id}, now());
-		</insert>
-		
-		<select id="getExam"
-		parameterType="int"
+
+	<insert id="setStartTest"
+		parameterType="com.onlinetest.backend.dto.ExamStudent">
+		insert into exam_student (student_id, exam_id, starttime)
+		VALUES (#{student_id}, #{exam_id}, now());
+	</insert>
+
+	<select id="getExam" parameterType="int"
 		resultType="com.onlinetest.backend.dto.Exam">
-			select e.id, e.name, starttime, endtime, u.name teacher_name
-			from exam e, user u
-			where e.id=#{exam_id} and e.teacher_id=u.id
-		</select>
-		
-		<select id="getQuestion"
-			parameterType="int"
-			resultType="com.onlinetest.backend.dto.Question">
-			select id, content, description, type, e.score score
-			from question_exam e, question q
-			where e.exam_id=#{exam_id} and e.question_id=q.id
-		</select>
-		
-	</mapper>
+		select e.id, e.name, starttime, endtime, u.name teacher_name
+		from exam e, user u
+		where e.id=#{exam_id} and e.teacher_id=u.id
+	</select>
+
+	<resultMap id="questionResultMap"
+		type="com.onlinetest.backend.dto.Question">
+		<id property="id" column="q_id" javaType="int" />
+		<result property="content" column="q_content" />
+		<result property="description" column="description" />
+		<result property="type" column="type" />
+		<result property="score" column="score" />
+		<collection property="examples" ofType="com.onlinetest.backend.dto.Example">
+			<id property="id" column="e_id" />
+			<result property="content" column="e_content" />
+		</collection>
+	</resultMap>
+
+	<select id="getQuestion" parameterType="int" resultMap="questionResultMap">
+		select q.id q_id, q.content q_content, description, type, score, e.id e_id, e.content e_content 
+		from question_exam ex, question q
+        left join (select e.id, e.question_id, e.content 
+				from example e, question q 
+				where e.question_id=q.id and q.type=1) e 
+            on q.id=e.question_id
+		where ex.exam_id=#{exam_id} and ex.question_id=q.id
+	</select>
+	
+	<select id="isExamStudent" parameterType="com.onlinetest.backend.dto.ExamStudent"
+		resultType="int">
+		select count(*)
+		from exam_student
+		where exam_id=#{exam_id} and student_id=#{student_id}
+	</select>
+	
+	<select id="getExamStudent" parameterType="com.onlinetest.backend.dto.ExamStudent"
+		resultType="com.onlinetest.backend.dto.ExamStudent">
+		select id, student_id, exam_id, starttime, endtime, student_score
+		from exam_student
+		where exam_id=#{exam_id} and student_id=#{student_id}
+	</select>
+	
+	<resultMap id="answerResultMap"
+		type="com.onlinetest.backend.dto.Submit">
+		<id property="question_id" column="q_id" javaType="int" />
+		<result property="type" column="type" />
+		<result property="score" column="score" />
+		<collection property="answer" javaType="List" ofType="string">
+			<id property="answer" column="e_id"/>
+		</collection>
+	</resultMap>
+	
+	<select id="getAnswer" parameterType="int"
+		resultMap="answerResultMap">
+		select q.id q_id, type, score, if(type=1, e.id, e.content) e_id
+		from question_exam ex, question q
+        left join example e 
+            on q.id=e.question_id
+		where ex.exam_id=#{exam_id} and ex.question_id=q.id and e.correct=1
+	</select>
+	
+	<insert id="setAnswer"
+		parameterType="com.onlinetest.backend.dto.Answer">
+		insert into answer (exam_student_id, question_id, answer, correct)
+		VALUES (#{exam_student_id}, #{question_id}, #{answer}, #{correct})
+	</insert>
+	
+	<update id="setScore"
+	parameterType="com.onlinetest.backend.dto.ExamStudent">
+		update exam_student 
+		set student_score=#{student_score}, endtime=now()
+		where id = #{id}
+	</update>
+	
+	<select id="isPossible" parameterType="int"
+		resultType="int">
+		<![CDATA[
+		select count(*) 
+		from exam
+		where id=#{exam_id} and starttime<now() and endtime>now()
+		]]>
+	</select>
+
+</mapper>

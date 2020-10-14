@@ -138,39 +138,39 @@ textarea:disabled {
 
 /* (7) 배경색 지정 */
 .bg-red {
-  color: var(--red);
+  background-color: var(--red);
 }
 
 .bg-orangered {
-  color: var(--orangered);
+  background-color: var(--orangered);
 }
 
 .bg-gray {
-  color: var(--gray);
+  background-color: var(--gray);
 }
 
 .bg-light-gray {
-  color: var(--light-gray);
+  background-color: var(--light-gray);
 }
 
 .bg-beige {
-  color: var(--beige);
+  background-color: var(--beige);
 }
 
 .bg-oynx {
-  color: var(--oynx);
+  background-color: var(--oynx);
 }
 
 .bg-orange {
-  color: var(--orange);
+  background-color: var(--orange);
 }
 
 .bg-black {
-  color: var(--black);
+  background-color: var(--black);
 }
 
 .bg-white {
-  color: var(--white);
+  background-color: var(--white);
 }
 
 /* (8) 텍스트 정렬 */
