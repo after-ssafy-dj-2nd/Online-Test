@@ -43,11 +43,11 @@ const ExamAddStudent = () => {
     }
   }
   const excelExport = (event) => {
-    var input = event.target;
-    var reader = new FileReader();
+    let input = event.target;
+    let reader = new FileReader();
     reader.onload = function(){
-      var fileData = reader.result;
-      var wb = XLSX.read(fileData, {type : 'binary'});
+      let fileData = reader.result;
+      let wb = XLSX.read(fileData, {type : 'binary'});
       const sheet = wb.Sheets[wb.SheetNames[0]]
       const mailList = Object.entries(sheet).map(data => data[1].v).slice(0,-1)
       const validMailList = mailList.filter(mail=> emailDuplCheck(mail) && validation.emailValidation(mail))

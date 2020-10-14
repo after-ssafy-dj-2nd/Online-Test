@@ -130,7 +130,7 @@ const TeacherExamDetail = () => {
   }
   return (
     <>
-      <hr></hr>
+      <hr/>
       <span>선택된 문제</span>
       <div className="questions-box">
         {selectedItems.map((question,id)=> 
