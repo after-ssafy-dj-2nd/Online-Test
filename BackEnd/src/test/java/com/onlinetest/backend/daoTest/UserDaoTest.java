@@ -121,22 +121,6 @@ public class UserDaoTest {
         assertThat(loginUser.getAuth()).isEqualTo(user.getAuth());
         assertThat(loginUser.getName()).isEqualTo(user.getName());
         assertThat(loginUser.getEmail()).isEqualTo(user.getEmail());
-
-
     }
-
-//    @Test
-//    @Rollback
-//    public void getUserName(){
-//        // given
-//        User user = new User("unitTestCase", "test", 0, "unitTestCase", "unitTestCase@onlineTest.com");
-//        userDao.signUp(user);
-//
-//        // when
-//        String name = userDao.getUserName(user.getId());
-//
-//        // then
-//        assertThat(name).isEqualTo(user.getName());
-//    }
 }
 
