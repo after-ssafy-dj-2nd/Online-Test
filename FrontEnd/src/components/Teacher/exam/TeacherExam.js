@@ -1,5 +1,5 @@
 import React, {useReducer} from 'react';
-import { reducer } from '../../util/reducer';
+import { reducer } from '../../../util/reducer';
 
 const TeacherExam = () => {
   const [state, dispatch] = useReducer(reducer, {

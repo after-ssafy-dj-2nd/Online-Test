@@ -1,31 +1,23 @@
 import React , {useState,useEffect} from 'react'
 import Exam from './exam'
-import {fetchExams} from '../../api/modules/exams'
+import {fetchExams} from '../../../api/modules/exams'
 
 const statuses = ['완료', '진행중','종료']
 let EXAM_SAMPLE = [
     {
       title: '1번 시험',
-      startTime: '2020-09-15T13:00',
-      endTime:'2020-09-15T15:00',
+      startTime: '2020-09-27T13:00',
+      endTime:'2020-09-27T15:00',
       isOpen: true,
       participants : 10,
       password : ''
     },
     {
       title: '2번 시험',
-      startTime: '2020-09-16T00:00',
-      endTime:'2020-09-17T15:00',
+      startTime: '2020-09-29T00:00',
+      endTime:'2020-09-29T15:00',
       isOpen: false,
       participants : 20,
-      password : 'asdf'
-    },
-    {
-      title: '3번 시험',
-      startTime: '2020-10-07T14:00',
-      endTime:'2020-10-07T17:30',
-      isOpen: false,
-      participants : 12,
       password : 'asdf'
     },
   ]
@@ -36,9 +28,9 @@ const TeacherHome = () => {
   useEffect(()=>{
     const fetchData = async ()=> {
       try {
-        const { data } = await fetchExams();
-        setExams(data);
-        EXAM_SAMPLE = data
+        // const { data } = await fetchExams();
+        // setExams(data);
+        // EXAM_SAMPLE = data
       } catch {
         setExams(EXAM_SAMPLE)
         return

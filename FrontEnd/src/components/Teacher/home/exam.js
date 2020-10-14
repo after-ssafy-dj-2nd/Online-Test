@@ -1,7 +1,7 @@
 import React from 'react'
 import { withRouter } from 'react-router-dom';
+import {timeDiff, timeToString, diffSecond} from '../../../util/time'
 
-import {timeDiff, timeToString, diffSecond} from '../../util/time'
 const Examcard = (props) => {
   const {exam, id, history} = props
   const examStatus = () => {
