@@ -70,25 +70,26 @@ public class ExamController {
         if (examQuestion.getTeacher_id() != user_id){
             return new ResponseEntity<ExamSwagger>(new ExamSwagger(), HttpStatus.UNAUTHORIZED);
         }
-        else if (examQuestion.getName() == null || examQuestion.getQuestions() == null
-                || examQuestion.getStarttime() == null || examQuestion.getEndtime() == null){
+        else if (examQuestion.getName() == null || examQuestion.getStarttime() == null || examQuestion.getEndtime() == null){
             return new ResponseEntity<ExamSwagger>(new ExamSwagger(), HttpStatus.BAD_REQUEST);
         }
         else if (examQuestion.getStarttime().isAfter(examQuestion.getEndtime())){
             return new ResponseEntity<ExamSwagger>(new ExamSwagger(), HttpStatus.BAD_REQUEST);
         }
         List<QuestionExam> questionExamTable = examQuestion.getQuestions();
-        for (QuestionExam questionExam: questionExamTable) {
-            if (questionExam.getScore() == 0){
-                return new ResponseEntity<ExamSwagger>(new ExamSwagger(), HttpStatus.BAD_REQUEST);
-            }
-            else{
-                Question question = questionService.getQuestionById(questionExam.getQuestion_id());
-                if (question == null){
+        if (questionExamTable.size() > 0) {
+            for (QuestionExam questionExam: questionExamTable) {
+                if (questionExam.getScore() == 0){
                     return new ResponseEntity<ExamSwagger>(new ExamSwagger(), HttpStatus.BAD_REQUEST);
                 }
-                else if (question.getWriter_id() != user_id){
-                    return new ResponseEntity<ExamSwagger>(new ExamSwagger(), HttpStatus.UNAUTHORIZED);
+                else{
+                    Question question = questionService.getQuestionById(questionExam.getQuestion_id());
+                    if (question == null){
+                        return new ResponseEntity<ExamSwagger>(new ExamSwagger(), HttpStatus.BAD_REQUEST);
+                    }
+                    else if (question.getWriter_id() != user_id){
+                        return new ResponseEntity<ExamSwagger>(new ExamSwagger(), HttpStatus.UNAUTHORIZED);
+                    }
                 }
             }
         }
