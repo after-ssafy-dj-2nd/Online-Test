@@ -41,6 +41,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where `user_id` = #{user_id}
 	</update>
 
+	<select id="signUpCheck" parameterType="string" resultType="int">
+		select count(*) from user where email = #{email}
+	</select>
+
+	<select id="getUserPk" parameterType="string" resultType="int">
+		select id from user where email = #{email}
+	</select>
+
 	<select id="getUserName" parameterType="int" resultType="string">
 		select name from user where id = #{user_id}
 	</select>

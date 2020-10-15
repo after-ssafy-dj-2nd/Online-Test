@@ -15,4 +15,9 @@ public interface IUserService {
 
 	boolean sendEamil(String subject, String pwdMsg, String email);
 
+	boolean signUpCheck(String email);
+
+	int getUserPk(String email);
+
+	String getUserName(int id);
 }	

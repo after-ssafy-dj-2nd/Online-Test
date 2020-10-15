@@ -34,6 +34,14 @@ public class UserDaoImpl {
 		sqlSeesion.update(ns+"updatePwd", user);
 	}
 
+	public int signUpCheck(String email) {
+		return sqlSeesion.selectOne(ns + "signUpCheck", email);
+	}
+
+	public int getUserPk(String email) {
+		return sqlSeesion.selectOne(ns + "getUserPk", email);
+	}
+
 	public String getUserName(int id) {
 		return sqlSeesion.selectOne(ns + "getUserName", id);
 	}

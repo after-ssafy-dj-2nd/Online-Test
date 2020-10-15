@@ -1,10 +1,10 @@
 package com.onlinetest.backend.controller;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
+import com.onlinetest.backend.dto.swagger.*;
+import com.onlinetest.backend.service.IExamService;
+import com.onlinetest.backend.service.IUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +17,6 @@ import com.onlinetest.backend.dto.Exam;
 import com.onlinetest.backend.dto.ExamStudent;
 import com.onlinetest.backend.dto.Question;
 import com.onlinetest.backend.dto.Submit;
-import com.onlinetest.backend.dto.swagger.QuestionList;
-import com.onlinetest.backend.dto.swagger.SubmitSwagger;
 import com.onlinetest.backend.service.IJwtService;
 import com.onlinetest.backend.service.ITestService;
 
@@ -39,6 +37,47 @@ public class TestController {
 	
 	@Autowired
     private IJwtService jwtservice;
+
+	@Autowired
+	private IUserService userService;
+
+	@Autowired
+	private IExamService examService;
+
+
+	@ApiOperation(value = "시험 볼 학생 추가", response = ExamUserSwagger.class)
+	@RequestMapping(value = "/test/student", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<ExamUserResultSwagger> setExamUser(@RequestBody ExamUserSwagger examUserSwagger) throws Exception {
+		logger.info("1-------------examUser-----------------------------" + new Date());
+		int teacher_id = jwtservice.getId();
+		int exam_id = examUserSwagger.getExam_id();
+		Map<String, Integer> paramMap = new HashMap<>();
+		paramMap.put("id", exam_id);
+		paramMap.put("user_id", teacher_id);
+		ExamSwagger exam = examService.getExam(paramMap);
+		ExamUserResultSwagger result = new ExamUserResultSwagger();
+		List<String> registeredStudent = new ArrayList<>();
+		List<String> notFoundedStudent = new ArrayList<>();
+		if (exam == null){
+			result.setStatus("해당하는 시험을 찾을 수 없습니다.");
+			return new ResponseEntity<ExamUserResultSwagger>(result, HttpStatus.NOT_FOUND);
+		}
+		for (String studentEmail:examUserSwagger.getUserList()) {
+			if (userService.signUpCheck(studentEmail)){
+				int student_id = userService.getUserPk(studentEmail);
+				testservice.setExamStudent(new ExamStudent(student_id, exam_id));
+				registeredStudent.add(studentEmail);
+			}
+			else {
+				notFoundedStudent.add(studentEmail);
+			}
+		}
+		result.setStatus("학생 등록이 완료되었습니다.");
+		result.setRegister(registeredStudent);
+		result.setNotRegister(notFoundedStudent);
+		return new ResponseEntity<ExamUserResultSwagger>(result, HttpStatus.NO_CONTENT);
+	}
 	
 	@ApiResponses(value = { 
             @ApiResponse(code = 200, message = "Successful", response = Exam.class)})

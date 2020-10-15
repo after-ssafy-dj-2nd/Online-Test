@@ -16,10 +16,11 @@ import com.onlinetest.backend.dto.Submit;
 public class TestDaoImpl {
 
 	String ns = "test.";
-	
+
 	@Autowired
 	private SqlSession sqlSeesion;
 
+	// 수정필요-> 시작시간만 변경 하도록 변경해야 할듯
 	public void setStartTest(ExamStudent examStudent) {
 		sqlSeesion.insert(ns+"setStartTest", examStudent);
 	}
@@ -54,5 +55,10 @@ public class TestDaoImpl {
 
 	public int isPossible(int exam_id) {
 		return sqlSeesion.selectOne(ns+"isPossible", exam_id);
+	}
+
+	// 수정이 필요 -> db starttime 수정 후
+	public void setExamStudent(ExamStudent examStudent) {
+		sqlSeesion.insert(ns + "setExamStudent", examStudent);
 	}
 }
