@@ -150,7 +150,6 @@ public class QuestionControllerTest {
         String description = "문제 설명";
         String commentary = "문제 해설";
         boolean type = true;
-        int wrong_user_id = 2;
         List<Example> exampleList = new ArrayList<>();
         exampleList.add(new Example("보기1", false));
         exampleList.add(new Example("보기2", false));
@@ -164,18 +163,13 @@ public class QuestionControllerTest {
         // 보기 없을 때
         Question wrongQuestion1 = new Question(content, description, commentary, type, user_id);
         HttpEntity<Question> wrong_httpEntity1 = new HttpEntity<>(wrongQuestion1, headers);
-        // 작성자가 잘못 되었을 때
-        Question wrongQuestion2 = new Question(content, description, commentary, type, wrong_user_id, exampleList);
-        HttpEntity<Question> wrong_httpEntity2 = new HttpEntity<>(wrongQuestion2, headers);
 
         // when
         ResponseEntity<Question> responseEntity = restTemplate.exchange(uri, HttpMethod.POST, httpEntity, Question.class);
         ResponseEntity<Question> wrongResponseEntity1 = restTemplate.exchange(uri, HttpMethod.POST, wrong_httpEntity1, Question.class);
-        ResponseEntity<Question> wrongResponseEntity2 = restTemplate.exchange(uri, HttpMethod.POST, wrong_httpEntity2, Question.class);
 
         // then
         assertThat(wrongResponseEntity1.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-        assertThat(wrongResponseEntity2.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         List<Question> questionList = questionDao.getQuestions(user_id).getQuestion();
         Question question1 = questionList.get(questionList.size()-1);
@@ -226,9 +220,7 @@ public class QuestionControllerTest {
         // 보기 없을 때
         Question wrongQuestion1 = new Question(question_id, content, description, commentary, type, user_id);
         HttpEntity<Question> wrong_httpEntity1 = new HttpEntity<>(wrongQuestion1, headers);
-        // 작성자가 잘못 되었을 때
-        Question wrongQuestion2 = new Question(question_id, content, description, commentary, type, wrong_user_id, exampleList);
-        HttpEntity<Question> wrong_httpEntity2 = new HttpEntity<>(wrongQuestion2, headers);
+
         // pk가 잘못 들어 갔을 때
         Question wrongQuestion3 = new Question(wrong_question_id, content, description, commentary, type, user_id, exampleList);
         HttpEntity<Question> wrong_httpEntity3 = new HttpEntity<>(wrongQuestion3, headers);
@@ -236,12 +228,10 @@ public class QuestionControllerTest {
         // when
         ResponseEntity<Question> responseEntity = restTemplate.exchange(uri, HttpMethod.PUT, httpEntity, Question.class);
         ResponseEntity<Question> wrongResponseEntity1 = restTemplate.exchange(uri, HttpMethod.PUT, wrong_httpEntity1, Question.class);
-        ResponseEntity<Question> wrongResponseEntity2 = restTemplate.exchange(uri, HttpMethod.PUT, wrong_httpEntity2, Question.class);
         ResponseEntity<Question> wrongResponseEntity3 = restTemplate.exchange(uri, HttpMethod.PUT, wrong_httpEntity3, Question.class);
 
         // then
         assertThat(wrongResponseEntity1.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-        assertThat(wrongResponseEntity2.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
         assertThat(wrongResponseEntity3.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         Question question1 = questionDao.getQuestionById(question_id);
