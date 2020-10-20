@@ -156,7 +156,7 @@ public class ExamControllerTest {
         LocalDateTime endtime = LocalDateTime.of(2020, 10, 6, 15,0,0);
 
         int teacher_id = 4;
-        int wrong_teacher_id = 2;
+
 
         int question_id = 74;
         int wrong_question_id1 = 18;
@@ -166,7 +166,7 @@ public class ExamControllerTest {
         // 정상 시험
         Exam exam = new Exam(name, starttime, endtime, teacher_id);
         // 접속한 사람과 시험 내는사람이 다른 경우
-        Exam wrong_exam1 = new Exam(name, starttime, endtime, wrong_teacher_id);
+
         // 시험의 이름이 없는 경우
         Exam wrong_exam2 = new Exam(starttime, endtime, teacher_id);
         // 시험의 시작시간이 없는 경우
@@ -199,9 +199,8 @@ public class ExamControllerTest {
         // 문제가 없는 케이스
         ExamQuestionsSwagger wrong_case3 = new ExamQuestionsSwagger(exam, wrong_questionExamTable3);
         HttpEntity<ExamQuestionsSwagger> wrong_httpEntity3 = new HttpEntity<>(wrong_case3, headers);
-        // 접속한 사람과 시험 내는사람이 다른 경우
-        ExamQuestionsSwagger wrong_case4 = new ExamQuestionsSwagger(wrong_exam1, questionExamTable);
-        HttpEntity<ExamQuestionsSwagger> wrong_httpEntity4 = new HttpEntity<>(wrong_case4, headers);
+
+
         // 시험의 이름이 없는 경우
         ExamQuestionsSwagger wrong_case5 = new ExamQuestionsSwagger(wrong_exam2, questionExamTable);
         HttpEntity<ExamQuestionsSwagger> wrong_httpEntity5 = new HttpEntity<>(wrong_case5, headers);
@@ -218,7 +217,7 @@ public class ExamControllerTest {
         ResponseEntity<ExamSwagger> wrongResponseEntity1 = restTemplate.exchange(uri, HttpMethod.POST, wrong_httpEntity1, ExamSwagger.class);
         ResponseEntity<ExamSwagger> wrongResponseEntity2 = restTemplate.exchange(uri, HttpMethod.POST, wrong_httpEntity2, ExamSwagger.class);
         ResponseEntity<ExamSwagger> wrongResponseEntity3 = restTemplate.exchange(uri, HttpMethod.POST, wrong_httpEntity3, ExamSwagger.class);
-        ResponseEntity<ExamSwagger> wrongResponseEntity4 = restTemplate.exchange(uri, HttpMethod.POST, wrong_httpEntity4, ExamSwagger.class);
+
         ResponseEntity<ExamSwagger> wrongResponseEntity5 = restTemplate.exchange(uri, HttpMethod.POST, wrong_httpEntity5, ExamSwagger.class);
         ResponseEntity<ExamSwagger> wrongResponseEntity6 = restTemplate.exchange(uri, HttpMethod.POST, wrong_httpEntity6, ExamSwagger.class);
         ResponseEntity<ExamSwagger> wrongResponseEntity7 = restTemplate.exchange(uri, HttpMethod.POST, wrong_httpEntity7, ExamSwagger.class);
@@ -227,7 +226,6 @@ public class ExamControllerTest {
         assertThat(wrongResponseEntity1.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
         assertThat(wrongResponseEntity2.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
         assertThat(wrongResponseEntity3.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-        assertThat(wrongResponseEntity4.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
         assertThat(wrongResponseEntity5.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
         assertThat(wrongResponseEntity6.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
         assertThat(wrongResponseEntity7.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
@@ -279,8 +277,7 @@ public class ExamControllerTest {
 
         // 정상 시험
         Exam exam = new Exam(exam_id, name, starttime, endtime, teacher_id);
-        // 접속한 사람과 시험 내는사람이 다른 경우
-        Exam wrong_exam1 = new Exam(exam_id, name, starttime, endtime, wrong_teacher_id);
+
         // 시험의 이름이 없는 경우
         Exam wrong_exam2 = new Exam(exam_id, starttime, endtime, teacher_id);
         // 시험의 시작시간이 없는 경우
@@ -315,9 +312,7 @@ public class ExamControllerTest {
         // 문제가 없는 케이스
         ExamQuestionsSwagger wrong_case3 = new ExamQuestionsSwagger(exam, wrong_questionExamTable3);
         HttpEntity<ExamQuestionsSwagger> wrong_httpEntity3 = new HttpEntity<>(wrong_case3, headers);
-        // 접속한 사람과 시험 내는사람이 다른 경우
-        ExamQuestionsSwagger wrong_case4 = new ExamQuestionsSwagger(wrong_exam1, questionExamTable);
-        HttpEntity<ExamQuestionsSwagger> wrong_httpEntity4 = new HttpEntity<>(wrong_case4, headers);
+
         // 시험의 이름이 없는 경우
         ExamQuestionsSwagger wrong_case5 = new ExamQuestionsSwagger(wrong_exam2, questionExamTable);
         HttpEntity<ExamQuestionsSwagger> wrong_httpEntity5 = new HttpEntity<>(wrong_case5, headers);
@@ -335,7 +330,7 @@ public class ExamControllerTest {
         ResponseEntity<ExamSwagger> wrongResponseEntity1 = restTemplate.exchange(uri, HttpMethod.PUT, wrong_httpEntity1, ExamSwagger.class);
         ResponseEntity<ExamSwagger> wrongResponseEntity2 = restTemplate.exchange(uri, HttpMethod.PUT, wrong_httpEntity2, ExamSwagger.class);
         ResponseEntity<ExamSwagger> wrongResponseEntity3 = restTemplate.exchange(uri, HttpMethod.PUT, wrong_httpEntity3, ExamSwagger.class);
-        ResponseEntity<ExamSwagger> wrongResponseEntity4 = restTemplate.exchange(uri, HttpMethod.PUT, wrong_httpEntity4, ExamSwagger.class);
+
         ResponseEntity<ExamSwagger> wrongResponseEntity5 = restTemplate.exchange(uri, HttpMethod.PUT, wrong_httpEntity5, ExamSwagger.class);
         ResponseEntity<ExamSwagger> wrongResponseEntity6 = restTemplate.exchange(uri, HttpMethod.PUT, wrong_httpEntity6, ExamSwagger.class);
         ResponseEntity<ExamSwagger> wrongResponseEntity7 = restTemplate.exchange(uri, HttpMethod.PUT, wrong_httpEntity7, ExamSwagger.class);
@@ -346,7 +341,7 @@ public class ExamControllerTest {
         assertThat(wrongResponseEntity1.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
         assertThat(wrongResponseEntity2.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
         assertThat(wrongResponseEntity3.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-        assertThat(wrongResponseEntity4.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
+
         assertThat(wrongResponseEntity5.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
         assertThat(wrongResponseEntity6.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
         assertThat(wrongResponseEntity7.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);

@@ -1,6 +1,7 @@
 package com.onlinetest.backend.controller;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -168,7 +169,7 @@ public class UserController {
 
 	@RequestMapping(value = "/time", method = RequestMethod.GET)
 	public ResponseEntity<LocalDateTime> getLocalTime() throws Exception {
-		LocalDateTime now = LocalDateTime.now();
+		LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
 		return new ResponseEntity<LocalDateTime> (now, HttpStatus.OK);
 	}
 
