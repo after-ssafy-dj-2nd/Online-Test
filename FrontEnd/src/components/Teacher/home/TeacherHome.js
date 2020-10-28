@@ -1,34 +1,9 @@
 import React , {useState,useEffect} from 'react'
 import Exam from './exam'
-import {fetchExams} from '../../api/modules/exams'
+import {fetchExams, deleteExam} from '../../../api/modules/exams'
 
 const statuses = ['완료', '진행중','종료']
-let EXAM_SAMPLE = [
-    {
-      title: '1번 시험',
-      startTime: '2020-09-15T13:00',
-      endTime:'2020-09-15T15:00',
-      isOpen: true,
-      participants : 10,
-      password : ''
-    },
-    {
-      title: '2번 시험',
-      startTime: '2020-09-16T00:00',
-      endTime:'2020-09-17T15:00',
-      isOpen: false,
-      participants : 20,
-      password : 'asdf'
-    },
-    {
-      title: '3번 시험',
-      startTime: '2020-10-07T14:00',
-      endTime:'2020-10-07T17:30',
-      isOpen: false,
-      participants : 12,
-      password : 'asdf'
-    },
-  ]
+let EXAM_SAMPLE = []
 let sortedTime = false;
 const TeacherHome = () => {
   const [exams , setExams] = useState(EXAM_SAMPLE)
@@ -37,8 +12,8 @@ const TeacherHome = () => {
     const fetchData = async ()=> {
       try {
         const { data } = await fetchExams();
-        setExams(data);
-        EXAM_SAMPLE = data
+        EXAM_SAMPLE = data.exams
+        setExams(EXAM_SAMPLE);
       } catch {
         setExams(EXAM_SAMPLE)
         return
@@ -48,19 +23,27 @@ const TeacherHome = () => {
   },[])
   const sortedExam = () => {
     if(sortedTime){
-      setExams([...exams].sort(exam=> exam.startTime))
+      setExams(exams.sort(exam=> exam.starttime))
       sortedTime = false
     } else {
-      setExams([...exams].sort(exam=> exam.startTime).reverse())
+      setExams(exams.sort(exam=> exam.starttime).reverse())
       sortedTime = true
     }
   }
   const filterExam = (e) => {
-    setExams(EXAM_SAMPLE.filter(exam=> exam.title.includes(e.target.value)))
+    setExams(EXAM_SAMPLE.filter(exam=> exam.name.includes(e.target.value)))
+  }
+
+  const deleteExamItem = async (exam) => {
+    const confirm = window.confirm(`정말 '${exam.name}' 시험을 삭제하시겠습니까`)
+    if (confirm){
+      EXAM_SAMPLE = EXAM_SAMPLE.filter(e => e.id !== exam.id)
+      setExams(EXAM_SAMPLE)
+      await deleteExam(exam.id)
+    }
   }
   const showMenu = () =>{
     setShowStatusList(!showStatusList)
-    console.log(showStatusList)
   }
   return (
     <div>
@@ -69,7 +52,7 @@ const TeacherHome = () => {
         <div className="exam--row">
           <div>공개</div>
           <div>제목</div>
-          <div>인원수</div>
+          <div>등록된 문제 수</div>
           <div onClick={sortedExam}>시험시간<i className={"fas " + (sortedTime ? 'fa-sort-numeric-up' : 'fa-sort-numeric-down')}></i></div>
           <div>진행시간</div>
           <div onClick={showMenu}>상태
@@ -82,8 +65,11 @@ const TeacherHome = () => {
                 </li>)}
             </ul>
           </div>
+          <div>
+            삭제
+          </div>
         </div>
-        {exams.map((exam, key) => <Exam key={key} id={key+1} exam={exam}></Exam>)}
+        {exams.map((exam, key) => <Exam key={key} deleteExam={()=>deleteExamItem(exam)} exam={exam}></Exam>)}
       </div>
     </div>
   )

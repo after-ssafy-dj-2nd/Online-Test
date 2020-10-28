@@ -1,0 +1,78 @@
+{
+  "question": [
+    {
+      "id": 15,
+      "content": "test_content",
+      "description": "test_description",
+      "commentary": null,
+      "type": true,
+      "writer_id": 0,
+      "score": 5,
+      "examples": [
+        {
+          "id": 19,
+          "question_id": 0,
+          "content": "test_example",
+          "correct": null
+        },
+        {
+          "id": 20,
+          "question_id": 0,
+          "content": "test_example2",
+          "correct": null
+        },
+        {
+          "id": 21,
+          "question_id": 0,
+          "content": "test_example3",
+          "correct": null
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "content": "문제 제목",
+      "description": "해설",
+      "commentary": null,
+      "type": true,
+      "writer_id": 0,
+      "score": 5,
+      "examples": []
+    },
+    {
+      "id": 17,
+      "content": "문제 제목",
+      "description": "해설",
+      "commentary": null,
+      "type": true,
+      "writer_id": 0,
+      "score": 8,
+      "examples": [
+        {
+          "id": 27,
+          "question_id": 0,
+          "content": "보기1",
+          "correct": null
+        },
+        {
+          "id": 28,
+          "question_id": 0,
+          "content": "보기2",
+          "correct": null
+        },
+        {
+          "id": 29,
+          "question_id": 0,
+          "content": "보기3",
+          "correct": null
+        },
+        {
+          "id": 30,
+          "question_id": 0,
+          "content": "보기4",
+          "correct": null
+        }
+      ]
+    }
+  ]
+}

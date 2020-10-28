@@ -4,24 +4,24 @@ import java.util.List;
 import com.onlinetest.backend.dto.Question;
 
 public class QuestionList {
-	private List<Question> question;
+	private List<Question> questions;
 	
 	public QuestionList() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	
-	public QuestionList(List<Question> question) {
+	public QuestionList(List<Question> questions) {
 		super();
-		this.question = question;
+		this.questions = questions;
 	}
 
 	public List<Question> getQuestion() {
-		return question;
+		return questions;
 	}
 	
-	public void setQuestion(List<Question> question) {
-		this.question = question;
+	public void setQuestion(List<Question> questions) {
+		this.questions = questions;
 	}
 
 }

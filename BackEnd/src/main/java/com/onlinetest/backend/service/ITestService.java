@@ -24,4 +24,6 @@ public interface ITestService {
 	void setAnswer(Answer answer);
 
 	void setScore(ExamStudent exam_student);
+
+	int isPossible(int exam_id);
 }	

@@ -67,8 +67,10 @@ public class TestServiceImpl implements ITestService{
 		testdao.setScore(exam_student);
 	}
 
-	
-
-	
+	@Override
+	@Transactional(readOnly=true)
+	public int isPossible(int exam_id) {
+		return testdao.isPossible(exam_id);
+	}
 
 }

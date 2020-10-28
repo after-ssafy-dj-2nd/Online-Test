@@ -62,15 +62,13 @@ public class QuestionController {
     @ResponseBody
     public ResponseEntity<QuestionList> addQuestions(@RequestBody QuestionList questionList){
         int user_id = jwtservice.getId();
+
         List<Question> result = new ArrayList<>();
         for (Question question: questionList.getQuestion()) {
-            if (question.getWriter_id() != user_id){
-                return new ResponseEntity<QuestionList>(new QuestionList(), HttpStatus.UNAUTHORIZED);
-            }
-            else if (question.getContent() == null || question.getExamples() == null){
+            question.setWriter_id(user_id);
+            if (question.getContent() == null || question.getExamples() == null){
                 return new ResponseEntity<QuestionList>(new QuestionList(), HttpStatus.BAD_REQUEST);
             }
-
         }
         for (Question question: questionList.getQuestion()) {
             questionService.createQuestion(question);
@@ -91,11 +89,8 @@ public class QuestionController {
     @ResponseBody
     public ResponseEntity<Question> addQuestion(@RequestBody Question question){
         int user_id = jwtservice.getId();
-
-        if (question.getWriter_id() != user_id){
-            return new ResponseEntity<Question>(new Question(), HttpStatus.UNAUTHORIZED);
-        }
-        else if (question.getContent() == null || question.getExamples() == null){
+        question.setWriter_id(user_id);
+        if (question.getContent() == null || question.getExamples() == null){
             return new ResponseEntity<Question>(new Question(), HttpStatus.BAD_REQUEST);
         }
         questionService.createQuestion(question);
@@ -115,18 +110,18 @@ public class QuestionController {
     public ResponseEntity<Question> updateQuestion(@RequestBody Question question) {
         int user_id = jwtservice.getId();
         int q_id = question.getId();
-        Map<String, Object> resultMap = new HashMap<>();
+
+        question.setWriter_id(user_id);
         Question origin = questionService.getQuestionById(q_id);
-        if (origin == null || origin.getWriter_id() != user_id){
-            return new ResponseEntity<Question>(new Question(), HttpStatus.BAD_REQUEST);
+        if (origin == null){
+            return new ResponseEntity<Question>(HttpStatus.BAD_REQUEST);
         }
-        else if (question.getWriter_id() != user_id){
-            return new ResponseEntity<Question>(new Question(), HttpStatus.UNAUTHORIZED);
+        else if (origin.getWriter_id() != user_id){
+            return new ResponseEntity<Question>(HttpStatus.UNAUTHORIZED);
         }
         else if (question.getContent() == null || question.getExamples() == null){
-            return new ResponseEntity<Question>(new Question(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<Question>(HttpStatus.BAD_REQUEST);
         }
-
 
         List<Example>examples = question.getExamples();
         questionService.deleteExamples(q_id);
@@ -150,13 +145,9 @@ public class QuestionController {
         if (question == null){
             return new ResponseEntity<Boolean>(false, HttpStatus.NOT_FOUND);
         }
-        else if (question.getWriter_id() != user_id){
-            return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
-        }
 
         questionService.deleteExamples(id);
         questionService.deleteQuestion(id);
-
         return new ResponseEntity<Boolean>(true, HttpStatus.OK);
     }
 }

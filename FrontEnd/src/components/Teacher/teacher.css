@@ -87,7 +87,24 @@
   display:none;
 }
 
+.email-list {
+
+  width : 100%;
+}
+.email-checked {
+  display:inline-block;
+  margin:auto;
+  width : 10%;
+}
+.student-email {
+  display:inline-block;
+  width : 90%;
+}
 /* /exam/questions */
+.question {
+  width : 100%;
+}
+
 .questions-box {
   width : 30%;
   min-height : 100px;
@@ -98,10 +115,15 @@
 .questions-box button {
   width : 20%;
 }
-
+.selected-question {
+  margin-bottom : 100px;
+}
 .question-wrap {
+  width : 90%;
+  display:inline-block;
   border : 1px solid var(--gray);
   padding : 15px;
+  margin : 3px;
 }
 
 .question-list .question-wrap {

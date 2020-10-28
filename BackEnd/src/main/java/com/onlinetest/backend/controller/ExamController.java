@@ -66,29 +66,28 @@ public class ExamController {
     @ResponseBody
     public ResponseEntity<ExamSwagger> createExam(@RequestBody ExamQuestionsSwagger examQuestion){
         int user_id = jwtservice.getId();
+        examQuestion.setTeacher_id(user_id);
         // 검증
-        if (examQuestion.getTeacher_id() != user_id){
-            return new ResponseEntity<ExamSwagger>(new ExamSwagger(), HttpStatus.UNAUTHORIZED);
-        }
-        else if (examQuestion.getName() == null || examQuestion.getQuestions() == null
-                || examQuestion.getStarttime() == null || examQuestion.getEndtime() == null){
+        if (examQuestion.getName() == null || examQuestion.getStarttime() == null || examQuestion.getEndtime() == null){
             return new ResponseEntity<ExamSwagger>(new ExamSwagger(), HttpStatus.BAD_REQUEST);
         }
         else if (examQuestion.getStarttime().isAfter(examQuestion.getEndtime())){
             return new ResponseEntity<ExamSwagger>(new ExamSwagger(), HttpStatus.BAD_REQUEST);
         }
         List<QuestionExam> questionExamTable = examQuestion.getQuestions();
-        for (QuestionExam questionExam: questionExamTable) {
-            if (questionExam.getScore() == 0){
-                return new ResponseEntity<ExamSwagger>(new ExamSwagger(), HttpStatus.BAD_REQUEST);
-            }
-            else{
-                Question question = questionService.getQuestionById(questionExam.getQuestion_id());
-                if (question == null){
+        if (questionExamTable.size() > 0) {
+            for (QuestionExam questionExam: questionExamTable) {
+                if (questionExam.getScore() == 0){
                     return new ResponseEntity<ExamSwagger>(new ExamSwagger(), HttpStatus.BAD_REQUEST);
                 }
-                else if (question.getWriter_id() != user_id){
-                    return new ResponseEntity<ExamSwagger>(new ExamSwagger(), HttpStatus.UNAUTHORIZED);
+                else{
+                    Question question = questionService.getQuestionById(questionExam.getQuestion_id());
+                    if (question == null){
+                        return new ResponseEntity<ExamSwagger>(new ExamSwagger(), HttpStatus.BAD_REQUEST);
+                    }
+                    else if (question.getWriter_id() != user_id){
+                        return new ResponseEntity<ExamSwagger>(new ExamSwagger(), HttpStatus.UNAUTHORIZED);
+                    }
                 }
             }
         }
@@ -109,21 +108,25 @@ public class ExamController {
     @ResponseBody
     public ResponseEntity<ExamSwagger> updateExam(@RequestBody ExamQuestionsSwagger examQuestion) {
         int user_id = jwtservice.getId();
+        int exam_id = examQuestion.getId();
+        examQuestion.setTeacher_id(user_id);
         // 검증
-        if (examQuestion.getTeacher_id() != user_id){
-            return new ResponseEntity<ExamSwagger>(new ExamSwagger(), HttpStatus.UNAUTHORIZED);
-        }
-        else if (examQuestion.getName() == null || examQuestion.getQuestions() == null
+        if (examQuestion.getName() == null || examQuestion.getQuestions() == null
                 || examQuestion.getStarttime() == null || examQuestion.getEndtime() == null){
             return new ResponseEntity<ExamSwagger>(new ExamSwagger(), HttpStatus.BAD_REQUEST);
         }
         else if (examQuestion.getStarttime().isAfter(examQuestion.getEndtime())){
-            return new ResponseEntity<ExamSwagger>(new ExamSwagger(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<ExamSwagger>(HttpStatus.BAD_REQUEST);
         }
-        int exam_id = examQuestion.getId();
-        if (examService.getExamById(exam_id) == null){
-            return new ResponseEntity<ExamSwagger>(new ExamSwagger(), HttpStatus.BAD_REQUEST);
+        ExamSwagger origin = examService.getExamById(exam_id);
+        if (origin == null){
+            return new ResponseEntity<ExamSwagger>(HttpStatus.BAD_REQUEST);
         }
+        else if (origin.getTeacher_id() != user_id){
+            return new ResponseEntity<ExamSwagger>(HttpStatus.UNAUTHORIZED);
+        }
+
+
 
         List<QuestionExam> questionExamTable = examQuestion.getQuestions();
         for (QuestionExam questionExam: questionExamTable) {

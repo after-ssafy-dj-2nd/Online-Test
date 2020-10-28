@@ -1,17 +1,19 @@
 import React, {useState} from 'react'
 import TeacherQuestion from './TeacherQuestion'
-import {$} from '../../util/DOM'
-
+import {$} from '../../../util/DOM'
+import { createQuestions } from '../../../api/modules/questions'
+import { useSelector } from 'react-redux';
 const defaultQuestion = [
-  {content:'', examples : [{content : '', correct:false},{content : '', correct:false},{content : '', correct:false}], description: '' ,correct : [0,1]},
+  {content:'', examples : [{content : '', correct:false},{content : '', correct:false},{content : '', correct:false}], description: '' ,correct : [0,1],type:true},
 ]
   
-const TeacherQuestionList = () => {
+const TeacherQuestionListAdd = () => {
+  const { userInfo } = useSelector(state => state.users);
   let [showIndex , setShowIndex] = useState(0)
 
   const [questions,setQuestions] = useState([
-    {content:'이 중 먹을 수 없는 것은', examples : [{content : '마라탕', correct:false},{content : '설렁탕', correct:false},{content : '곰탕', correct:false},{content : '목욕탕', correct:true}], description : ''},
-    {content:'2번 문제', examples : [{content : '1', correct:false},{content : '2', correct:false},{content : '3', correct:true}], description :'2번 문제는 '},
+    {content:'이 중 먹을 수 없는 것은', examples : [{content : '마라탕', correct:false},{content : '설렁탕', correct:false},{content : '곰탕', correct:false},{content : '목욕탕', correct:true}], description : '',type:true},
+    {content:'2번 문제', examples : [{content : '1', correct:false},{content : '2', correct:false},{content : '3', correct:true}], description :'2번 문제는 ',type:true},
   ]);
 
   const addQuestions = () => {
@@ -38,12 +40,12 @@ const TeacherQuestionList = () => {
     }
     return true
   }
-  const onEnd = () =>{
+  const onEnd = async () =>{
     const $wrong = $('button.wrong')
     if ($wrong){
       alert(`${$wrong.innerText } 문항을 확인해주세요`)
     }
-    console.log(questions)
+    await createQuestions(questions)
   }
 
   const deleteQuestion = (e,index) => {
@@ -86,4 +88,4 @@ const TeacherQuestionList = () => {
   )
 }
 
-export default TeacherQuestionList
+export default TeacherQuestionListAdd

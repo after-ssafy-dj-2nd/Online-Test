@@ -1,0 +1,28 @@
+.tryout {
+  display: flex;
+  padding: 1rem;
+}
+
+.tryout .tryout-question {
+  flex-grow: 1;
+  padding-right: 1rem;
+}
+
+.tryout .tryout-sidebar {
+  width: 220px;
+  padding-left: 1rem;
+  text-align: center;
+}
+
+.tryout .tryout-sidebar > button {
+  width: 100%;
+}
+
+.tryout .tryout-sidebar-box-style {
+  font-size: 1.2rem;
+  font-weight: 600;
+  padding: 0.75rem 0;
+  margin-bottom: 1.25rem;
+  border: 1px solid var(--beige);
+  border-radius: 10px;
+}

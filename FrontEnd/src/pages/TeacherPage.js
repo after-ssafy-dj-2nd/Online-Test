@@ -1,10 +1,11 @@
 import React from 'react';
 import TeacherNavBar from '../components/Teacher/TeacherNavBar'
-import TeacherHome from '../components/Teacher/TeacherHome'
+import TeacherHome from '../components/Teacher/home/TeacherHome'
 import TeacherChart from '../components/Teacher/TeacherChart'
-import TeacherExam from '../components/Teacher/TeacherExam'
+import TeacherExam from '../components/Teacher/exam/TeacherExam'
 import TeacherStudent from '../components/Teacher/TeacherStudent'
-import TeacherQuestionList from '../components/Teacher/TeacherQuestionList'
+import TeacherQuestionListAdd from '../components/Teacher/questions/TeacherQuestionListAdd'
+import TeacherQuestionList from '../components/Teacher/questions/TeacherQuestionList'
 import TeacherExamDetail from '../components/Teacher/exam/TeacherExamDetail'
 import { Redirect, Switch } from 'react-router';
 import { Route } from 'react-router-dom';
@@ -23,6 +24,7 @@ const TeacherPage = () => {
             <div className="teacher-content">
               <Switch>
                 <Route path={`${BASE_PATH}home`} render={()=> <TeacherHome/>} />
+                <Route path={`${BASE_PATH}questions/add`} render={() => <TeacherQuestionListAdd />} />
                 <Route path={`${BASE_PATH}questions`} render={() => <TeacherQuestionList />} />
                 <Route path={`${BASE_PATH}exam/:id`} render={(props) => <TeacherExamDetail {...props}/>} />
                 <Route path={`${BASE_PATH}exam`} render={() => <TeacherExam />} exact/>

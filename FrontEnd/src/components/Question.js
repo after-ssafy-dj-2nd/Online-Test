@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect } from 'react'
 const unicode = {
   // 1~9
   '0' : '\u2460',
@@ -23,19 +23,22 @@ const unicode = {
 }
 
 const Question = (props) => {
-  const {question} = props
-  const [shorthen, setShorthen] = useState(true)
-  const [showDescription,setShowDescription] = useState(false)
+  const {question, show} = props
+  const [showContent, setShowContent] = useState(false)
+  const [ShowDescription,setShowDescription] = useState(false)
   const showQuestion = () => {
-    setShorthen(!shorthen)
+    setShowContent(!showContent)
   }
+  useEffect(()=> {
+    setShowContent(show || false)
+  }, [show])
   return (
     <div className="question-wrap">
       <div className="question-content">
         <span>{question.content}</span>
-        <i onClick={showQuestion} className={"fas " + (shorthen ? "fa-chevron-down" : "fa-chevron-up")}></i>
+        <i onClick={showQuestion} className={"fas " + (showContent ? "fa-chevron-up" : "fa-chevron-down")}></i>
       </div>
-      <div className={shorthen ? 'hide' : ''}>
+      <div className={showContent ? '' : 'hide'}>
         <div className="question-commentary">
           {question.commentary}
         </div>
@@ -46,10 +49,10 @@ const Question = (props) => {
             </div>
           )}
         </div>
-        <div className="toggle-description" onClick={()=> setShowDescription(!showDescription)}>
-            {showDescription ? '해설 닫기' : '해설 펼쳐보기'}
+        <div className="toggle-description" onClick={()=> setShowDescription(!ShowDescription)}>
+            {ShowDescription ? '해설 닫기' : '해설 펼쳐보기'}
         </div>
-        <div className={(showDescription ? '' : 'hide ') + "question-description"}>
+        <div className={(ShowDescription ? '' : 'hide ') + "question-description"}>
           {question.description}
         </div>
       </div>
