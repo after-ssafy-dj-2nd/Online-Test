@@ -1,10 +1,10 @@
-// 추후 TOKEN 값은 redux에 저장된 토큰 값 가져와서 매칭시킬 예정
+import {storage} from '../../util/storage'
 export function setInterceptors(instance) {
   instance.interceptors.request.use(
     config => {
-      let TOKEN = process.env.REACT_APP_TEMP_TOKEN
-      if (TOKEN) {
-        config.headers['access-token'] = TOKEN
+      const userInfo = storage(sessionStorage).getItem('userInfo');
+      if (userInfo) {
+        config.headers['access-token'] = userInfo.token
       }
       return config
     },
