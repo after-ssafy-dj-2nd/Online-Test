@@ -133,5 +133,11 @@
     <delete id="deleteQuestionExam" parameterType="java.lang.Integer">
         delete from question_exam where exam_id = #{exam_id}
     </delete>
+    
+    <select id="getStudentEmail" parameterType="int" resultType="string">
+		select email
+		from user u, exam_student e
+		where e.exam_id = {exam_id} and e.student_id = u.id
+	</select>
 
 </mapper>

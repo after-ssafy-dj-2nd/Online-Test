@@ -49,4 +49,8 @@ public class ExamDaoImpl {
     public void deleteQuestionExam(int exam_id){
         sqlSeesion.delete(ns+"deleteQuestionExam", exam_id);
     }
+
+	public List<String> getStudentEmail(int exam_id) {
+		return sqlSeesion.selectList(ns + "getStudentEmail", exam_id);
+	}
 }

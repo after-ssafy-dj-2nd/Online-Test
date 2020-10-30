@@ -19,4 +19,5 @@ public interface IExamService {
 
     void createQuestionExam(QuestionExam questionExam);
     void deleteQuestionExam(int exam_id);
+	List<String> getStudentEmail(int exam_id);
 }

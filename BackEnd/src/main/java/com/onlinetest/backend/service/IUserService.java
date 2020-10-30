@@ -13,6 +13,4 @@ public interface IUserService {
 
 	void updatePwd(User user);
 
-	boolean sendEamil(String subject, String pwdMsg, String email);
-
 }	

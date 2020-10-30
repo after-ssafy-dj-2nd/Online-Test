@@ -67,4 +67,10 @@ public class ExamServiceImpl implements IExamService{
     public void deleteQuestionExam(int exam_id){
         examDao.deleteQuestionExam(exam_id);
     }
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<String> getStudentEmail(int exam_id) {
+		return examDao.getStudentEmail(exam_id);
+	}
 }
