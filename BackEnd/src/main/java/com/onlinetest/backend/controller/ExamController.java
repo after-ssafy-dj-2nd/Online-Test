@@ -1,7 +1,5 @@
 package com.onlinetest.backend.controller;
 
-import com.onlinetest.backend.dto.Exam;
-import com.onlinetest.backend.dto.Example;
 import com.onlinetest.backend.dto.Question;
 import com.onlinetest.backend.dto.QuestionExam;
 import com.onlinetest.backend.dto.swagger.*;
@@ -9,12 +7,15 @@ import com.onlinetest.backend.service.IExamService;
 import com.onlinetest.backend.service.IJwtService;
 import com.onlinetest.backend.service.IQuestionService;
 import io.swagger.annotations.ApiOperation;
+
+import org.apache.ibatis.jdbc.Null;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,18 +67,16 @@ public class ExamController {
     @ResponseBody
     public ResponseEntity<ExamSwagger> createExam(@RequestBody ExamQuestionsSwagger examQuestion){
         int user_id = jwtservice.getId();
+        examQuestion.setTeacher_id(user_id);
         // 검증
-        if (examQuestion.getTeacher_id() != user_id){
-            return new ResponseEntity<ExamSwagger>(new ExamSwagger(), HttpStatus.UNAUTHORIZED);
-        }
-        else if (examQuestion.getName() == null || examQuestion.getStarttime() == null || examQuestion.getEndtime() == null){
+        if (examQuestion.getName() == null || examQuestion.getStarttime() == null || examQuestion.getEndtime() == null){
             return new ResponseEntity<ExamSwagger>(new ExamSwagger(), HttpStatus.BAD_REQUEST);
         }
         else if (examQuestion.getStarttime().isAfter(examQuestion.getEndtime())){
             return new ResponseEntity<ExamSwagger>(new ExamSwagger(), HttpStatus.BAD_REQUEST);
         }
         List<QuestionExam> questionExamTable = examQuestion.getQuestions();
-        if (questionExamTable.size() > 0) {
+        if (questionExamTable != null) {
             for (QuestionExam questionExam: questionExamTable) {
                 if (questionExam.getScore() == 0){
                     return new ResponseEntity<ExamSwagger>(new ExamSwagger(), HttpStatus.BAD_REQUEST);
@@ -94,11 +93,14 @@ public class ExamController {
             }
         }
         // 실행
+        System.out.println(examQuestion.getStarttime());
         examService.createExam(examQuestion);
         int exam_id = examQuestion.getId();
-        for (QuestionExam questionExam: questionExamTable) {
-            questionExam.setExam_id(exam_id);
-            examService.createQuestionExam(questionExam);
+        if (questionExamTable != null){
+            for (QuestionExam questionExam: questionExamTable) {
+                questionExam.setExam_id(exam_id);
+                examService.createQuestionExam(questionExam);
+            }
         }
         ExamSwagger exam = examService.getExamById(exam_id);
         return new ResponseEntity<ExamSwagger>(exam, HttpStatus.OK);
@@ -110,21 +112,25 @@ public class ExamController {
     @ResponseBody
     public ResponseEntity<ExamSwagger> updateExam(@RequestBody ExamQuestionsSwagger examQuestion) {
         int user_id = jwtservice.getId();
+        int exam_id = examQuestion.getId();
+        examQuestion.setTeacher_id(user_id);
         // 검증
-        if (examQuestion.getTeacher_id() != user_id){
-            return new ResponseEntity<ExamSwagger>(new ExamSwagger(), HttpStatus.UNAUTHORIZED);
-        }
-        else if (examQuestion.getName() == null || examQuestion.getQuestions() == null
+        if (examQuestion.getName() == null || examQuestion.getQuestions() == null
                 || examQuestion.getStarttime() == null || examQuestion.getEndtime() == null){
             return new ResponseEntity<ExamSwagger>(new ExamSwagger(), HttpStatus.BAD_REQUEST);
         }
         else if (examQuestion.getStarttime().isAfter(examQuestion.getEndtime())){
-            return new ResponseEntity<ExamSwagger>(new ExamSwagger(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<ExamSwagger>(HttpStatus.BAD_REQUEST);
         }
-        int exam_id = examQuestion.getId();
-        if (examService.getExamById(exam_id) == null){
-            return new ResponseEntity<ExamSwagger>(new ExamSwagger(), HttpStatus.BAD_REQUEST);
+        ExamSwagger origin = examService.getExamById(exam_id);
+        if (origin == null){
+            return new ResponseEntity<ExamSwagger>(HttpStatus.BAD_REQUEST);
         }
+        else if (origin.getTeacher_id() != user_id){
+            return new ResponseEntity<ExamSwagger>(HttpStatus.UNAUTHORIZED);
+        }
+
+
 
         List<QuestionExam> questionExamTable = examQuestion.getQuestions();
         for (QuestionExam questionExam: questionExamTable) {
@@ -149,6 +155,7 @@ public class ExamController {
             examService.createQuestionExam(questionExam);
         }
         ExamSwagger exam = examService.getExamById(exam_id);
+        System.out.println(exam.getStarttime());
         return new ResponseEntity<ExamSwagger>(exam, HttpStatus.OK);
     }
 
@@ -172,5 +179,4 @@ public class ExamController {
 
         return new ResponseEntity<Boolean>(true, HttpStatus.OK);
     }
-
 }

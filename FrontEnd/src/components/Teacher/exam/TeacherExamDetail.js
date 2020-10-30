@@ -1,19 +1,37 @@
 import React, { useState, useEffect } from 'react'
-import { useLocation } from "react-router-dom";
 import {timeToString} from '../../../util/time'
 import ExamAddQuestion from './ExamAddQuestion'
 import ExamAddStudent from './ExamAddStudent'
+import {fetchExam} from '../../../api/modules/exams'
 
-const TeacherExamDetail = (props) => {
-  const location = useLocation();
-  const exam = location.state.exam
+const TeacherExamDetail = ({match}) => {
+  const examId = match.params.id
+  const [exam, setExam] = useState(
+    { name : '',
+      starttime : '',
+      endtime : '',
+      questions:[]
+    }
+  )
+  useEffect(()=>{
+    const fetchData = async ()=> {
+      try {
+        const { data } = await fetchExam(examId);
+        setExam(data)
+      } catch (e){
+        console.log(e)
+        return
+      }
+    };
+    fetchData()
+  },[])
   const [addType, setAddType] = useState('question')
   return (
     <>
       <div>
-        <div>{exam.title}</div>
-        <div>시험 시작 시간 : {timeToString(exam.startTime)}</div>
-        <div>시험 종료 시간 : {timeToString(exam.endTime)}</div>
+        <div>{exam.name}</div>
+        <div>시험 시작 시간 : {timeToString(exam.starttime)}</div>
+        <div>시험 종료 시간 : {timeToString(exam.endtime)}</div>
         <div>정원 : {exam.participants}</div>
       </div>
       <div>
@@ -23,7 +41,7 @@ const TeacherExamDetail = (props) => {
         </div>
         <div>
         <div className={(addType==="question") ? ' ' : 'hide'} >
-            <ExamAddQuestion />
+            <ExamAddQuestion selected={exam.questions.map(question=>question.id)}/>
           </div>
           <div className={(addType==="student") ? ' ' : 'hide'} >
             <ExamAddStudent />

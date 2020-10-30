@@ -26,10 +26,6 @@ public class UserDaoImpl {
 		return sqlSeesion.selectOne(ns+"login", user);
 	}
 
-	public String getEmail(String user_id) {
-		return sqlSeesion.selectOne(ns+"getEmail", user_id);
-	}
-
 	public void updatePwd(User user) {
 		sqlSeesion.update(ns+"updatePwd", user);
 	}
