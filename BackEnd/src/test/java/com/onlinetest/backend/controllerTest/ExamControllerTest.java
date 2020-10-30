@@ -64,7 +64,7 @@ public class ExamControllerTest {
 
     @Before
     public void setUp() throws Exception {
-        User userInfo = userService.login(new User("test", "test"));
+        User userInfo = userService.login(new User("test@test.com", "test"));
         String token = jwtService.create("user", userInfo, "userInfo");
         headers = new HttpHeaders();
         headers.add("access-token", token);
