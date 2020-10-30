@@ -19,6 +19,7 @@ import com.onlinetest.backend.dto.Question;
 import com.onlinetest.backend.dto.Submit;
 import com.onlinetest.backend.service.IJwtService;
 import com.onlinetest.backend.service.ITestService;
+import com.onlinetest.backend.service.IMailService;
 
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -44,6 +45,9 @@ public class TestController {
 	@Autowired
 	private IExamService examService;
 
+	@Autowired
+	private IMailService mailservice;
+
 
 	@ApiOperation(value = "시험 볼 학생 추가", response = ExamUserSwagger.class)
 	@RequestMapping(value = "/test/student", method = RequestMethod.POST)
@@ -67,12 +71,27 @@ public class TestController {
 			if (userService.signUpCheck(studentEmail)){
 				int student_id = userService.getUserPk(studentEmail);
 				testservice.setExamStudent(new ExamStudent(student_id, exam_id));
+
 				registeredStudent.add(studentEmail);
 			}
 			else {
 				notFoundedStudent.add(studentEmail);
 			}
 		}
+
+		String URL = "http://221.158.91.249:3000/tryout/"+exam_id+"/wait";
+		String subject = "[online-test] 시험 응시 안내 입니다.";
+		StringBuilder sb = new StringBuilder();
+		sb.append("<div align='center' style='border:1px solid black; font-family:verdana'>");
+		sb.append("<h3 style='color:blue;'>아래 URL에 접속하여 시험 응시 바랍니다.</h3>");
+		sb.append("<div style='font-size:130%'>");
+		sb.append("<a href='");
+		sb.append(URL);
+		sb.append("'>");
+		sb.append(URL);
+		sb.append("</a></div><br/>");
+		mailservice.sendEmail(subject, sb.toString(), registeredStudent);
+
 		result.setStatus("학생 등록이 완료되었습니다.");
 		result.setRegister(registeredStudent);
 		result.setNotRegister(notFoundedStudent);
