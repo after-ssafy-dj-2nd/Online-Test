@@ -112,13 +112,9 @@ public class UserController {
 		Map<String, Object> resultMap = new HashMap<>();
 		String email = user.getEmail();
 
-		if(email == null) {
+		if(userservice.idCheck(email) == 0) {
 			resultMap.put("status", false);
 			resultMap.put("resultMsg", "귀하의 이메일로 가입된 아이디가 존재하지 않습니다.");
-			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.BAD_REQUEST);
-		}else if(!email.equals(user.getEmail())) {
-			resultMap.put("status", false);
-			resultMap.put("resultMsg", "입력하신 이메일의 회원정보와 가입된 아이디가 일치하지 않습니다.");
 			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.BAD_REQUEST);
 		}
 		

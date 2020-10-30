@@ -21,7 +21,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="login"
 		parameterType="com.onlinetest.backend.dto.User"
 		resultType="com.onlinetest.backend.dto.User">
-		select email, user_id, auth, name
+		select id, email, auth, name
 		from user
 		where email=#{email} and password=hex(aes_encrypt(#{password}, 'test'))
 	</select>
