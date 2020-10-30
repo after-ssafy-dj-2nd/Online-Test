@@ -11,7 +11,7 @@ const StartExamButton = (props) => {
   const [diffTime, setDiffTime ] = useState(propsDiffTime)
   
   useEffect(() => {
-    if (diffTime === 9999999) {
+    if (diffTime === 8639999) {
       setDiffTime(props.diffTime)
     }
     else if (diffTime > 0) {
