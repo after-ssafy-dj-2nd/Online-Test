@@ -12,11 +12,11 @@ const Login = memo(({ history }) => {
   const checkBoxEl = useRef(null);
 
   const [state, dispatch] = useReducer(reducer, {
-    id: '',
+    email: '',
     password: ''
   });
 
-  const { id, password } = state;
+  const { email, password } = state;
 
 
   useEffect(() => {
@@ -51,8 +51,8 @@ const Login = memo(({ history }) => {
     e.preventDefault();
 
     // 아이디, 비밀번호 빈 값인지 확인하는 로직
-    if (id.length === 0) {
-      alert('아이디를 입력해주세요.');
+    if (email.length === 0) {
+      alert('이메일을 입력해주세요.');
       return
     }
     if (password.length === 0) {
@@ -62,13 +62,13 @@ const Login = memo(({ history }) => {
     
     // 아이디 저장 로직
     if (isSaveId) {
-      storage(localStorage).setItem('saveId', id);
+      storage(localStorage).setItem('saveId', email);
     } else {
       storage(localStorage).removeItem('saveId');
     }
     
     // 로그인 로직
-    const userData = { 'user_id': id, password };
+    const userData = { 'email': email, password };
     try {
       const { headers, data } = await login(userData);
       if (!data.login) {
@@ -90,9 +90,9 @@ const Login = memo(({ history }) => {
     <div className="login-form">
       <h2>로그인</h2>
       <form onSubmit={onSubmit}>
-        <article className="input-id">
-          <label htmlFor="id" name="id">아이디</label>
-          <input type="text" id="id" value={id} onChange={onChange} />
+        <article className="input-email">
+          <label htmlFor="email" name="email">아이디</label>
+          <input type="email" id="email" value={email} onChange={onChange} />
         </article>
         <article className="input-password">
           <label htmlFor="password" name="password">비밀번호</label>
