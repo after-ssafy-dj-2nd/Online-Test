@@ -2,11 +2,9 @@ package com.onlinetest.backend.controller;
 
 import com.onlinetest.backend.dto.Question;
 import com.onlinetest.backend.dto.QuestionExam;
-import com.onlinetest.backend.dto.User;
 import com.onlinetest.backend.dto.swagger.*;
 import com.onlinetest.backend.service.IExamService;
 import com.onlinetest.backend.service.IJwtService;
-import com.onlinetest.backend.service.IMailService;
 import com.onlinetest.backend.service.IQuestionService;
 import io.swagger.annotations.ApiOperation;
 
@@ -34,9 +32,6 @@ public class ExamController {
 
     @Autowired
     private IJwtService jwtservice;
-    
-    @Autowired
-    private IMailService mailservice;
 
     @ApiOperation(value = "모든 시험 보기", response = ExamListSwagger.class)
     @RequestMapping(value = "/exams", method = RequestMethod.GET)
@@ -184,34 +179,4 @@ public class ExamController {
 
         return new ResponseEntity<Boolean>(true, HttpStatus.OK);
     }
-    
-	@ApiOperation(value = "시험 보는 학생 메일 전송", response = Map.class)
-	@RequestMapping(value = "/send", method = RequestMethod.GET)
-	public ResponseEntity<Map<String, Object>> sendTestURL(@RequestParam int exam_id) throws Exception {
-		Map<String, Object> resultMap = new HashMap<>();
-		
-		//임시 URL
-		String URL = "localhost:3000/tryout/"+exam_id+"/wait";
-		
-		List<String> email = examService.getStudentEmail(exam_id);
-
-		String subject = "[online-test] 시험 응시 안내 입니다.";
-		
-		StringBuilder sb = new StringBuilder();
-		sb.append("<div align='center' style='border:1px solid black; font-family:verdana'>");
-		sb.append("<h3 style='color:blue;'>아래 URL에 접속하여 시험 응시 바랍니다.</h3>");
-		sb.append("<div style='font-size:130%'>");
-		sb.append("<a href='");
-		sb.append(URL);
-		sb.append("'>");
-		sb.append(URL);
-		sb.append("</a></div><br/>");
-
-		mailservice.sendEamil(subject, sb.toString(), email);
-
-		resultMap.put("status", true);
-		resultMap.put("resultMsg", "시험 응시 안내 메일을 발송 하였습니다.");
-		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
-	}
-
 }
