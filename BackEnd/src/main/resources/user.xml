@@ -6,8 +6,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<insert id="signUp"
 		parameterType="com.onlinetest.backend.dto.User">
-		insert into user (user_id, password, auth, name, email) 
-		VALUES (#{user_id}, hex(aes_encrypt(#{password}, 'test')), #{auth}, #{name}, #{email});
+		insert into user (email, password, auth, name)
+		VALUES (#{email}, hex(aes_encrypt(#{password}, 'test')), #{auth}, #{name});
 	</insert>
 	
 	<select id="idCheck"
@@ -15,30 +15,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	resultType="int">
 		select count(*)
 		from user
-		where user_id=#{user_id}
+		where email = #{email}
 	</select>
 	
 	<select id="login"
 		parameterType="com.onlinetest.backend.dto.User"
 		resultType="com.onlinetest.backend.dto.User">
-		select id, user_id, auth, name, email
+		select email, user_id, auth, name
 		from user
-		where user_id=#{user_id} and password=hex(aes_encrypt(#{password}, 'test'))
-	</select>
-	
-	<select id="getEmail"
-	parameterType="string"
-	resultType="string">
-		select email
-		from user
-		where user_id=#{user_id}
+		where email=#{email} and password=hex(aes_encrypt(#{password}, 'test'))
 	</select>
 	
 	<update id="updatePwd"
 	parameterType="com.onlinetest.backend.dto.User">
 		update user 
 		set password=hex(aes_encrypt(#{password}, 'test')) 
-		where `user_id` = #{user_id}
+		where `email` = #{email}
 	</update>
 
 	<select id="getUserName" parameterType="int" resultType="string">

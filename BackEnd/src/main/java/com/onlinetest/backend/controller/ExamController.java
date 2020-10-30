@@ -1,7 +1,5 @@
 package com.onlinetest.backend.controller;
 
-import com.onlinetest.backend.dto.Exam;
-import com.onlinetest.backend.dto.Example;
 import com.onlinetest.backend.dto.Question;
 import com.onlinetest.backend.dto.QuestionExam;
 import com.onlinetest.backend.dto.swagger.*;
@@ -9,6 +7,7 @@ import com.onlinetest.backend.service.IExamService;
 import com.onlinetest.backend.service.IJwtService;
 import com.onlinetest.backend.service.IQuestionService;
 import io.swagger.annotations.ApiOperation;
+import org.apache.ibatis.jdbc.Null;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -75,7 +74,7 @@ public class ExamController {
             return new ResponseEntity<ExamSwagger>(new ExamSwagger(), HttpStatus.BAD_REQUEST);
         }
         List<QuestionExam> questionExamTable = examQuestion.getQuestions();
-        if (questionExamTable.size() > 0) {
+        if (questionExamTable != null) {
             for (QuestionExam questionExam: questionExamTable) {
                 if (questionExam.getScore() == 0){
                     return new ResponseEntity<ExamSwagger>(new ExamSwagger(), HttpStatus.BAD_REQUEST);
@@ -92,11 +91,14 @@ public class ExamController {
             }
         }
         // 실행
+        System.out.println(examQuestion.getStarttime());
         examService.createExam(examQuestion);
         int exam_id = examQuestion.getId();
-        for (QuestionExam questionExam: questionExamTable) {
-            questionExam.setExam_id(exam_id);
-            examService.createQuestionExam(questionExam);
+        if (questionExamTable != null){
+            for (QuestionExam questionExam: questionExamTable) {
+                questionExam.setExam_id(exam_id);
+                examService.createQuestionExam(questionExam);
+            }
         }
         ExamSwagger exam = examService.getExamById(exam_id);
         return new ResponseEntity<ExamSwagger>(exam, HttpStatus.OK);
@@ -151,6 +153,7 @@ public class ExamController {
             examService.createQuestionExam(questionExam);
         }
         ExamSwagger exam = examService.getExamById(exam_id);
+        System.out.println(exam.getStarttime());
         return new ResponseEntity<ExamSwagger>(exam, HttpStatus.OK);
     }
 

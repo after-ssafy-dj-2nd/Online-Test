@@ -28,20 +28,14 @@ public class UserServiceImpl implements IUserService{
 
 	@Override
 	@Transactional(readOnly=true)
-	public int idCheck(String user_id) {
-		return userdao.idCheck(user_id);
+	public int idCheck(String email) {
+		return userdao.idCheck(email);
 	}
 
 	@Override
 	@Transactional(readOnly=true)
 	public User login(User user) {
 		return userdao.login(user);
-	}
-
-	@Override
-	@Transactional(readOnly=true)
-	public String getEmail(String user_id) {
-		return userdao.getEmail(user_id);
 	}
 
 	@Override
