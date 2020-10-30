@@ -31,7 +31,8 @@ public class SwaggerConfig {
 	@Bean
 	public Docket postsApi() {
 		List<Parameter> global = new ArrayList<>();
-		User userInfo = new User(4, "test", null, 2, "test", "test@onlinetest.com");
+		User userInfo = new User(2, "teacher@test.com", "teacher", 1, "teacherTest");
+
 		global.add(new ParameterBuilder().name("access-token")
 								  .description("Access Token (기본설정 - id:4, user_id:test, auth:2)")
 								  .parameterType("header")
