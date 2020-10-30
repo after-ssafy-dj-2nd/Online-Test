@@ -133,5 +133,4 @@
     <delete id="deleteQuestionExam" parameterType="java.lang.Integer">
         delete from question_exam where exam_id = #{exam_id}
     </delete>
-
 </mapper>

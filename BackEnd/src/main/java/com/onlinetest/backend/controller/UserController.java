@@ -1,9 +1,11 @@
 package com.onlinetest.backend.controller;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import com.onlinetest.backend.dto.User;
 import com.onlinetest.backend.dto.swagger.UserSwagger;
 import com.onlinetest.backend.service.IJwtService;
+import com.onlinetest.backend.service.IMailService;
 import com.onlinetest.backend.service.IUserService;
 
 import io.swagger.annotations.Api;
@@ -42,6 +45,9 @@ public class UserController {
 	
 	@Autowired
     private IJwtService jwtservice;
+	
+	@Autowired
+    private IMailService mailservice;
 	
 	@ApiResponses(value = { 
             @ApiResponse(code = 200, message = "Successful / true:성공", response = Boolean.class),
@@ -156,7 +162,9 @@ public class UserController {
 		sb.append(key);
 		sb.append("</strong> 입니다.</div><br/>");
 
-		userservice.sendEamil(subject, sb.toString(), email);
+		List<String> to = new ArrayList<>();
+		to.add(email);
+		mailservice.sendEamil(subject, sb.toString(), to);
 
 		resultMap.put("status", true);
 		resultMap.put("resultMsg", "귀하의 이메일 주소로 새로운 임시 비밀번호를 발송 하였습니다.");
