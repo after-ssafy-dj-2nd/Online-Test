@@ -11,4 +11,9 @@ public interface IUserService {
 
 	void updatePwd(User user);
 
+	boolean signUpCheck(String email);
+
+	int getUserPk(String email);
+
+	String getUserName(int id);
 }	

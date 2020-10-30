@@ -73,4 +73,10 @@ public class TestServiceImpl implements ITestService{
 		return testdao.isPossible(exam_id);
 	}
 
+	@Override
+	@Transactional
+	public void setExamStudent(ExamStudent examStudent) {
+		testdao.setExamStudent(examStudent);
+	}
+
 }

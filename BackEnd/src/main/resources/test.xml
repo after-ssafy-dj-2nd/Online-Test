@@ -95,4 +95,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		]]>
 	</select>
 
+	<insert id="setExamStudent"
+			parameterType="com.onlinetest.backend.dto.ExamStudent">
+		insert into exam_student (student_id, exam_id, starttime)
+		VALUES (#{student_id}, #{exam_id}, now());
+	</insert>
+
 </mapper>

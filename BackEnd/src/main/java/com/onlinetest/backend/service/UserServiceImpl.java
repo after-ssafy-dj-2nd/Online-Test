@@ -37,4 +37,18 @@ public class UserServiceImpl implements IUserService{
 		userdao.updatePwd(user);
 	}
 
+	public boolean signUpCheck(String email) {
+		if (userdao.signUpCheck(email) == 1)
+			return true;
+		else
+			return false;
+	}
+
+	public int getUserPk(String email){
+		return userdao.getUserPk(email);
+	}
+
+	public String getUserName(int id) {
+		return userdao.getUserName(id);
+	}
 }
