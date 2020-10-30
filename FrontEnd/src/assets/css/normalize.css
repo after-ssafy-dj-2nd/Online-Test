@@ -19,6 +19,11 @@
   box-shadow: var(--box-shadow);
 }
 
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
 .btn:focus {
   outline: none;
 }

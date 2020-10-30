@@ -70,11 +70,12 @@ const Login = memo(({ history }) => {
     // 로그인 로직
     const userData = { 'user_id': id, password };
     try {
-      const { data } = await login(userData);
+      const { headers, data } = await login(userData);
       if (!data.login) {
         alert('아이디나 비밀번호를 다시 확인해주세요.');
         return
       }
+      data.userInfo['token'] = headers['access-token']
       alert(`${data.userInfo.name}님 환영합니다!`);
       onLogin(data.userInfo);
       onChangeLoginStatus(true);

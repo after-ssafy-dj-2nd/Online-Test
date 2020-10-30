@@ -79,6 +79,8 @@ public class JwtServiceImpl implements IJwtService{
 		} catch (Exception e) {
 			throw new UnauthorizedException();
 		}
+
+
 		@SuppressWarnings("unchecked")
 		Map<String, Object> value = (LinkedHashMap<String, Object>)claims.getBody().get(key);
 		return value;

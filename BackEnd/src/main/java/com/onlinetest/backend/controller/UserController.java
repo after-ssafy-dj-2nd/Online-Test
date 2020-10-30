@@ -2,6 +2,7 @@ package com.onlinetest.backend.controller;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -72,12 +73,12 @@ public class UserController {
             @ApiResponse(code = 200, message = "Successful / true:사용가능, false:중복", response = Boolean.class)})
 	@ApiOperation(value = "회원가입 시 id 중복 체크 (Authorization 필요없음)", response = Boolean.class)
 	@RequestMapping(value = "/idcheck", method = RequestMethod.GET)
-	public ResponseEntity<Boolean> idCheck(@RequestParam String user_id) throws Exception {
+	public ResponseEntity<Boolean> idCheck(@RequestParam String email) throws Exception {
 		logger.info("1-------------idCheck-----------------------------" + new Date());
 		
 		boolean idCheck = false;
 		
-		int cnt = userservice.idCheck(user_id);
+		int cnt = userservice.idCheck(email);
 
 		if(cnt==0) {
 			idCheck = true;
@@ -112,11 +113,11 @@ public class UserController {
             @ApiResponse(code = 200, message = "Successful / 성공 - status:true, 실패 - status:false", response = UserSwagger.class)})
 	@ApiOperation(value = "비밀번호 찾기 (Authorization 필요없음)", response = UserSwagger.class)
 	@RequestMapping(value = "/findpwd", method = RequestMethod.POST)
-	public ResponseEntity<Map<String, Object>> findPwd(@RequestBody @ApiParam(value="user_id, email만 입력") User user) throws Exception {
+	public ResponseEntity<Map<String, Object>> findPwd(@RequestBody @ApiParam(value="email만 입력") User user) throws Exception {
 		logger.info("1-------------findPwd-----------------------------" + new Date());
 		Map<String, Object> resultMap = new HashMap<>();
-		
-		String email = userservice.getEmail(user.getUser_id());
+		String email = user.getEmail();
+
 		if(email == null) {
 			resultMap.put("status", false);
 			resultMap.put("resultMsg", "귀하의 이메일로 가입된 아이디가 존재하지 않습니다.");
@@ -176,7 +177,7 @@ public class UserController {
 
 	@RequestMapping(value = "/time", method = RequestMethod.GET)
 	public ResponseEntity<LocalDateTime> getLocalTime() throws Exception {
-		LocalDateTime now = LocalDateTime.now();
+		LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
 		return new ResponseEntity<LocalDateTime> (now, HttpStatus.OK);
 	}
 
