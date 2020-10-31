@@ -38,7 +38,7 @@ public class UserServiceImpl implements IUserService{
 	}
 
 	public boolean signUpCheck(String email) {
-		if (userdao.signUpCheck(email) == 1)
+		if (userdao.signUpCheck(email)!= 0)
 			return true;
 		else
 			return false;
