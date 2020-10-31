@@ -16,4 +16,6 @@ public interface IUserService {
 	int getUserPk(String email);
 
 	String getUserName(int id);
+
+	void setAuthenticate(int id);
 }	

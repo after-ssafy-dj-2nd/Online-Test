@@ -2,6 +2,7 @@ package com.onlinetest.backend.controllerTest;
 
 import com.onlinetest.backend.dao.UserDaoImpl;
 import com.onlinetest.backend.dto.User;
+import com.onlinetest.backend.service.IAES256Service;
 import com.onlinetest.backend.service.IUserService;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,6 +33,9 @@ public class UserControllerTest {
 
     @Autowired
     private UserDaoImpl userDao;
+
+    @Autowired
+    private IAES256Service AES256Service;
 
     @Autowired
     private TestRestTemplate restTemplate;
@@ -106,12 +110,11 @@ public class UserControllerTest {
     public void signUpTest() throws Exception{
         // given
         String uri = url + "/signup";
-        String email = "test22222@test.com";
+        String email = "jr435@naver.com";
         String wrong_email = "test@test.com";
         String password = "test";
         int auth = 0;
         String name = "test123";
-
 
         User user1 = new User(email, password, auth, name);
         User user2 = new User(wrong_email, password, auth, name);

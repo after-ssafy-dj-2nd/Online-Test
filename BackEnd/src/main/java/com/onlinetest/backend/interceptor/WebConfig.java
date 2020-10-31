@@ -10,7 +10,8 @@ public class WebConfig implements WebMvcConfigurer {
     private static final String[] EXCLUDE_PATHS = {
             "/api/login",
             "/api/signup",
-            "/api/idcheck"
+            "/api/idcheck",
+            "/api/authenticate"
     };
 
     @Autowired

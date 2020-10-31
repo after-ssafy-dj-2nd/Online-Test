@@ -6,8 +6,7 @@ public class User {
 	private String password;
 	private int auth;
 	private String name;
-
-
+	private boolean authenticate;
 	
 	public User() {
 		super();
@@ -87,5 +86,13 @@ public class User {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public boolean isAuthenticate() {
+		return authenticate;
+	}
+
+	public void setAuthenticate(boolean authenticate) {
+		this.authenticate = authenticate;
 	}
 }

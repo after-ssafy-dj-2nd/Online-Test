@@ -11,6 +11,7 @@ import java.util.Random;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.onlinetest.backend.service.AES256ServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +28,12 @@ import com.onlinetest.backend.service.IJwtService;
 import com.onlinetest.backend.service.IMailService;
 import com.onlinetest.backend.service.IUserService;
 
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+
+
 
 @CrossOrigin(origins = { "*" }, maxAge = 6000, exposedHeaders = "access-token", allowedHeaders = "*")
 @RestController
@@ -48,6 +50,9 @@ public class UserController {
 	
 	@Autowired
     private IMailService mailservice;
+
+	@Autowired
+	private AES256ServiceImpl AES256service;
 	
 	@ApiResponses(value = { 
             @ApiResponse(code = 200, message = "Successful / true:성공", response = Boolean.class),
@@ -57,6 +62,10 @@ public class UserController {
 	public ResponseEntity<Boolean> signUp(@RequestBody @ApiParam(value="id 제외하고 입력") User user) throws Exception {
 		logger.info("1-------------signUp-----------------------------" + new Date());
 		Boolean signUp = false;
+
+		if ( userservice.idCheck(user.getEmail())>0){
+			return new ResponseEntity<Boolean>(signUp, HttpStatus.BAD_REQUEST);
+		}
 		
 		try {
 			userservice.signUp(user);
@@ -65,9 +74,43 @@ public class UserController {
 			e.printStackTrace();
 			return new ResponseEntity<Boolean>(signUp, HttpStatus.BAD_REQUEST);
 		}
+
+		String encrypt = AES256service.encrypt(user.getEmail());
+		String URL = "http://221.158.91.249:5002/authenticate?token=" + encrypt;
+		String subject = "[online-test] 이메일 인증입니다.";
+		StringBuilder sb = new StringBuilder();
+		sb.append("<div align='center' style='border:1px solid black; font-family:verdana'>");
+		sb.append("<h3 style='color:blue;'>아래 URL에 접속하여 이메일 인증해주세요!</h3>");
+		sb.append("<div style='font-size:130%'>");
+		sb.append("<a href='");
+		sb.append(URL);
+		sb.append("'>");
+		sb.append(URL);
+		sb.append("</a></div><br/>");
+		List<String> to = new ArrayList<>();
+		to.add(user.getEmail());
+		mailservice.sendEmail(subject, sb.toString(), to);
 		
 		return new ResponseEntity<Boolean>(signUp, HttpStatus.OK);
 	}
+
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "Successful / true:인증완료, false:인증실패", response = Boolean.class)})
+	@ApiOperation(value = "이메일로 받은 토큰 인증 (Authorization 필요없음)", response = Boolean.class)
+	@RequestMapping(value = "/authenticate", method = RequestMethod.GET)
+	public ResponseEntity<Boolean> authenticate(@RequestParam String token) throws Exception {
+		logger.info("1-------------authenticate-----------------------------" + new Date());
+		System.out.println(token);
+		String email = AES256service.decrypt(token);
+		boolean flag = false;
+		int id = userservice.getUserPk(email);
+		if (id != 0){
+			flag = true;
+			userservice.setAuthenticate(id);
+		}
+		return new ResponseEntity<Boolean>(flag, HttpStatus.OK);
+	}
+
 
 	@ApiResponses(value = { 
             @ApiResponse(code = 200, message = "Successful / true:사용가능, false:중복", response = Boolean.class)})
@@ -83,7 +126,6 @@ public class UserController {
 		if(cnt==0) {
 			idCheck = true;
 		}
-
 		return new ResponseEntity<Boolean>(idCheck, HttpStatus.OK);
 	}
 	
@@ -164,7 +206,7 @@ public class UserController {
 
 		List<String> to = new ArrayList<>();
 		to.add(email);
-		mailservice.sendEamil(subject, sb.toString(), to);
+		mailservice.sendEmail(subject, sb.toString(), to);
 
 		resultMap.put("status", true);
 		resultMap.put("resultMsg", "귀하의 이메일 주소로 새로운 임시 비밀번호를 발송 하였습니다.");
@@ -176,5 +218,6 @@ public class UserController {
 		LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
 		return new ResponseEntity<LocalDateTime> (now, HttpStatus.OK);
 	}
+
 
 }
