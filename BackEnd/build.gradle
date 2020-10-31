@@ -21,6 +21,8 @@ dependencies {
 	compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
 	compile group: 'javax.mail', name: 'mail', version: '1.4.7'
 	compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5'
+	compile "javax.xml.bind:jaxb-api"
+
 	runtimeOnly 'mysql:mysql-connector-java'
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
