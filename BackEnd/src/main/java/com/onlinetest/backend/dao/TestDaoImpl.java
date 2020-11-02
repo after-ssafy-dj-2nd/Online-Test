@@ -61,4 +61,8 @@ public class TestDaoImpl {
 	public void setExamStudent(ExamStudent examStudent) {
 		sqlSeesion.insert(ns + "setExamStudent", examStudent);
 	}
+
+	public String getStudentStartTime(ExamStudent examStudent) {
+		return sqlSeesion.selectOne(ns+"getStudentStartTime", examStudent);
+	}
 }

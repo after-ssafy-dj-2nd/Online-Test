@@ -164,7 +164,7 @@ public class UserController {
 
 		List<String> to = new ArrayList<>();
 		to.add(email);
-		mailservice.sendEamil(subject, sb.toString(), to);
+		mailservice.sendEmail(subject, sb.toString(), to);
 
 		resultMap.put("status", true);
 		resultMap.put("resultMsg", "귀하의 이메일 주소로 새로운 임시 비밀번호를 발송 하였습니다.");
