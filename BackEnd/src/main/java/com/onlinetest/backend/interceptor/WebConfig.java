@@ -11,7 +11,8 @@ public class WebConfig implements WebMvcConfigurer {
             "/api/login",
             "/api/signup",
             "/api/idcheck",
-            "/api/authenticate"
+            "/api/authenticate",
+            "/api/time"
     };
 
     @Autowired
