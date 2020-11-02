@@ -98,8 +98,6 @@ public class TestController {
 		return new ResponseEntity<ExamUserResultSwagger>(result, HttpStatus.NO_CONTENT);
 	}
 	
-	@ApiResponses(value = { 
-            @ApiResponse(code = 200, message = "Successful", response = ExamReadySwagger.class)})
 	@ApiImplicitParam(name="exam_id", value="시험번호")
 	@ApiOperation(value = "시험 준비 - 시험 정보")
 	@RequestMapping(value = "/readytest", method = RequestMethod.GET)
@@ -126,8 +124,6 @@ public class TestController {
 		return new ResponseEntity<ExamReadySwagger>(result, HttpStatus.OK);
 	}
 	
-	@ApiResponses(value = { 
-            @ApiResponse(code = 200, message = "Successful / type - 객관식:true, 주관식:false / commentary, writer_id 사용안함", response = ExamStartSwagger.class)})
 	@ApiImplicitParam(name="exam_id", value="시험번호")
 	@ApiOperation(value = "시험 응시 시작")
 	@RequestMapping(value = "/starttest", method = RequestMethod.GET)
