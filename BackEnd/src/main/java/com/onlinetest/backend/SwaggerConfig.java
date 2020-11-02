@@ -3,6 +3,9 @@ package com.onlinetest.backend;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
 import com.onlinetest.backend.dto.User;
 import com.onlinetest.backend.service.IJwtService;
@@ -23,7 +26,7 @@ import java.util.List;
 
 @Configuration
 @EnableSwagger2
-public class SwaggerConfig {
+public class SwaggerConfig extends WebMvcConfigurationSupport{
 
 	@Autowired
     private IJwtService jwtService;
@@ -52,6 +55,20 @@ public class SwaggerConfig {
 				.version("1.0").build();
 	}
 
+	@Override
+	public void addViewControllers(ViewControllerRegistry registry) {
+		registry.addRedirectViewController("/api/v2/api-docs", "/v2/api-docs").setKeepQueryParams(true);
+		registry.addRedirectViewController("/api/swagger-resources/configuration/ui",
+				"/swagger-resources/configuration/ui");
+		registry.addRedirectViewController("/api/swagger-resources/configuration/security",
+				"/swagger-resources/configuration/security");
+		registry.addRedirectViewController("/api/swagger-resources", "/swagger-resources");
+	}
+
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		registry.addResourceHandler("/api/**").addResourceLocations("classpath:/META-INF/resources/");
+	}
 }
 
 //http://localhost:8080/swagger-ui.html#/
