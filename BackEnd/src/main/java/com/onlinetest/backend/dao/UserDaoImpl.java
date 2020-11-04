@@ -41,4 +41,8 @@ public class UserDaoImpl {
 	public String getUserName(int id) {
 		return sqlSeesion.selectOne(ns + "getUserName", id);
 	}
+
+	public void setAuthenticate(int id) {
+		sqlSeesion.update(ns + "setAuthenticate", id);
+	}
 }

@@ -6,8 +6,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<insert id="signUp"
 		parameterType="com.onlinetest.backend.dto.User">
-		insert into user (email, password, auth, name)
-		VALUES (#{email}, hex(aes_encrypt(#{password}, 'test')), #{auth}, #{name});
+		insert into user (email, password, auth, name, authenticate)
+		VALUES (#{email}, hex(aes_encrypt(#{password}, 'test')), #{auth}, #{name}, #{authenticate});
 	</insert>
 	
 	<select id="idCheck"
@@ -44,4 +44,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getUserName" parameterType="int" resultType="string">
 		select name from user where id = #{user_id}
 	</select>
+
+	<update id="setAuthenticate" parameterType="int">
+		update user set authenticate = true where id = #{id}
+	</update>
 </mapper>

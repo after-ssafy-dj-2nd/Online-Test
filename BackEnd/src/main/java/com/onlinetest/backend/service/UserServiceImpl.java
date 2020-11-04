@@ -44,11 +44,18 @@ public class UserServiceImpl implements IUserService{
 			return false;
 	}
 
+	@Override
 	public int getUserPk(String email){
 		return userdao.getUserPk(email);
 	}
 
+	@Override
 	public String getUserName(int id) {
 		return userdao.getUserName(id);
+	}
+
+	@Override
+	public void setAuthenticate(int id) {
+		userdao.setAuthenticate(id);
 	}
 }
