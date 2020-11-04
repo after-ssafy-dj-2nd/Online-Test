@@ -116,7 +116,7 @@ public class TestController {
 		}
 		if(testservice.isExamStudent(new ExamStudent(student_id, exam_id)) == 0) {
 			result.setStatus("시험 응시가 가능한 학생이 아닙니다.");
-			return new ResponseEntity<ExamReadySwagger>(result, HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<ExamReadySwagger>(result, HttpStatus.UNAUTHORIZED);
 		}
 		
 		result.setStatus("OK");
@@ -142,7 +142,7 @@ public class TestController {
 		
 		if(testservice.isExamStudent(new ExamStudent(student_id, exam_id)) == 0) {
 			result.setStatus("시험 응시가 가능한 학생이 아닙니다.");
-			return new ResponseEntity<ExamStartSwagger>(result, HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<ExamStartSwagger>(result, HttpStatus.UNAUTHORIZED);
 		}
 		if(testservice.getStudentStartTime(new ExamStudent(student_id, exam_id))!=null) {
 			result.setStatus("시험 응시 이력이 있습니다.");
