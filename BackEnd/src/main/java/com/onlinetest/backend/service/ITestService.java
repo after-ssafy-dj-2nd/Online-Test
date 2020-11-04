@@ -28,4 +28,6 @@ public interface ITestService {
 	int isPossible(int exam_id);
 
 	void setExamStudent(ExamStudent examStudent);
+
+	String getStudentStartTime(ExamStudent examStudent);
 }	

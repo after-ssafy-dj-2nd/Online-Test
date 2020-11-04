@@ -79,4 +79,10 @@ public class TestServiceImpl implements ITestService{
 		testdao.setExamStudent(examStudent);
 	}
 
+	@Override
+	@Transactional(readOnly=true)
+	public String getStudentStartTime(ExamStudent examStudent) {
+		return testdao.getStudentStartTime(examStudent);
+	}
+
 }
