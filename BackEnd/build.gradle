@@ -13,17 +13,24 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-web'
+	compile 'org.springframework.boot:spring-boot-starter-web'
+	// mybatis
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.3'
+	// jpa
+	compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+	// mysql
+	compile 'mysql:mysql-connector-java'
 	compile "org.springframework:spring-context-support"
+	// 스웨거
 	compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
 	compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+	// JWT 토큰
 	compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
+	// 메일
 	compile group: 'javax.mail', name: 'mail', version: '1.4.7'
 	compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5'
 	compile "javax.xml.bind:jaxb-api"
 
-	runtimeOnly 'mysql:mysql-connector-java'
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
