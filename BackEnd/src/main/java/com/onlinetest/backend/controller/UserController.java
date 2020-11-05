@@ -76,7 +76,7 @@ public class UserController {
 		}
 
 		String encrypt = AES256service.encrypt(user.getEmail());
-		String URL = "http://221.158.91.249:5002/authenticate?token=" + encrypt;
+		String URL = "https://untacttest.ga/authenticate?token=" + encrypt;
 		String subject = "[online-test] 이메일 인증입니다.";
 		StringBuilder sb = new StringBuilder();
 		sb.append("<div align='center' style='border:1px solid black; font-family:verdana'>");
