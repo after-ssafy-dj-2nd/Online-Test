@@ -99,49 +99,67 @@ public class TestController {
 		return new ResponseEntity<ExamUserResultSwagger>(result, HttpStatus.OK);
 	}
 	
-	@ApiResponses(value = { 
-            @ApiResponse(code = 200, message = "Successful", response = Exam.class)})
 	@ApiImplicitParam(name="exam_id", value="시험번호")
 	@ApiOperation(value = "시험 준비 - 시험 정보")
 	@RequestMapping(value = "/readytest", method = RequestMethod.GET)
-	public ResponseEntity<Exam> readytest(@RequestParam int exam_id) throws Exception {
+	public ResponseEntity<ExamReadySwagger> readytest(@RequestParam int exam_id) throws Exception {
 		logger.info("1-------------readytest-----------------------------" + new Date());
 		
-		//시험 응시 가능한 학생인지 체크
+		int student_id = jwtservice.getId();
+		
+		ExamReadySwagger result = new ExamReadySwagger();
 		
 		Exam exam = testservice.getExam(exam_id);
 		
 		if(exam == null) {
-			return new ResponseEntity<Exam>(HttpStatus.NO_CONTENT);
+			result.setStatus("해당하는 시험을 찾을 수 없습니다.");
+			return new ResponseEntity<ExamReadySwagger>(result, HttpStatus.NOT_FOUND);
+		}
+		if(testservice.isExamStudent(new ExamStudent(student_id, exam_id)) == 0) {
+			result.setStatus("시험 응시가 가능한 학생이 아닙니다.");
+			return new ResponseEntity<ExamReadySwagger>(result, HttpStatus.UNAUTHORIZED);
 		}
 		
-		return new ResponseEntity<Exam>(exam, HttpStatus.OK);
+		result.setStatus("OK");
+		result.setExam(exam);
+		return new ResponseEntity<ExamReadySwagger>(result, HttpStatus.OK);
 	}
 	
-	@ApiResponses(value = { 
-            @ApiResponse(code = 200, message = "Successful / type - 객관식:true, 주관식:false / commentary, writer_id 사용안함", response = QuestionList.class)})
 	@ApiImplicitParam(name="exam_id", value="시험번호")
 	@ApiOperation(value = "시험 응시 시작")
 	@RequestMapping(value = "/starttest", method = RequestMethod.GET)
-	public ResponseEntity<QuestionList> starttest(@RequestParam int exam_id) throws Exception {
+	public ResponseEntity<ExamStartSwagger> starttest(@RequestParam int exam_id) throws Exception {
 		logger.info("1-------------starttest-----------------------------" + new Date());
 		
 		int student_id = jwtservice.getId();
 		
-		if(testservice.isExamStudent(new ExamStudent(student_id, exam_id)) > 0) {
-			return new ResponseEntity<QuestionList>(HttpStatus.BAD_REQUEST);
+		ExamStartSwagger result = new ExamStartSwagger();
+		
+		Exam exam = testservice.getExam(exam_id);		
+		if(exam == null) {
+			result.setStatus("해당하는 시험을 찾을 수 없습니다.");
+			return new ResponseEntity<ExamStartSwagger>(result, HttpStatus.NOT_FOUND);
 		}
 		
+		if(testservice.isExamStudent(new ExamStudent(student_id, exam_id)) == 0) {
+			result.setStatus("시험 응시가 가능한 학생이 아닙니다.");
+			return new ResponseEntity<ExamStartSwagger>(result, HttpStatus.UNAUTHORIZED);
+		}
+		if(testservice.getStudentStartTime(new ExamStudent(student_id, exam_id))!=null) {
+			result.setStatus("시험 응시 이력이 있습니다.");
+			return new ResponseEntity<ExamStartSwagger>(result, HttpStatus.BAD_REQUEST);
+		}
 		if(testservice.isPossible(exam_id) == 0) {
-			return new ResponseEntity<QuestionList>(HttpStatus.BAD_REQUEST);
+			result.setStatus("시험 응시 가능한 시간이 아닙니다.");
+			return new ResponseEntity<ExamStartSwagger>(result, HttpStatus.BAD_REQUEST);
 		}
 		
 		testservice.setStartTest(new ExamStudent(student_id, exam_id));
-		
 		List<Question> questions = testservice.getQuestion(exam_id);
-		QuestionList start = new QuestionList(questions);
 		
-		return new ResponseEntity<QuestionList>(start, HttpStatus.OK);
+		result.setStatus("OK");
+		result.setQuestions(questions);
+		return new ResponseEntity<ExamStartSwagger>(result, HttpStatus.OK);
 	}
 	
 	@ApiResponses(value = { 

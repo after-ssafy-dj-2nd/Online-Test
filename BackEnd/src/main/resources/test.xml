@@ -4,11 +4,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="test">
 
-	<insert id="setStartTest"
+	<update id="setStartTest"
 		parameterType="com.onlinetest.backend.dto.ExamStudent">
-		insert into exam_student (student_id, exam_id, starttime)
-		VALUES (#{student_id}, #{exam_id}, now());
-	</insert>
+		update exam_student 
+		set starttime=now()
+		where student_id=#{student_id} and exam_id=#{exam_id}
+	</update>
 
 	<select id="getExam" parameterType="int"
 		resultType="com.onlinetest.backend.dto.Exam">
@@ -100,5 +101,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		insert into exam_student (student_id, question_set_id)
 		VALUES (#{student_id}, #{exam_id});
 	</insert>
+	
+	<select id="getStudentStartTime" parameterType="com.onlinetest.backend.dto.ExamStudent"
+		resultType="string">
+		select starttime
+		from exam_student
+		where exam_id=#{exam_id} and student_id=#{student_id}
+	</select>
 
 </mapper>
