@@ -126,11 +126,6 @@ public class ExamController {
         if (origin == null){
             return new ResponseEntity<ExamSwagger>(HttpStatus.BAD_REQUEST);
         }
-        else if (origin.getTeacher_id() != user_id){
-            return new ResponseEntity<ExamSwagger>(HttpStatus.UNAUTHORIZED);
-        }
-
-
 
         List<QuestionExam> questionExamTable = examQuestion.getQuestions();
         for (QuestionExam questionExam: questionExamTable) {

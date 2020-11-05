@@ -79,7 +79,7 @@ public class TestController {
 			}
 		}
 		if (registeredStudent.size() != 0){
-			String URL = "http://221.158.91.249:3000/tryout/"+exam_id+"/wait";
+			String URL = "http://untacttest.ga/tryout/"+exam_id+"/wait";
 			String subject = "[online-test] 시험 응시 안내 입니다.";
 			StringBuilder sb = new StringBuilder();
 			sb.append("<div align='center' style='border:1px solid black; font-family:verdana'>");
