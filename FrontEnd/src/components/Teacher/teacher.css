@@ -170,3 +170,9 @@
   padding : 5px;
   margin-top:10px;
 }
+.choice-question .question-wrap {
+  width : 80%;
+}
+.choice-question input {
+  width : 70px;
+}

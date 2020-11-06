@@ -14,3 +14,6 @@ export function createExam(data) {
 export function deleteExam(id){
   return instance.delete('exam', {params : {id: id}})
 }
+export function updateExam(examQuestion){
+  return instance.put('exam', examQuestion)
+}
