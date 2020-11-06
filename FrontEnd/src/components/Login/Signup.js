@@ -15,7 +15,7 @@ const Signup = memo(({ signupType, history }) => {
     email: ''
   });
 
-  const { password, username, email } = state; //
+  const { password, username, email } = state;
 
   const onChange = e => {
     dispatch(e.target);
