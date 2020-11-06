@@ -9,12 +9,13 @@ import TeacherQuestionList from '../components/Teacher/questions/TeacherQuestion
 import TeacherExamDetail from '../components/Teacher/exam/TeacherExamDetail'
 import { Redirect, Switch } from 'react-router';
 import { Route } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { storage } from '../util/storage'
 
 const BASE_PATH = '/teacher/'
 
 const TeacherPage = () => {
-  const { loginStatus, userInfo } = useSelector(state => state.users);
+  const loginStatus = storage(sessionStorage).getItem('loginStatus');
+  const userInfo = storage(sessionStorage).getItem('userInfo');
 
   return (
     <>
