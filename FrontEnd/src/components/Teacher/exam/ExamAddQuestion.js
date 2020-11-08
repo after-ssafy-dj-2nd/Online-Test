@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import {fetchQuestions} from '../../../api/modules/questions'
+import {fetchQuestions, } from '../../../api/modules/questions'
 import Question from '../../Question'
 
 const DEFAULT = []
 const TeacherExamDetail = (props) => {
   const selected = props.selected
+  const onSubmit = (e) => {
+    e.preventDefault();
+    props.putQuestions(selectedItems)
+  }
   const [questions, setQuestions] = useState([])
   const [selectedItems, setSelectedItems] = useState(props.selected)
   const [showQuestionId, setShowQuestionId] = useState(null)
@@ -24,14 +28,11 @@ const TeacherExamDetail = (props) => {
   useEffect(()=> {
     setSelectedItems(selected)
   },[selected])
-  const onSubmit = (e) => {
-    e.preventDefault()
-  }
   const onChange = id => {
-    if (selectedItems.includes(id)) {
-      setSelectedItems(selectedItems.filter(item=> item !== id));
+    if (selectedItems.some(item=> item.question_id === id)) {
+      setSelectedItems(selectedItems.filter(item=> item.question_id !== id));
     } else {
-      setSelectedItems(selectedItems.concat(id));
+      setSelectedItems(selectedItems.concat({question_id:id,score:0}));
     }
   };
   const filterQuestion = (value)=>{
@@ -39,27 +40,47 @@ const TeacherExamDetail = (props) => {
   }
 
   const checkItem = (id) => {
-    return selectedItems.includes(id)
+    return selectedItems.some(item => item.question_id === id)
+  }
+  const changeScore = (id,e) => {
+    setSelectedItems(selectedItems.map(item => {
+      if (item.question_id===id){
+        item.score = e.target.value
+      }
+      return item
+    })
+    )
   }
   return (
     <>
       <hr/>
+      <div>
+        {'총점 : ' + selectedItems.reduce((prev,cur)=> {
+          if (cur.score) {
+            prev += parseInt(cur.score)
+          }
+          return prev
+        },0) + '점'}
+      </div>
       <span>선택된 문제</span>
       <div className="questions-box">
-        {selectedItems.map((questionId,i)=> 
-          <button onClick={()=>setShowQuestionId(questionId)} key={i}>
+        {selectedItems.map((item,i)=> 
+          <button onClick={()=>setShowQuestionId(item.question_id)} key={i}>
             <p>{i+1} 번 문제</p>
           </button>
         )}
       </div>
       <div className="selected-question">
-        {questions.filter(question => question.id === showQuestionId)
-          .map((question,id)=>
-            <Question
-              show={true}
-              key={id}
-              question={question}>
-            </Question>
+        {questions.filter((question) => question.id === showQuestionId)
+          .map((question)=>
+            <div key={question.id}>
+              <Question
+                show={true}
+                question={question}>
+              </Question>
+              <input type="number" value={selectedItems.filter(e=>e.question_id===question.id)[0].score} onChange={(e)=> changeScore(question.id,e)}/>
+              <span>점</span>
+            </div>
         )}
       </div>
       <hr/>
@@ -67,12 +88,21 @@ const TeacherExamDetail = (props) => {
       <input type="text" onChange={e=>filterQuestion(e.target.value)}/>
       <form onSubmit={e=>onSubmit(e)}>
         {questions.map(question=>(
-          <div key={question.id}>
+          <div className="choice-question" key={question.id}>
             <i onClick={()=> onChange(question.id)}
               className={"far " + (checkItem(question.id) ? "fa-check-square" : "fa-square")}
             >
             </i>
-            <Question question={question}></Question>
+            <Question question={question} />
+            {checkItem(question.id) ? 
+              <>
+                <input type="number"
+                  value={selectedItems.filter(e=>e.question_id===question.id)[0].score} 
+                  onChange={(e)=> changeScore(question.id,e)}
+                />
+                <span>점</span>
+              </>
+              : ''}
           </div>
           )
         )}

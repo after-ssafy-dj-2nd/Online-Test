@@ -6,7 +6,7 @@ export function fetchQuestions() {
 }
 
 export function createQuestions(data) {
-  return instance.post('questions', {questions:data})
+  return instance.post('questions', {question:data})
 }
 
 export function deleteQuestion(id) {

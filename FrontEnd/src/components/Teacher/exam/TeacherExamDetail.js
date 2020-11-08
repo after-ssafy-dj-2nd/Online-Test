@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react'
 import {timeToString} from '../../../util/time'
 import ExamAddQuestion from './ExamAddQuestion'
 import ExamAddStudent from './ExamAddStudent'
-import {fetchExam} from '../../../api/modules/exams'
+import {fetchExam, updateExam} from '../../../api/modules/exams'
 
 const TeacherExamDetail = ({match}) => {
   const examId = match.params.id
+  const [addType, setAddType] = useState('question')
   const [exam, setExam] = useState(
     { name : '',
       starttime : '',
@@ -25,7 +26,20 @@ const TeacherExamDetail = ({match}) => {
     };
     fetchData()
   },[])
-  const [addType, setAddType] = useState('question')
+  const putQuestions = (questions) => {
+    const newExam = {...exam,questions:questions}
+    updateExam(newExam)
+  }
+  const selected = () => {
+    return exam.questions.reduce((prev,question)=> 
+      prev.concat(
+        {
+          question_id : question.id,
+          score : question.score
+        }
+      )
+    ,[])
+  }
   return (
     <>
       <div>
@@ -41,7 +55,7 @@ const TeacherExamDetail = ({match}) => {
         </div>
         <div>
         <div className={(addType==="question") ? ' ' : 'hide'} >
-            <ExamAddQuestion selected={exam.questions.map(question=>question.id)}/>
+            <ExamAddQuestion putQuestions={putQuestions} selected={selected}/>
           </div>
           <div className={(addType==="student") ? ' ' : 'hide'} >
             <ExamAddStudent />
